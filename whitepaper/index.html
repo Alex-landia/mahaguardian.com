@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MahaGuardian White Paper</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--surface:#FFF;--text:#1A1A18;--muted:#6B6B65;--accent:#0F6E56;--accent-lt:#E1F5EE;--border:#E5E5E0;--code-bg:#F4F4F0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);line-height:1.8}
+a{color:var(--accent)} a:hover{text-decoration:underline}
+code{font-family:'DM Mono',monospace;font-size:.88em;background:var(--code-bg);padding:2px 6px;border-radius:4px}
+.c{max-width:720px;margin:0 auto;padding:0 24px}
+nav{max-width:880px;margin:0 auto;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+nav .logo{font-size:18px;font-weight:700;letter-spacing:-.5px} nav .logo span{color:var(--accent)}
+nav .links{display:flex;gap:24px;font-size:14px;font-weight:500}
+nav .links a{color:var(--muted);text-decoration:none} nav .links a:hover{color:var(--text)}
+.hero{padding:60px 0 40px;border-bottom:1px solid var(--border)}
+.hero h1{font-size:32px;font-weight:700;letter-spacing:-1px;margin-bottom:8px}
+.hero .meta{font-size:14px;color:var(--muted);margin-bottom:4px}
+h2{font-size:22px;font-weight:700;margin:40px 0 16px;letter-spacing:-.3px;padding-top:20px;border-top:1px solid var(--border)}
+h3{font-size:17px;font-weight:700;margin:24px 0 10px}
+p{margin-bottom:14px}
+ul{margin:0 0 14px 20px} li{margin-bottom:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--border)}
+th{font-weight:600;background:var(--code-bg)}
+.code{background:#1A1A18;color:#E5E5E0;border-radius:8px;padding:16px 20px;font-family:'DM Mono',monospace;font-size:13px;line-height:1.7;margin:14px 0;overflow-x:auto}
+.refs{font-size:13px;color:var(--muted);line-height:1.9}
+footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../" class="logo" style="text-decoration:none">Maha<span>Guardian</span></a>
+  <div class="links">
+    <a href="../">Home</a>
+    <a href="../#architecture">Architecture</a>
+  </div>
+</nav>
+
+<div class="c">
+
+<div class="hero">
+  <h1>Cryptographic Information Barriers for Autonomous AI Agents</h1>
+  <p class="meta">White Paper &mdash; April 2026 &mdash; Alexander Landia</p>
+  <p class="meta">Patent Pending (USPTO)</p>
+  <p class="meta"><a href="MahaGuardian-Whitepaper-20260422.docx">Download DOCX</a></p>
+</div>
+
+<h2>Abstract</h2>
+<p>As autonomous AI agents proliferate in enterprise environments, the security model governing their access to sensitive data and systems has not kept pace. The dominant pattern &mdash; long-lived API credentials stored alongside the agent on a cloud server &mdash; creates a single point of compromise. MahaGuardian is a cryptographic information-barrier platform that separates where authority over AI agents is <em>defined</em> from where it is <em>enforced</em>. The owner retains sole cryptographic control over what agents are permitted to do. The always-on cloud infrastructure can only operate within pre-authorized bounds.</p>
+
+<h2>1. The Problem</h2>
+
+<h3>1.1 AI agents need credentials</h3>
+<p>An AI agent deployed to manage customer relationships needs access to a CRM. An agent drafting emails needs access to a mail service. An agent analyzing financial data needs database read permissions. In every case, the agent requires credentials to do its work.</p>
+
+<h3>1.2 The current model is fragile</h3>
+<p>In the dominant deployment model, credentials are stored on the same cloud server that runs the agent. A single compromise exposes everything. The enforcement layer can grant new permissions. There is typically no mechanism for the owner to independently verify what the enforcement layer did while the owner was not watching.</p>
+
+<h3>1.3 Information barriers between agents</h3>
+<p>When multiple agents operate within the same organization &mdash; one handling client A's data, another handling client B's &mdash; the information barrier between them is typically enforced by policy, not by architecture. A misconfigured permission, a shared credential store, or a compromised orchestration layer can leak data between partitions. In regulated industries, this is a compliance failure.</p>
+
+<h2>2. Design Principles</h2>
+
+<p><strong>Separate authority definition from enforcement.</strong> The party that defines what agents are allowed to do is architecturally distinct from the party that carries out those instructions. Compromising the cloud does not grant the ability to define new authority.</p>
+
+<p><strong>Cryptographic enforcement.</strong> Permissions are enforced through cryptographic signatures, not through access-control lists or configuration files that can be edited by a compromised system.</p>
+
+<p><strong>Short-lived, scoped credentials.</strong> Agents receive credentials that are both time-limited and scope-limited. Credential lifetimes are short enough that compromise of a single credential has bounded impact.</p>
+
+<p><strong>Tamper-evident audit.</strong> Every credential issuance and agent action is logged in a tamper-evident audit trail that the system owner can verify after the fact.</p>
+
+<h2>3. Current Implementation</h2>
+
+<p>MahaGuardian V1 is a functional Guardian Daemon running on the system owner's device, managing credentials, rules, and audit for isolated AI agent deployments.</p>
+
+<h3>3.1 Credential vault</h3>
+<p>Agent credentials are stored in an encrypted vault using age encryption. The age identity key is wrapped with an AES-256-GCM key derived from the owner's passphrase via scrypt. Salt and nonce from <code>os.urandom</code>.</p>
+
+<h3>3.2 Agent rules</h3>
+<p>Agent rules are defined in a TOML file signed with ed25519. The Guardian verifies the signature before loading any rules. A hash ledger tracks the integrity of all signed artifacts and is itself signed.</p>
+
+<h3>3.3 Audit log</h3>
+<p>An append-only SQLite audit log records every event. Each entry includes a SHA-256 hash of the previous entry, forming a hash chain. The SQLite authorizer blocks UPDATE and DELETE operations.</p>
+
+<h3>3.4 Agent deployment</h3>
+<p>Agents run on isolated cloud droplets connected to the Guardian via mutual TLS. Each agent receives short-lived, scoped tokens held in memory only. Agents are partition-blind: they cannot discover other agents' credentials or data.</p>
+
+<h3>3.5 Test coverage</h3>
+<p>970 passing tests covering credential operations, signature verification, hash-chain integrity, access-control enforcement, deployment workflows, and input sanitization.</p>
+
+<h2>4. Known Limitations</h2>
+<ul>
+  <li><code>mlock</code> protects raw buffers but CPython's string interning and GC mean parsed credential values may exist in copies.</li>
+  <li>Audit log tail truncation is not hash-chain-detectable; entry-count verification is separate.</li>
+  <li>Guardian must be online for agents to receive new credentials.</li>
+  <li>Device loss is total compromise in V1 (no multi-device recovery).</li>
+  <li>No external anchor on the audit log in V1.</li>
+</ul>
+
+<h2>5. Direction</h2>
+<p>MahaGuardian's architecture is designed to evolve toward stronger separation between credential management, agent execution, and audit verification. Future versions will extend the cryptographic guarantees of the current Guardian Daemon into production cloud deployments with independent audit verification.</p>
+<p>This future architecture is under development. Details will be published as the implementation matures and relevant intellectual property protections are in place.</p>
+
+<h2>6. Technology Stack</h2>
+<table>
+  <tr><th>Component</th><th>Technology</th></tr>
+  <tr><td>Language</td><td>Python 3.11+</td></tr>
+  <tr><td>Vault encryption</td><td>age (via pyrage)</td></tr>
+  <tr><td>Key wrapping</td><td>AES-256-GCM (via cryptography)</td></tr>
+  <tr><td>KDF</td><td>scrypt (via cryptography)</td></tr>
+  <tr><td>Rule signing</td><td>ed25519 (via PyNaCl)</td></tr>
+  <tr><td>Audit log</td><td>SQLite (append-only, hash-chained)</td></tr>
+  <tr><td>Agent transport</td><td>mutual TLS</td></tr>
+  <tr><td>Agent hosting</td><td>Hetzner cloud</td></tr>
+</table>
+
+<h2>7. Getting Started</h2>
+<div class="code">Public repository URL coming soon
+
+python -m guardian init</div>
+<p>The public repository and full setup documentation will be linked here once the codebase is published.</p>
+
+<h2>References</h2>
+<div class="refs">
+<p>Birgisson, A., et al. (2014). <em>Macaroons: Cookies with Contextual Caveats for Decentralized Authorization in the Cloud.</em> NDSS 2014.</p>
+<p>Laurie, B., Langley, A., Kasper, E. (2013). <em>Certificate Transparency.</em> RFC 6962.</p>
+<p>SPIFFE. <em>Secure Production Identity Framework for Everyone.</em> spiffe.io</p>
+<p>W3C. <em>Trace Context.</em> w3.org/TR/trace-context/</p>
+</div>
+
+</div>
+
+<footer>
+  <div class="c">MahaGuardian &copy; 2026 Alexander Landia. Patent pending (USPTO).</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MahaGuardian — Cryptographic Information Barriers for AI Agents</title>
+<meta name="description" content="MahaGuardian enforces information barriers between autonomous AI agents through architecture, not policy.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#FAFAF8; --surface:#FFF; --text:#1A1A18; --muted:#6B6B65; --accent:#0F6E56; --accent-lt:#E1F5EE; --border:#E5E5E0; --code-bg:#F4F4F0; --coral:#D85A30; --blue:#185FA5; --purple:#534AB7; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);line-height:1.7}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+code{font-family:'DM Mono',monospace;font-size:.9em;background:var(--code-bg);padding:2px 6px;border-radius:4px}
+.c{max-width:880px;margin:0 auto;padding:0 24px}
+nav{padding:20px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+nav .logo{font-size:18px;font-weight:700;letter-spacing:-.5px} nav .logo span{color:var(--accent)}
+nav .links{display:flex;gap:24px;font-size:14px;font-weight:500;color:var(--muted)}
+nav .links a{color:var(--muted)} nav .links a:hover{color:var(--text)}
+
+.hero{padding:80px 0 60px;border-bottom:1px solid var(--border)}
+.hero h1{font-size:44px;font-weight:700;letter-spacing:-1.5px;margin-bottom:16px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .sub{font-size:19px;color:var(--muted);max-width:620px;margin-bottom:28px}
+.badges{display:flex;gap:10px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid var(--border);background:var(--surface)}
+.badge.g{background:var(--accent-lt);border-color:var(--accent);color:var(--accent)}
+
+section{padding:56px 0;border-bottom:1px solid var(--border)}
+section:last-of-type{border-bottom:none}
+h2{font-size:26px;font-weight:700;margin-bottom:20px;letter-spacing:-.5px}
+h3{font-size:17px;font-weight:700;margin-bottom:10px}
+p{margin-bottom:14px} p:last-child{margin-bottom:0}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px}
+.card h3{font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.card.prob h3{color:var(--coral)} .card.sol h3{color:var(--accent)}
+
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:20px}
+.feat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px}
+.feat h3{font-size:14px;margin-bottom:6px} .feat p{font-size:13px;color:var(--muted)}
+.feat .ic{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-weight:700;font-size:15px}
+.ic.g{background:var(--accent-lt);color:var(--accent)} .ic.p{background:#EEEDFE;color:var(--purple)} .ic.b{background:#E6F1FB;color:var(--blue)}
+
+.arch{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px;margin:20px 0;font-family:'DM Mono',monospace;font-size:12.5px;line-height:1.9;white-space:pre;overflow-x:auto;color:var(--muted)}
+.arch b{color:var(--text);font-weight:500}
+
+.code{background:#1A1A18;color:#E5E5E0;border-radius:10px;padding:18px 22px;font-family:'DM Mono',monospace;font-size:13px;line-height:1.8;margin:14px 0;overflow-x:auto}
+.code .c1{color:#6B6B65} .code .cm{color:#5DCAA5}
+
+.lim{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;margin-top:20px}
+.lim ul{list-style:none;padding:0}
+.lim li{padding:7px 0;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--muted);display:flex;gap:10px}
+.lim li:last-child{border-bottom:none}
+.lim li::before{content:"\2192";color:var(--coral);flex-shrink:0}
+
+footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:768px){.hero h1{font-size:30px}.grid2,.grid3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="c">
+<nav>
+  <div class="logo">Maha<span>Guardian</span></div>
+  <div class="links">
+    <a href="#architecture">Architecture</a>
+    <a href="#quickstart">Quick start</a>
+    <a href="whitepaper/">White paper</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Cryptographic barriers<br>for <em>AI agents</em></h1>
+  <p class="sub">MahaGuardian enforces information barriers between autonomous AI agents through architecture, not policy. Cryptographic credential management, signed rules, and tamper-evident audit.</p>
+  <div class="badges">
+    <span class="badge g">Patent pending</span>
+    <span class="badge">970 tests passing</span>
+    <span class="badge">Python 3.11+</span>
+    <span class="badge">Open source</span>
+  </div>
+</div>
+
+<section>
+  <h2>The problem</h2>
+  <div class="grid2">
+    <div class="card prob">
+      <h3>Today</h3>
+      <p>AI agents hold long-lived credentials on cloud servers. If the server is compromised, the agent's authority is compromised. The enforcement layer can grant new permissions, making it a high-value target.</p>
+    </div>
+    <div class="card sol">
+      <h3>MahaGuardian</h3>
+      <p>Credentials are encrypted and held by the owner's device. Agent rules are cryptographically signed — agents cannot modify or escalate their own permissions. Every action is logged in a tamper-evident audit trail.</p>
+    </div>
+  </div>
+</section>
+
+<section id="architecture">
+  <h2>Architecture</h2>
+  <p>MahaGuardian's Guardian Daemon runs on the owner's device and manages encrypted credentials, signed agent rules, and a tamper-evident audit log. Agents run on isolated cloud droplets with short-lived, scoped credentials that cannot be escalated.</p>
+  <div class="arch"><b>Owner's device (Guardian Daemon)</b>
+  vault.enc    \u2014 age-encrypted credential store
+  SOUL.lock    \u2014 ed25519-signed agent rules
+  SOUL.hash    \u2014 SHA-256 integrity ledger (signed)
+  audit.log    \u2014 append-only, hash-chained
+      |
+      |  mTLS
+      v
+<b>Cloud droplet (one per agent)</b>
+  short-lived credentials (memory only)
+  scoped Guardian Access Tokens
+  partition-blind (cannot see other agents)</div>
+  <p>A future production architecture extending these guarantees into cloud deployments is under development. See the <a href="whitepaper/">white paper</a> for design philosophy.</p>
+</section>
+
+<section>
+  <h2>Security properties</h2>
+  <div class="grid3">
+    <div class="feat">
+      <div class="ic g">E</div>
+      <h3>Encrypted vault</h3>
+      <p>Credentials encrypted with age, wrapped with scrypt-derived AES-256-GCM. Salt and nonce from os.urandom.</p>
+    </div>
+    <div class="feat">
+      <div class="ic p">S</div>
+      <h3>Signed rules</h3>
+      <p>Agent rules (SOUL.lock) signed with ed25519. Guardian verifies the signature before loading any rule.</p>
+    </div>
+    <div class="feat">
+      <div class="ic b">A</div>
+      <h3>Audit trail</h3>
+      <p>Append-only SQLite log with hash chaining. Each entry includes SHA-256 of the previous. UPDATE and DELETE blocked.</p>
+    </div>
+    <div class="feat">
+      <div class="ic g">P</div>
+      <h3>Partition isolation</h3>
+      <p>Each agent runs in its own droplet. Agents cannot see other agents' credentials, rules, or data.</p>
+    </div>
+    <div class="feat">
+      <div class="ic p">T</div>
+      <h3>Short-lived tokens</h3>
+      <p>Guardian Access Tokens are scoped and time-limited. Agents cannot escalate beyond the token's scope.</p>
+    </div>
+    <div class="feat">
+      <div class="ic b">I</div>
+      <h3>Input sanitization</h3>
+      <p>Prompt sanitizer strips null bytes, Unicode direction characters, zero-width characters, XML injection, and header injection.</p>
+    </div>
+  </div>
+</section>
+
+<section id="quickstart">
+  <h2>Quick start</h2>
+  <div class="code"><span class="c1"># Public repository link</span>
+<span class="cm">Coming soon</span>
+
+<span class="c1"># Initialize the Guardian</span>
+<span class="cm">python -m guardian</span> init
+
+<span class="c1"># Configure agent rules in SOUL.lock, then sign</span>
+<span class="cm">python -m guardian</span> sign
+
+<span class="c1"># Deploy an agent</span>
+<span class="cm">python -m guardian</span> deploy --agent research --target hetzner
+
+<span class="c1"># Run tests (970 passing)</span>
+<span class="cm">pytest</span></div>
+  <p>Requires Python 3.11+. Dependencies: <code>pyrage</code>, <code>PyNaCl</code>, <code>cryptography</code>. The public repository URL will be added once the codebase is published.</p>
+</section>
+
+<section>
+  <h2>Known limitations</h2>
+  <p>We believe in honest disclosure. These are documented limitations of the current V1 implementation.</p>
+  <div class="lim">
+    <ul>
+      <li><code>mlock</code> protects raw JSON buffers but not parsed Python dict values. CPython interns strings and GC copies memory.</li>
+      <li>Audit log tail truncation is not detectable by hash chain alone; entry count is checked separately.</li>
+      <li>Guardian must be online for agents to receive new credentials. Agents are always on; Guardian is not.</li>
+      <li>Device loss is total compromise in V1. Multi-device recovery is planned for future versions.</li>
+      <li>No external anchor on the audit log in V1. Future versions will address this.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Roadmap</h2>
+  <p><strong>V1 (current):</strong> Laptop-based Guardian Daemon with encrypted vault, signed rules, and tamper-evident audit logging. Functional with 970 passing tests.</p>
+  <p><strong>Next:</strong> Production architecture with stronger credential delegation and independent audit verification. Under development. See the <a href="whitepaper/">white paper</a>.</p>
+</section>
+</div>
+
+<footer>
+  <div class="c">
+    <p>MahaGuardian &copy; 2026 Alexander Landia. Patent pending (USPTO).</p>
+  </div>
+</footer>
+
+</body>
+</html>
