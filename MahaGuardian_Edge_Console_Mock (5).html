@@ -193,7 +193,9 @@
   }
   .msg.msg-current {
     border-left-color: var(--brass) !important;
-    background: rgba(200, 155, 92, 0.07) !important;
+    border-left-width: 5px !important;
+    background: rgba(200, 155, 92, 0.14) !important;
+    box-shadow: 0 0 0 1px rgba(200, 155, 92, 0.18);
   }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(8px); }
@@ -604,6 +606,8 @@
     }
     if (e.key === 'Escape') hideAuth();
   });
+
+  setTimeout(() => document.getElementById('btn-play').click(), 400);
 </script>
 </body>
 </html>
