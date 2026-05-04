@@ -178,8 +178,9 @@
   }
   .msg.msg-current {
     border-left-color: var(--brass) !important;
-    background: rgba(200, 155, 92, 0.07) !important;
-    box-shadow: inset 0 0 0 1px rgba(200, 155, 92, 0.1);
+    border-left-width: 4px !important;
+    background: rgba(200, 155, 92, 0.14) !important;
+    box-shadow: 0 0 0 1px rgba(200, 155, 92, 0.18);
   }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(6px); }
@@ -690,50 +691,59 @@
     updateStats();
   });
 
-  // ========= 20-SECOND PLAY SEQUENCE ======================
-  document.getElementById('btn-play').addEventListener('click', async () => {
+  async function typeInto(el, text, speed) {
+    el.value = '';
+    el.focus();
+    for (const ch of text) {
+      el.value += ch;
+      await wait(speed + Math.random() * 10);
+    }
+  }
+
+  // ========= AUTO-PLAY SEQUENCE ======================
+  async function runSequence() {
     document.getElementById('btn-reset').click();
 
-    // 0:00 — Operator sends request immediately
+    // Typing
     const prompt = "Review our multi-agent system for security weaknesses before we ship.";
+    inputWrap.classList.add('flash');
+    await typeInto(userInput, prompt, 22);
+    await wait(300);
+    inputWrap.classList.remove('flash');
+
     addMsg('user', prompt, 'user', false);
+    userInput.value = '';
     activate();
 
-    // 0:01 — Orchestrator dispatches
-    await wait(1000);
+    await wait(800);
     addMsg('orchestrator',
       'Task accepted. Capability batch issued: <strong>1000 calls</strong>, scope=<strong>spec_review</strong>. Dispatching to three reviewers in parallel.');
 
-    // 0:04 — Opus starts scanning
-    await wait(3000);
+    await wait(2200);
     addMsg('opus', 'Round 1. Scanning agent communication patterns and SOUL.lock configuration…');
 
-    // 0:08 — Gemini finds C-001
-    await wait(4000);
+    await wait(2500);
     addMsg('gemini',
       '<strong>C-001 critical:</strong> ANTHROPIC_API_KEY written to agent environment — leaks to subprocess scope.');
 
-    // 0:12 — GPT finds C-002
-    await wait(4000);
+    await wait(2500);
     addMsg('codex',
       '<strong>C-002 critical:</strong> user-controlled input reaches system prompt without sanitisation in coding.py:147.');
 
-    // 0:15 — Haiku deduplicates
-    await wait(3000);
+    await wait(2000);
     addMsg('haiku', 'Deduplication complete. <strong>2 distinct critical findings</strong> confirmed across independent reviewers.');
 
-    // 0:17 — HALT — freeze cost counter
-    await wait(2000);
+    await wait(1500);
     state.halted = true;
-    const costEl = document.getElementById('stat-cost');
-    costEl.classList.add('frozen');
     ['orchestrator','opus','gemini','codex','haiku'].forEach(a => setAgent(a, 'halted'));
     convAux.textContent = 'halted · build blocked';
     addMsg('orchestrator',
       '<strong>HALT.</strong> Build blocked. 2 critical security findings — C-001 env-var leak · C-002 prompt injection. Witness log finalized.',
       'halt');
     updateStats();
-  });
+  }
+
+  document.getElementById('btn-play').addEventListener('click', () => runSequence());
 
   document.getElementById('btn-reset').addEventListener('click', () => {
     state.cost = 0; state.cap = 1000; state.capMax = 1000;
@@ -764,10 +774,11 @@
     if (e.key === 'Escape') hideAuth();
   });
 
-  // Start blank — no boot message
+  // Start blank — auto-run on load
   ['orchestrator','opus','gemini','codex','haiku','claude-code'].forEach(a => setAgent(a, 'idle'));
   updateStats();
   userInput.focus();
+  setTimeout(() => runSequence(), 400);
 </script>
 </body>
 </html>
