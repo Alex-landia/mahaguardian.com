@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MahaGuardian Edge — Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Serif:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0d10;
+    --bg-raised: #15171c;
+    --bg-panel: #111317;
+    --bg-deep: #0a0b0e;
+    --border: #22252c;
+    --border-strong: #2e3239;
+    --text: #e8e6e1;
+    --text-2: #b8bbc2;
+    --text-3: #6d7079;
+    --text-mono: #d4d2cd;
+    --brass: #c89b5c;
+    --brass-glow: rgba(200, 155, 92, 0.18);
+    --mint: #6ee7b7;
+    --mint-strong: #34d399;
+    --mint-glow: rgba(110, 231, 183, 0.22);
+    --amber: #f5b556;
+    --amber-strong: #f59e0b;
+    --amber-glow: rgba(245, 181, 86, 0.25);
+    --coral: #f47174;
+    --coral-strong: #ef4444;
+    --coral-glow: rgba(244, 113, 116, 0.22);
+    --ice: #93c5fd;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: "IBM Plex Sans", -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.5;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(200, 155, 92, 0.04), transparent 50%),
+      radial-gradient(circle at 80% 90%, rgba(110, 231, 183, 0.03), transparent 50%);
+  }
+
+  .console {
+    display: grid;
+    grid-template-rows: 64px 1fr 32px;
+    height: 100vh;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+  }
+  .brand {
+    display: flex; align-items: baseline; gap: 12px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 18px; font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .brand-seal { color: var(--brass); font-size: 22px; line-height: 1; transform: translateY(2px); }
+  .brand-product { color: var(--text); font-weight: 700; }
+  .brand-divider { color: var(--text-3); }
+  .brand-context { color: var(--text-2); font-weight: 400; }
+
+  .topbar-mid {
+    display: flex; gap: 14px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 14px; color: var(--text-2);
+  }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px; border-radius: 3px;
+    background: var(--bg-raised); border: 1px solid var(--border);
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 0 3px var(--mint-glow);
+  }
+  .dot.live { animation: livepulse 1.6s ease-in-out infinite; }
+  @keyframes livepulse {
+    0%, 100% { box-shadow: 0 0 0 3px var(--mint-glow); }
+    50% { box-shadow: 0 0 0 7px var(--mint-glow); }
+  }
+
+  /* PANELS */
+  .panels {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    overflow: hidden;
+  }
+  .panel {
+    overflow-y: auto;
+    border-right: 1px solid var(--border);
+    background: var(--bg-panel);
+  }
+  .panel.conv {
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-right: none;
+  }
+  .panel.conv .panel-head { flex-shrink: 0; }
+  .panel.conv .panel-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+    padding: 18px 22px;
+  }
+  .panel.conv .input-bar { flex-shrink: 0; }
+
+  .panel-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+    background: inherit;
+  }
+  .panel-title {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-2);
+  }
+  .panel-aux {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px; color: var(--text-3);
+    letter-spacing: 0.05em;
+  }
+
+  /* FLEET — bigger nodes */
+  .panel-body { padding: 16px 18px; }
+  .section-head {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-3);
+    margin-bottom: 10px;
+  }
+
+  .agent-card {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 12px;
+    margin-bottom: 8px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-left: 3px solid transparent;
+    border-radius: 3px;
+    transition: all 200ms ease;
+  }
+  .agent-dot {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--text-3);
+    transition: all 200ms;
+    grid-row: 1 / 3;
+  }
+  .agent-card.active .agent-dot {
+    background: var(--mint);
+    box-shadow: 0 0 12px var(--mint);
+    animation: livepulse 1.4s ease-in-out infinite;
+  }
+  .agent-card.allowed { border-left-color: var(--mint); }
+  .agent-card.denied { border-left-color: var(--coral); }
+  .agent-card.elevated { border-left-color: var(--amber); }
+  .agent-card.allowed .agent-dot { background: var(--mint); box-shadow: 0 0 14px var(--mint); }
+  .agent-card.denied .agent-dot { background: var(--coral); box-shadow: 0 0 14px var(--coral); }
+  .agent-card.elevated .agent-dot { background: var(--amber); box-shadow: 0 0 14px var(--amber); }
+  .agent-card.flash {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 2px var(--brass-glow), 0 0 24px rgba(200, 155, 92, 0.4);
+  }
+
+  .agent-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .agent-meta {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    color: var(--text-3);
+    margin-top: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  /* DATA CLASSES list */
+  .data-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 4px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-size: 13px;
+  }
+  .data-row .name { color: var(--text); font-weight: 500; }
+  .data-row .class {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* CONVERSATION — much bigger fonts */
+  .conv-feed { display: flex; flex-direction: column; gap: 14px; }
+  .msg {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--text-3);
+    border-radius: 0 4px 4px 0;
+    padding: 16px 22px;
+    animation: fadeUp 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .msg.fund { border-left-color: var(--ice); }
+  .msg.legal { border-left-color: #c4b5fd; }
+  .msg.adv { border-left-color: #f5a3a5; }
+  .msg.guardian { border-left-color: var(--text); border-left-width: 5px; }
+  .msg.allowed { background: rgba(110, 231, 183, 0.06); }
+  .msg.denied { background: rgba(244, 113, 116, 0.07); }
+  .msg.elevated { background: rgba(245, 181, 86, 0.07); }
+
+  .msg-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 8px;
+  }
+  .msg-agent {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+  }
+  .msg.fund .msg-agent { color: var(--ice); }
+  .msg.legal .msg-agent { color: #c4b5fd; }
+  .msg.adv .msg-agent { color: #f5a3a5; }
+  .msg.guardian .msg-agent { color: var(--text); }
+  .msg-time {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px; color: var(--text-3);
+    letter-spacing: 0.04em;
+  }
+  .msg-body {
+    font-size: 18px;
+    color: var(--text);
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .msg-body strong {
+    color: var(--text);
+    font-weight: 700;
+  }
+  .msg-body em {
+    color: var(--brass);
+    font-style: normal;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .msg.request-flash {
+    border-color: var(--brass);
+    background: var(--brass-glow);
+    box-shadow: 0 0 24px rgba(200, 155, 92, 0.35);
+    transform: scale(1.01);
+    transition: all 220ms ease;
+  }
+  .msg.request-flash .msg-body {
+    font-weight: 700;
+    color: var(--brass);
+  }
+
+  /* HUGE OUTCOME BADGE — for projection */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 14px;
+    padding: 14px 24px;
+    border-radius: 4px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    animation: badgePop 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes badgePop {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.08); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .badge.allow {
+    background: rgba(52, 211, 153, 0.18);
+    color: var(--mint);
+    border: 2px solid var(--mint);
+    box-shadow: 0 0 32px rgba(110, 231, 183, 0.3);
+  }
+  .badge.deny {
+    background: rgba(239, 68, 68, 0.18);
+    color: var(--coral);
+    border: 2px solid var(--coral);
+    box-shadow: 0 0 32px rgba(244, 113, 116, 0.3);
+  }
+  .badge.elevate {
+    background: rgba(245, 158, 11, 0.18);
+    color: var(--amber);
+    border: 2px solid var(--amber);
+    box-shadow: 0 0 32px rgba(245, 181, 86, 0.3);
+  }
+  .badge .icon {
+    font-size: 32px;
+    line-height: 1;
+  }
+
+  /* INPUT BAR — bigger */
+  .input-bar {
+    border-top: 1px solid var(--border);
+    background: var(--bg-deep);
+    padding: 16px 22px;
+  }
+  .input-wrap {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    padding: 6px 6px 6px 16px;
+    transition: border-color 150ms;
+  }
+  .input-wrap:focus-within { border-color: var(--brass); }
+  .input-wrap.flash { border-color: var(--brass); box-shadow: 0 0 0 3px var(--brass-glow); }
+  .input-wrap input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 16px;
+    outline: none;
+    padding: 10px 0;
+  }
+  .input-wrap input::placeholder { color: var(--text-3); font-style: italic; }
+  .input-wrap button {
+    background: var(--brass);
+    color: var(--bg-deep);
+    border: none;
+    padding: 0 18px;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+  }
+
+  .statusbar {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px; color: var(--text-3);
+    letter-spacing: 0.06em;
+  }
+  .statusbar .group { display: flex; gap: 22px; }
+  .statusbar .v { color: var(--text-2); }
+  .statusbar .v.brass { color: var(--brass); }
+
+  /* AUTHENTICATOR MODAL */
+  .overlay {
+    position: fixed; inset: 0;
+    background: rgba(8, 9, 11, 0.82);
+    backdrop-filter: blur(6px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100;
+  }
+  .overlay.show { display: flex; animation: fadeUp 200ms ease-out; }
+  .phone {
+    width: 340px; height: 620px;
+    background: linear-gradient(180deg, #1a1c20 0%, #131519 100%);
+    border-radius: 42px;
+    border: 1px solid #2a2d34;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 0 8px #07080a, 0 0 0 9px #1a1c20;
+    padding: 30px 24px 24px;
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  .phone::before {
+    content: '';
+    position: absolute;
+    top: 16px; left: 50%;
+    transform: translateX(-50%);
+    width: 100px; height: 24px;
+    background: #07080a;
+    border-radius: 0 0 14px 14px;
+  }
+  .phone-brand {
+    display: flex; align-items: baseline; justify-content: center; gap: 8px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 14px; color: var(--text-2);
+    margin-top: 26px; letter-spacing: 0.06em;
+  }
+  .phone-brand .seal { color: var(--brass); font-size: 16px; }
+  .phone-product {
+    text-align: center;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--text); letter-spacing: 0.06em;
+    margin-bottom: 22px;
+  }
+  .phone-callout {
+    text-align: center;
+    font-family: "IBM Plex Serif", serif;
+    font-style: italic;
+    font-size: 16px; color: var(--brass);
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+  .phone-card {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px; margin-bottom: 12px;
+  }
+  .phone-row {
+    display: flex; justify-content: space-between;
+    margin-bottom: 10px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+  }
+  .phone-row:last-child { margin-bottom: 0; }
+  .phone-row .k { color: var(--text-3); text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px; }
+  .phone-row .v { color: var(--text-mono); font-weight: 500; }
+  .phone-row .v.brass { color: var(--brass); }
+  .phone-actions { display: flex; gap: 10px; margin-top: auto; }
+  .phone-btn {
+    flex: 1; padding: 16px 12px;
+    border: none; border-radius: 14px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 16px; font-weight: 700;
+    letter-spacing: 0.04em; cursor: pointer;
+  }
+  .phone-btn.deny { background: rgba(244, 113, 116, 0.15); color: var(--coral); }
+  .phone-btn.approve {
+    background: linear-gradient(180deg, #6ee7b7 0%, #34d399 100%);
+    color: #0a3a25;
+    box-shadow: 0 4px 16px rgba(110, 231, 183, 0.3);
+  }
+
+  .demo-tray {
+    position: fixed; bottom: 50px; right: 20px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    padding: 14px;
+    z-index: 50;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+    width: 240px;
+  }
+  .demo-tray .head {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.18em; color: var(--brass);
+    margin-bottom: 10px;
+  }
+  .demo-tray button {
+    width: 100%; margin-bottom: 6px;
+    padding: 9px 12px;
+    background: var(--bg-raised);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+  }
+  .demo-tray button:hover { border-color: var(--brass); color: var(--brass); }
+  .demo-tray button.brass {
+    background: transparent;
+    border-color: var(--brass);
+    color: var(--brass);
+  }
+  .demo-tray .hint {
+    font-size: 11px; color: var(--text-3);
+    margin-top: 8px; line-height: 1.4;
+    font-style: italic;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="console">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-seal">◆</span>
+      <span class="brand-product">MahaGuardian</span>
+      <span class="brand-divider">/</span>
+      <span class="brand-context">Edge — Console</span>
+    </div>
+    <div class="topbar-mid">
+      <span class="pill"><span class="dot live"></span> EDGE ONLINE</span>
+      <span class="pill"><span class="dot"></span> WITNESS SYNCED</span>
+      <span class="pill">MahaGuardian of: <strong style="color: var(--brass); margin-left: 6px;">Electric Mobility Co. X</strong></span>
+    </div>
+    <div></div>
+  </header>
+
+  <div class="panels">
+
+    <aside class="panel">
+      <div class="panel-head">
+        <span class="panel-title">External Advisors' Agents</span>
+        <span class="panel-aux">requesting · 3</span>
+      </div>
+      <div class="panel-body">
+
+        <div class="section-head">Each agent sits in its own advisor's MahaGuardian</div>
+        <div class="agent-card" id="agent-fund">
+          <span class="agent-dot"></span>
+          <div>
+            <div class="agent-name">Fundraising Advisor</div>
+            <div class="agent-meta">advising Company X</div>
+          </div>
+        </div>
+        <div class="agent-card" id="agent-legal">
+          <span class="agent-dot"></span>
+          <div>
+            <div class="agent-name">Legal Advisor</div>
+            <div class="agent-meta">advising Company X</div>
+          </div>
+        </div>
+        <div class="agent-card" id="agent-adv">
+          <span class="agent-dot"></span>
+          <div>
+            <div class="agent-name">Advisor's Agent</div>
+            <div class="agent-meta">serving other client</div>
+          </div>
+        </div>
+
+        <div class="section-head" style="margin-top: 22px;">Company X's Data</div>
+        <div class="data-row">
+          <span class="name">Unit Economics</span>
+          <span class="class">FUND ONLY</span>
+        </div>
+        <div class="data-row">
+          <span class="name">Legal Structure</span>
+          <span class="class">FUND + LEGAL</span>
+        </div>
+        <div class="data-row">
+          <span class="name">Partner Pipeline</span>
+          <span class="class">RESTRICTED</span>
+        </div>
+
+      </div>
+    </aside>
+
+    <main class="panel conv">
+      <div class="panel-head">
+        <span class="panel-title">Live · Guardian Decisions</span>
+        <span class="panel-aux" id="conv-aux">awaiting requests…</span>
+      </div>
+      <div class="panel-body" id="conv-scroll">
+        <div class="conv-feed" id="conv"></div>
+      </div>
+      <div class="input-bar">
+        <div class="input-wrap" id="input-wrap">
+          <input type="text" id="user-input"
+                 placeholder="Operator console — Edge governs all agent requests…"
+                 autocomplete="off" />
+          <button id="btn-send">SEND ↑</button>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <footer class="statusbar">
+    <div class="group">
+      <span><span class="v">edge://laptop-alexa-mit</span></span>
+      <span><span class="v brass">witness ▸ merkle://wit.mahaguardian.local</span></span>
+    </div>
+    <div class="group">
+      <span><span class="v">v0.4.1-edge</span></span>
+      <span><span class="v" id="clock">14:22:08 UTC</span></span>
+    </div>
+  </footer>
+</div>
+
+<!-- AUTHENTICATOR -->
+<div class="overlay" id="modal">
+  <div class="phone">
+    <div class="phone-brand"><span class="seal">◆</span> MahaGuardian</div>
+    <div class="phone-product">AUTHENTICATOR</div>
+    <div class="phone-callout">Sensitive access requested.<br/>Approve?</div>
+    <div class="phone-card">
+      <div class="phone-row"><span class="k">requester</span><span class="v">Legal Advisor</span></div>
+      <div class="phone-row"><span class="k">data</span><span class="v">Partner Pipeline</span></div>
+      <div class="phone-row"><span class="k">data owner</span><span class="v">Company X</span></div>
+      <div class="phone-row"><span class="k">access</span><span class="v">RESTRICTED</span></div>
+      <div class="phone-row"><span class="k">expires</span><span class="v brass">in 5 min</span></div>
+    </div>
+    <div class="phone-actions">
+      <button class="phone-btn deny" id="phone-deny">Deny</button>
+      <button class="phone-btn approve" id="phone-approve">Approve</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-tray">
+  <div class="head">Demo</div>
+  <button id="btn-play" class="brass">▶ Play 20-sec sequence</button>
+  <button id="btn-reset">↺ Reset</button>
+  <div class="hint">F11 fullscreen · ` to hide tray</div>
+</div>
+
+<script>
+  const conv = document.getElementById('conv');
+  const convScroll = document.getElementById('conv-scroll');
+  const convAux = document.getElementById('conv-aux');
+  const userInput = document.getElementById('user-input');
+  const inputWrap = document.getElementById('input-wrap');
+
+  const now = () => new Date().toTimeString().slice(0, 8);
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+
+  setInterval(() => { document.getElementById('clock').textContent = now() + ' UTC'; }, 1000);
+
+  function autoScroll() { convScroll.scrollTop = convScroll.scrollHeight; }
+
+  const agents = {
+    fund:     { name: 'Fundraising Advisor',                  cls: 'fund' },
+    legal:    { name: 'Legal Advisor',                        cls: 'legal' },
+    adv:      { name: "Advisor's Agent (other client)",       cls: 'adv' },
+    guardian: { name: 'MahaGuardian Edge — Company X',        cls: 'guardian' },
+  };
+
+  function flashCard(agentKey) {
+    const card = document.getElementById('agent-' + agentKey);
+    if (!card) return;
+    card.classList.remove('flash');
+    void card.offsetWidth;
+    card.classList.add('flash');
+    setTimeout(() => card.classList.remove('flash'), 800);
+  }
+
+  function setAgentState(agentKey, state) {
+    const card = document.getElementById('agent-' + agentKey);
+    if (!card) return;
+    card.classList.remove('active', 'allowed', 'denied', 'elevated');
+    if (state) card.classList.add(state);
+  }
+
+  function addMsg(agentKey, body, badge, isRequest) {
+    const a = agents[agentKey];
+    const div = document.createElement('div');
+    let badgeHtml = '';
+    let bgCls = '';
+    if (badge === 'allow')   { badgeHtml = '<div class="badge allow"><span class="icon">✓</span> ALLOW</div>'; bgCls = 'allowed'; }
+    if (badge === 'deny')    { badgeHtml = '<div class="badge deny"><span class="icon">✗</span> DENY</div>'; bgCls = 'denied'; }
+    if (badge === 'elevate') { badgeHtml = '<div class="badge elevate"><span class="icon">↑</span> ELEVATE</div>'; bgCls = 'elevated'; }
+    const reqCls = isRequest ? 'request-flash' : '';
+    div.className = `msg ${a.cls} ${bgCls} ${reqCls}`;
+    div.innerHTML = `
+      <div class="msg-head">
+        <span class="msg-agent">${a.name}</span>
+        <span class="msg-time">${now()}</span>
+      </div>
+      <div class="msg-body">${body}</div>
+      ${badgeHtml}`;
+    conv.appendChild(div);
+    requestAnimationFrame(autoScroll);
+    setTimeout(autoScroll, 50);
+    setTimeout(autoScroll, 320);
+    if (agentKey !== 'guardian') flashCard(agentKey);
+    // remove the request-flash highlight after a beat so the
+    // Guardian decision becomes the visual focal point
+    if (isRequest) {
+      setTimeout(() => div.classList.remove('request-flash'), 1400);
+    }
+  }
+
+  function showAuth() { document.getElementById('modal').classList.add('show'); }
+  function hideAuth() { document.getElementById('modal').classList.remove('show'); }
+
+  document.getElementById('phone-deny').addEventListener('click', () => {
+    hideAuth();
+    addMsg('guardian',
+      '<strong>Operator denied.</strong> Legal Advisor request rejected.',
+      'deny');
+    setAgentState('legal', 'denied');
+  });
+  document.getElementById('phone-approve').addEventListener('click', () => {
+    hideAuth();
+    addMsg('guardian',
+      '<strong>Operator approved.</strong> Capability issued for Legal Advisor — <em>partner_pipeline</em>, expires 5 min. Witnessed.',
+      'allow');
+    setAgentState('legal', 'allowed');
+  });
+
+  // ========= 20-SECOND PLAY SEQUENCE ======================
+  document.getElementById('btn-play').addEventListener('click', async () => {
+    document.getElementById('btn-reset').click();
+    await wait(800);
+
+    // 0:00 → 0:05  ALLOW — Fundraising Advisor → Unit Economics
+    addMsg('fund',
+      'Requesting <strong>Unit Economics</strong> for Company X.',
+      null, true);
+    await wait(1300);
+    addMsg('guardian',
+      'Fundraising Advisor authorized for Unit Economics in Company X\'s policy.',
+      'allow');
+    setAgentState('fund', 'allowed');
+
+    // 0:05 → 0:10  DENY — Advisor's Agent (other client) → Unit Economics
+    await wait(2200);
+    addMsg('adv',
+      'Requesting <strong>Unit Economics</strong> — I know Company X is your client.',
+      null, true);
+    await wait(1300);
+    addMsg('guardian',
+      'Agent serves another client. Not enrolled in Company X\'s policy. No data leaves.',
+      'deny');
+    setAgentState('adv', 'denied');
+
+    // 0:10 → 0:16  ELEVATE — Legal Advisor → Partner Pipeline
+    await wait(2400);
+    addMsg('legal',
+      'Requesting <strong>Partner Pipeline</strong>.',
+      null, true);
+    await wait(1300);
+    addMsg('guardian',
+      'Partner Pipeline is <strong>RESTRICTED</strong>. Operator approval required.',
+      'elevate');
+    setAgentState('legal', 'elevated');
+
+    await wait(800);
+    showAuth();
+    await wait(3500);
+    if (document.getElementById('modal').classList.contains('show')) {
+      document.getElementById('phone-approve').click();
+    }
+
+    // 0:16 → 0:20  Witness summary
+    await wait(2200);
+    addMsg('guardian',
+      '<strong>3 decisions logged.</strong> Witness chain finalized — ALLOW · DENY · ELEVATE+APPROVE. Tamper-evident.',
+      null);
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    conv.innerHTML = '';
+    ['fund', 'legal', 'adv'].forEach(a => setAgentState(a, null));
+    convAux.textContent = 'awaiting requests…';
+    showBoot();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === '`') {
+      const tray = document.querySelector('.demo-tray');
+      tray.style.display = (tray.style.display === 'none') ? 'block' : 'none';
+    }
+    if (e.key === 'Escape') hideAuth();
+  });
+
+  function showBoot() {
+    addMsg('guardian',
+      'Company X\'s MahaGuardian online. 3 advisors\' agents enrolled. Awaiting requests.',
+      null);
+  }
+
+  showBoot();
+</script>
+</body>
+</html>

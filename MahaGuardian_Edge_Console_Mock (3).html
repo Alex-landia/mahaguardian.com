@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MahaGuardian Edge — Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0d10;
+    --bg-raised: #15171c;
+    --bg-panel: #111317;
+    --bg-deep: #0a0b0e;
+    --border: #22252c;
+    --border-strong: #2e3239;
+    --text: #e8e6e1;
+    --text-2: #9ea2a9;
+    --text-3: #5d6068;
+    --text-mono: #d4d2cd;
+    --brass: #c89b5c;
+    --brass-glow: rgba(200, 155, 92, 0.15);
+    --mint: #6ee7b7;
+    --mint-glow: rgba(110, 231, 183, 0.18);
+    --amber: #f5b556;
+    --amber-glow: rgba(245, 181, 86, 0.2);
+    --coral: #f47174;
+    --coral-glow: rgba(244, 113, 116, 0.18);
+    --ice: #93c5fd;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: "IBM Plex Sans", -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(200, 155, 92, 0.04), transparent 50%),
+      radial-gradient(circle at 80% 90%, rgba(110, 231, 183, 0.03), transparent 50%);
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.022 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.6;
+  }
+
+  .console {
+    display: grid;
+    grid-template-rows: 52px 1fr 28px;
+    height: 100vh;
+    position: relative;
+    z-index: 2;
+  }
+
+  .topbar {
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 18px;
+  }
+  .brand {
+    display: flex; align-items: baseline; gap: 10px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px; font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .brand-seal { color: var(--brass); font-size: 16px; line-height: 1; transform: translateY(2px); }
+  .brand-product { color: var(--text); font-weight: 600; }
+  .brand-divider { color: var(--text-3); }
+  .brand-context { color: var(--text-2); font-weight: 400; }
+
+  .topbar-mid {
+    display: flex; gap: 22px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px; color: var(--text-2);
+  }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 9px; border-radius: 2px;
+    background: var(--bg-raised); border: 1px solid var(--border);
+    letter-spacing: 0.02em;
+  }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 0 2px var(--mint-glow);
+  }
+  .dot.live { animation: livepulse 1.6s ease-in-out infinite; }
+  @keyframes livepulse {
+    0%, 100% { box-shadow: 0 0 0 2px var(--mint-glow); }
+    50% { box-shadow: 0 0 0 5px var(--mint-glow); }
+  }
+
+  .controls { display: flex; gap: 6px; }
+  button {
+    background: var(--bg-raised);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    padding: 6px 12px; border-radius: 2px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 120ms ease;
+  }
+  button:hover { background: var(--border); border-color: var(--brass); color: var(--brass); }
+  button.brass { background: transparent; border-color: var(--brass); color: var(--brass); }
+  button.brass:hover { background: var(--brass-glow); }
+  button.coral { color: var(--coral); border-color: rgba(244, 113, 116, 0.3); }
+  button.coral:hover { background: var(--coral-glow); border-color: var(--coral); }
+
+  .panels {
+    display: grid;
+    grid-template-columns: 268px 1fr 340px;
+    overflow: hidden;
+  }
+  .panel {
+    overflow-y: auto;
+    border-right: 1px solid var(--border);
+    background: var(--bg-panel);
+  }
+  .panel:last-child { border-right: none; background: var(--bg-deep); }
+  .panel.conv {
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .panel.conv .panel-head { flex-shrink: 0; }
+  .panel.conv .panel-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+  }
+  .panel.conv .input-bar { flex-shrink: 0; }
+
+  .panel-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0;
+    background: inherit;
+    z-index: 5;
+  }
+  .panel-title {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px; font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-3);
+  }
+  .panel-aux {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px; color: var(--text-3);
+    letter-spacing: 0.05em;
+  }
+  .panel-body { padding: 12px 14px; }
+
+  .fleet-node {
+    display: grid;
+    grid-template-columns: 14px 10px 1fr auto;
+    gap: 9px;
+    align-items: center;
+    padding: 7px 8px;
+    margin-bottom: 1px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 100ms;
+    border-left: 2px solid transparent;
+  }
+  .fleet-node:hover { background: var(--bg-raised); }
+  .fleet-node.selected { background: var(--bg-raised); border-left-color: var(--brass); }
+  .fleet-node .agent-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--text-3);
+    transition: all 200ms;
+  }
+  .fleet-node.busy .agent-dot {
+    background: var(--mint);
+    box-shadow: 0 0 8px var(--mint);
+    animation: livepulse 1.4s ease-in-out infinite;
+  }
+  .fleet-node.paused .agent-dot { background: var(--amber); box-shadow: 0 0 6px var(--amber-glow); }
+  .fleet-node.error .agent-dot { background: var(--coral); box-shadow: 0 0 6px var(--coral-glow); }
+  .fleet-node.speaking .agent-dot {
+    background: var(--brass) !important;
+    box-shadow: 0 0 0 3px var(--brass-glow), 0 0 18px rgba(200, 155, 92, 0.85) !important;
+    animation: speakflash 1.5s ease-out !important;
+  }
+  @keyframes speakflash {
+    0%   { transform: scale(2.4); }
+    35%  { transform: scale(1.5); }
+    100% { transform: scale(1); }
+  }
+
+  .agent-name { font-size: 13px; color: var(--text); font-weight: 500; }
+  .fleet-node.idle .agent-name { color: var(--text-2); }
+  .agent-meta {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px; color: var(--text-3);
+    letter-spacing: 0.04em;
+  }
+
+  .section-divider {
+    margin: 18px 0 10px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px; color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+
+  .stats { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+  .stat {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 9px 11px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .stat-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--text-3);
+  }
+  .stat-value {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px; font-weight: 500;
+    color: var(--text); letter-spacing: 0.02em;
+  }
+  .stat-value.brass { color: var(--brass); }
+  .stat-value.mint { color: var(--mint); }
+  .stat-value.amber { color: var(--amber); }
+  .stat-value .sub { color: var(--text-3); font-size: 11px; margin-left: 3px; }
+
+  .conv-feed { display: flex; flex-direction: column; gap: 8px; }
+  .msg {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--text-3);
+    border-radius: 0 2px 2px 0;
+    padding: 10px 13px;
+    animation: fadeUp 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .msg.opus { border-left-color: var(--ice); }
+  .msg.gemini { border-left-color: #c4b5fd; }
+  .msg.codex { border-left-color: var(--mint); }
+  .msg.haiku { border-left-color: var(--brass); }
+  .msg.orch { border-left-color: var(--text); border-left-width: 3px; }
+  .msg.user {
+    border-left-color: var(--brass);
+    border-left-width: 3px;
+    background: rgba(200, 155, 92, 0.06);
+  }
+  .msg.alert { border-left-color: var(--amber); background: rgba(245, 181, 86, 0.04); }
+  .msg.error { border-left-color: var(--coral); background: rgba(244, 113, 116, 0.04); }
+
+  .msg-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .msg-agent {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600; font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+  .msg-agent .role-tag {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9.5px;
+    color: var(--text-3);
+    margin-left: 8px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .msg.opus .msg-agent { color: var(--ice); }
+  .msg.gemini .msg-agent { color: #c4b5fd; }
+  .msg.codex .msg-agent { color: var(--mint); }
+  .msg.haiku .msg-agent { color: var(--brass); }
+  .msg.orch .msg-agent { color: var(--text); }
+  .msg.user .msg-agent { color: var(--brass); }
+  .msg.alert .msg-agent { color: var(--amber); }
+  .msg.error .msg-agent { color: var(--coral); }
+
+  .msg-time {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px; color: var(--text-3);
+    letter-spacing: 0.04em;
+  }
+  .msg-body { font-size: 13px; color: var(--text); line-height: 1.55; }
+  .msg-meta {
+    display: flex; gap: 14px;
+    margin-top: 6px; padding-top: 6px;
+    border-top: 1px dotted var(--border);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px; color: var(--text-3);
+    letter-spacing: 0.04em;
+  }
+  .msg-meta .ok { color: var(--mint); }
+  .msg-meta .label { color: var(--text-3); }
+  .msg-meta .val { color: var(--text-mono); }
+
+  .input-bar {
+    border-top: 1px solid var(--border);
+    background: var(--bg-deep);
+    padding: 12px 14px;
+  }
+  .input-wrap {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    padding: 4px 4px 4px 12px;
+    transition: border-color 150ms;
+  }
+  .input-wrap:focus-within { border-color: var(--brass); }
+  .input-wrap.flash { border-color: var(--brass); box-shadow: 0 0 0 2px var(--brass-glow); }
+  .input-wrap input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 13px;
+    outline: none;
+    padding: 8px 0;
+    letter-spacing: 0.01em;
+  }
+  .input-wrap input::placeholder { color: var(--text-3); font-style: italic; }
+  .input-wrap button {
+    background: var(--brass);
+    color: var(--bg-deep);
+    border: none;
+    padding: 0 14px;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 150ms;
+  }
+  .input-wrap button:hover { background: #d4a76a; }
+  .input-hint {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    color: var(--text-3);
+    margin-top: 6px;
+    letter-spacing: 0.04em;
+  }
+  .input-hint .accent { color: var(--brass); }
+
+  .ins-section {
+    margin-bottom: 18px; padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ins-section:last-child { border-bottom: none; }
+  .ins-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.18em; color: var(--text-3);
+    margin-bottom: 6px;
+  }
+  .ins-value {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px; color: var(--text-mono);
+    word-break: break-all; line-height: 1.5;
+  }
+  .ins-value.large {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 16px; font-weight: 600;
+    color: var(--text); letter-spacing: -0.01em;
+  }
+  .ins-value .accent { color: var(--brass); }
+  .ins-value.cap-id {
+    background: var(--bg-raised);
+    padding: 8px 10px;
+    border-radius: 2px;
+    border-left: 2px solid var(--brass);
+    font-size: 11px;
+  }
+  .ins-row {
+    display: flex; justify-content: space-between;
+    margin-bottom: 4px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+  }
+  .ins-row .k { color: var(--text-3); }
+  .ins-row .v { color: var(--text-mono); }
+
+  .witness-log { display: flex; flex-direction: column; gap: 4px; }
+  .wit-entry {
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    gap: 8px; align-items: center;
+    padding: 6px 9px;
+    background: var(--bg-raised);
+    border-radius: 2px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px; color: var(--text-mono);
+  }
+  .wit-entry .check { color: var(--mint); font-weight: 600; }
+  .wit-entry .placeholder { color: var(--text-3); font-style: italic; }
+  .wit-entry .t { color: var(--text-3); font-size: 10px; }
+
+  .ins-actions { display: flex; gap: 6px; margin-top: 8px; }
+  .ins-actions button { flex: 1; }
+
+  .statusbar {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 18px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px; color: var(--text-3);
+    letter-spacing: 0.06em;
+  }
+  .statusbar .group { display: flex; gap: 18px; }
+  .statusbar .k { color: var(--text-3); }
+  .statusbar .v { color: var(--text-2); }
+  .statusbar .v.brass { color: var(--brass); }
+
+  .overlay {
+    position: fixed; inset: 0;
+    background: rgba(8, 9, 11, 0.78);
+    backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100;
+  }
+  .overlay.show { display: flex; animation: fadeUp 200ms ease-out; }
+  .phone {
+    width: 296px; height: 580px;
+    background: linear-gradient(180deg, #1a1c20 0%, #131519 100%);
+    border-radius: 38px;
+    border: 1px solid #2a2d34;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 0 8px #07080a, 0 0 0 9px #1a1c20;
+    padding: 26px 22px 22px;
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  .phone::before {
+    content: '';
+    position: absolute;
+    top: 14px; left: 50%;
+    transform: translateX(-50%);
+    width: 90px; height: 22px;
+    background: #07080a;
+    border-radius: 0 0 14px 14px;
+  }
+  .phone-brand {
+    display: flex; align-items: baseline; justify-content: center; gap: 8px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px; color: var(--text-2);
+    margin-top: 22px; letter-spacing: 0.06em;
+  }
+  .phone-brand .seal { color: var(--brass); font-size: 14px; }
+  .phone-product {
+    text-align: center;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 13px; font-weight: 600;
+    color: var(--text); letter-spacing: 0.04em;
+    margin-bottom: 22px;
+  }
+  .phone-callout {
+    text-align: center;
+    font-family: "IBM Plex Serif", serif;
+    font-style: italic;
+    font-size: 13px; color: var(--brass);
+    margin-bottom: 18px;
+  }
+  .phone-card {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px; margin-bottom: 10px;
+  }
+  .phone-row {
+    display: flex; justify-content: space-between;
+    margin-bottom: 8px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+  }
+  .phone-row:last-child { margin-bottom: 0; }
+  .phone-row .k { color: var(--text-3); text-transform: uppercase; letter-spacing: 0.1em; }
+  .phone-row .v { color: var(--text-mono); }
+  .phone-row .v.brass { color: var(--brass); }
+  .phone-actions { display: flex; gap: 8px; margin-top: auto; }
+  .phone-btn {
+    flex: 1; padding: 14px 12px;
+    border: none; border-radius: 12px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.02em; cursor: pointer;
+    transition: transform 120ms;
+  }
+  .phone-btn:active { transform: scale(0.97); }
+  .phone-btn.deny { background: rgba(244, 113, 116, 0.12); color: var(--coral); }
+  .phone-btn.approve {
+    background: linear-gradient(180deg, #6ee7b7 0%, #34d399 100%);
+    color: #0a3a25;
+    box-shadow: 0 4px 14px rgba(110, 231, 183, 0.3);
+  }
+  .phone-fingerprint {
+    text-align: center; margin-top: 10px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px; color: var(--text-3);
+    letter-spacing: 0.06em;
+  }
+
+  .demo-tray {
+    position: fixed; bottom: 44px; right: 16px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    padding: 10px 12px 12px;
+    z-index: 50;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+    width: 230px;
+  }
+  .demo-tray .head {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.18em; color: var(--brass);
+    margin-bottom: 8px;
+  }
+  .demo-tray button {
+    width: 100%; margin-bottom: 5px;
+    text-align: left;
+    padding: 7px 10px;
+    font-size: 11px;
+  }
+  .demo-tray button:last-child { margin-bottom: 0; }
+  .demo-tray .hint {
+    font-size: 10px; color: var(--text-3);
+    margin-top: 6px; line-height: 1.4;
+    font-style: italic;
+  }
+
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--brass); }
+</style>
+</head>
+<body>
+<div class="console">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-seal">◆</span>
+      <span class="brand-product">MahaGuardian</span>
+      <span class="brand-divider">/</span>
+      <span class="brand-context">Edge — Console</span>
+    </div>
+    <div class="topbar-mid">
+      <span class="pill"><span class="dot live"></span> EDGE CONNECTED</span>
+      <span class="pill"><span class="dot"></span> WITNESS SYNCED</span>
+      <span class="pill" style="font-family: 'IBM Plex Mono', monospace;">edge://laptop-alexa-mit · root</span>
+    </div>
+    <div class="controls">
+      <button id="btn-pause">⏸ Pause Fleet</button>
+    </div>
+  </header>
+
+  <div class="panels">
+
+    <aside class="panel">
+      <div class="panel-head">
+        <span class="panel-title">Fleet</span>
+        <span class="panel-aux">6 agents · 1 root</span>
+      </div>
+      <div class="panel-body">
+        <div class="fleet-node selected idle" data-agent="orchestrator">
+          <span></span>
+          <span class="agent-dot"></span>
+          <span class="agent-name">Orchestrator</span>
+          <span class="agent-meta">root</span>
+        </div>
+        <div class="fleet-node idle" data-agent="opus">
+          <span style="border-left: 1px solid var(--border-strong); height: 100%;"></span>
+          <span class="agent-dot"></span>
+          <span class="agent-name">Reviewer 1</span>
+          <span class="agent-meta">Opus 4.7</span>
+        </div>
+        <div class="fleet-node idle" data-agent="gemini">
+          <span style="border-left: 1px solid var(--border-strong); height: 100%;"></span>
+          <span class="agent-dot"></span>
+          <span class="agent-name">Reviewer 2</span>
+          <span class="agent-meta">Gemini 3.1 Pro</span>
+        </div>
+        <div class="fleet-node idle" data-agent="codex">
+          <span style="border-left: 1px solid var(--border-strong); height: 100%;"></span>
+          <span class="agent-dot"></span>
+          <span class="agent-name">Reviewer 3</span>
+          <span class="agent-meta">GPT-5.5</span>
+        </div>
+        <div class="fleet-node idle" data-agent="haiku">
+          <span style="border-left: 1px solid var(--border-strong); height: 100%;"></span>
+          <span class="agent-dot"></span>
+          <span class="agent-name">Comparator</span>
+          <span class="agent-meta">Haiku 4.5</span>
+        </div>
+        <div class="fleet-node idle" data-agent="claude-code">
+          <span style="border-left: 1px solid var(--border-strong); height: 100%;"></span>
+          <span class="agent-dot"></span>
+          <span class="agent-name">Builder</span>
+          <span class="agent-meta">Claude Code</span>
+        </div>
+
+        <div class="section-divider">Telemetry</div>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-label">Session cost</span>
+            <span class="stat-value brass" id="stat-cost">$0.00</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Capability batch</span>
+            <span class="stat-value mint" id="stat-cap">1000<span class="sub">/ 1000</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Throughput</span>
+            <span class="stat-value" id="stat-rate">0<span class="sub">calls/min</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Witness lag</span>
+            <span class="stat-value mint" id="stat-witness">0<span class="sub">ms</span></span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="panel conv">
+      <div class="panel-head">
+        <span class="panel-title">Orchestrator · Coding Stage</span>
+        <span class="panel-aux" id="conv-aux">awaiting operator…</span>
+      </div>
+      <div class="panel-body" id="conv-scroll">
+        <div class="conv-feed" id="conv"></div>
+      </div>
+      <div class="input-bar">
+        <div class="input-wrap" id="input-wrap">
+          <input type="text" id="user-input"
+                 placeholder="Type a request to the Orchestrator…"
+                 autocomplete="off" />
+          <button id="btn-send">SEND ↑</button>
+        </div>
+        <div class="input-hint">
+          <span class="accent">◆</span> Operator action signed by Edge · capability issued per request · witness log appends on send
+        </div>
+      </div>
+    </main>
+
+    <aside class="panel">
+      <div class="panel-head">
+        <span class="panel-title">Inspector</span>
+        <span class="panel-aux" id="ins-aux">live</span>
+      </div>
+      <div class="panel-body">
+        <div class="ins-section">
+          <div class="ins-label">Selected agent</div>
+          <div class="ins-value large" id="ins-agent">Orchestrator <span class="accent">· root</span></div>
+        </div>
+
+        <div class="ins-section">
+          <div class="ins-label">Active capability</div>
+          <div class="ins-value cap-id" id="ins-cap">(none — awaiting operator)</div>
+          <div style="height: 8px;"></div>
+          <div class="ins-row"><span class="k">scope</span><span class="v" id="ins-scope">—</span></div>
+          <div class="ins-row"><span class="k">issuer</span><span class="v">edge://laptop-alexa-mit</span></div>
+          <div class="ins-row"><span class="k">issued</span><span class="v" id="ins-issued">—</span></div>
+          <div class="ins-row"><span class="k">expires</span><span class="v" id="ins-exp">—</span></div>
+          <div class="ins-row"><span class="k">remaining</span><span class="v" id="ins-rem">—</span></div>
+        </div>
+
+        <div class="ins-section">
+          <div class="ins-label">Witness log · last 5</div>
+          <div class="witness-log" id="witness-log">
+            <div class="wit-entry"><span class="check">·</span><span class="placeholder">no entries yet</span><span class="t"></span></div>
+          </div>
+        </div>
+
+        <div class="ins-section">
+          <div class="ins-label">Operator actions</div>
+          <div class="ins-actions">
+            <button id="btn-revoke" class="coral">Revoke</button>
+            <button id="btn-extend" class="brass">Request extension</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="statusbar">
+    <div class="group">
+      <span><span class="k">edge</span> <span class="v">laptop-alexa-mit</span></span>
+      <span><span class="k">core</span> <span class="v">unreachable · offline mode</span></span>
+      <span><span class="k">witness</span> <span class="v brass">merkle://wit.mahaguardian.local</span></span>
+    </div>
+    <div class="group">
+      <span><span class="k">build</span> <span class="v">v0.4.1-edge</span></span>
+      <span><span class="k">utc</span> <span class="v" id="clock">14:22:08</span></span>
+    </div>
+  </footer>
+</div>
+
+<div class="overlay" id="modal">
+  <div class="phone">
+    <div class="phone-brand"><span class="seal">◆</span> MahaGuardian</div>
+    <div class="phone-product">AUTHENTICATOR</div>
+    <div class="phone-callout">A capability extension is requested.</div>
+    <div class="phone-card">
+      <div class="phone-row"><span class="k">requester</span><span class="v">Orchestrator</span></div>
+      <div class="phone-row"><span class="k">stage</span><span class="v">coding · round 2/8</span></div>
+      <div class="phone-row"><span class="k">scope</span><span class="v">spec_review</span></div>
+      <div class="phone-row"><span class="k">batch</span><span class="v">+1000 calls · 30m</span></div>
+      <div class="phone-row"><span class="k">est cost</span><span class="v brass">$3.20 — $4.80</span></div>
+    </div>
+    <div class="phone-card">
+      <div class="phone-row"><span class="k">witness</span><span class="v" style="font-size:10px;">merkle://wit.mahaguardian.local</span></div>
+      <div class="phone-row"><span class="k">edge sig</span><span class="v" style="font-size:10px;">3a:7f:e9:c1:…:0b</span></div>
+    </div>
+    <div class="phone-actions">
+      <button class="phone-btn deny" id="phone-deny">Deny</button>
+      <button class="phone-btn approve" id="phone-approve">Approve</button>
+    </div>
+    <div class="phone-fingerprint">↑ HOLD TO CONFIRM</div>
+  </div>
+</div>
+
+<div class="demo-tray">
+  <div class="head">Demo</div>
+  <button id="btn-play" class="brass">▶ Play 45-sec sequence</button>
+  <button id="btn-trigger-deny">Trigger denial flow</button>
+  <button id="btn-trigger-auth">Open authenticator</button>
+  <button id="btn-reset">↺ Reset</button>
+  <div class="hint">Tip: F11 fullscreen, then screen-record. Hide this tray with the <strong>`</strong> key.</div>
+</div>
+
+<script>
+  const state = {
+    cost: 0, cap: 1000, capMax: 1000,
+    paused: false, rate: 0,
+    selected: 'orchestrator',
+    witnessLag: 0,
+    activated: false,
+  };
+
+  const conv = document.getElementById('conv');
+  const convScroll = document.getElementById('conv-scroll');
+  const witnessLog = document.getElementById('witness-log');
+  const convAux = document.getElementById('conv-aux');
+  const userInput = document.getElementById('user-input');
+  const sendBtn = document.getElementById('btn-send');
+  const inputWrap = document.getElementById('input-wrap');
+
+  const now = () => new Date().toTimeString().slice(0, 8);
+  const hex = n => Array.from({length:n}, () => '0123456789abcdef'[Math.floor(Math.random()*16)]).join('');
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+
+  const agents = {
+    orchestrator: { name: 'Orchestrator', cls: 'orch',   role: 'ROOT' },
+    opus:         { name: 'Reviewer 1',   cls: 'opus',   role: 'OPUS 4.7' },
+    gemini:       { name: 'Reviewer 2',   cls: 'gemini', role: 'GEMINI 3.1' },
+    codex:        { name: 'Reviewer 3',   cls: 'codex',  role: 'GPT-5.5' },
+    haiku:        { name: 'Comparator',   cls: 'haiku',  role: 'HAIKU 4.5' },
+    'claude-code':{ name: 'Builder',      cls: 'orch',   role: 'CLAUDE CODE' },
+    user:         { name: 'Operator',     cls: 'user',   role: 'YOU' },
+  };
+
+  function autoScroll() {
+    convScroll.scrollTop = convScroll.scrollHeight;
+  }
+
+  function flashSpeaker(agentId) {
+    const node = document.querySelector(`.fleet-node[data-agent="${agentId}"]`);
+    if (!node) return;
+    node.classList.remove('speaking');
+    void node.offsetWidth;
+    node.classList.add('speaking');
+    setTimeout(() => node.classList.remove('speaking'), 1500);
+  }
+
+  function flashInputBar() {
+    inputWrap.classList.add('flash');
+    setTimeout(() => inputWrap.classList.remove('flash'), 800);
+  }
+
+  function addMsg(agent, body, type='', meta=true) {
+    const a = agents[agent] || { name: agent, cls: '', role: '' };
+    const cls = type ? type : a.cls;
+    const div = document.createElement('div');
+    div.className = `msg ${cls}`;
+    const metaHtml = meta ? `
+      <div class="msg-meta">
+        <span><span class="label">cap</span> <span class="val">cap_${hex(8)}</span></span>
+        <span><span class="label">wit</span> <span class="val">wit_${hex(8)}</span> <span class="ok">✓</span></span>
+      </div>` : '';
+    div.innerHTML = `
+      <div class="msg-head">
+        <span class="msg-agent">${a.name}<span class="role-tag">${a.role}</span></span>
+        <span class="msg-time">${now()}</span>
+      </div>
+      <div class="msg-body">${body}</div>
+      ${metaHtml}`;
+    conv.appendChild(div);
+    requestAnimationFrame(autoScroll);
+    setTimeout(autoScroll, 50);
+    setTimeout(autoScroll, 320);
+
+    if (agent !== 'user' && agents[agent]) flashSpeaker(agent);
+    if (agent === 'user') flashInputBar();
+
+    if (type !== 'error' && meta) {
+      const placeholder = witnessLog.querySelector('.placeholder');
+      if (placeholder) witnessLog.innerHTML = '';
+      const e = document.createElement('div');
+      e.className = 'wit-entry';
+      e.innerHTML = `<span class="check">✓</span><span>wit_${hex(8)}</span><span class="t">${now()}</span>`;
+      witnessLog.insertBefore(e, witnessLog.firstChild);
+      while (witnessLog.children.length > 5) witnessLog.removeChild(witnessLog.lastChild);
+    }
+  }
+
+  function setAgent(id, cls) {
+    const node = document.querySelector(`.fleet-node[data-agent="${id}"]`);
+    if (!node) return;
+    node.classList.remove('idle', 'busy', 'paused', 'error');
+    if (cls) node.classList.add(cls);
+  }
+
+  function updateStats() {
+    document.getElementById('stat-cost').textContent = '$' + state.cost.toFixed(2);
+    document.getElementById('stat-cap').innerHTML =
+      `${state.cap}<span class="sub">/ ${state.capMax}</span>`;
+    const capEl = document.getElementById('stat-cap');
+    capEl.classList.remove('mint', 'amber');
+    capEl.classList.add(state.cap < 200 ? 'amber' : 'mint');
+    document.getElementById('stat-rate').innerHTML = `${state.rate}<span class="sub">calls/min</span>`;
+    document.getElementById('stat-witness').innerHTML = `${state.witnessLag}<span class="sub">ms</span>`;
+    document.getElementById('ins-rem').textContent = state.activated ? `${state.cap} calls` : '—';
+  }
+
+  setInterval(() => {
+    if (!state.activated || state.paused) return;
+    if (state.cap > 0) {
+      state.cap = Math.max(0, state.cap - (Math.floor(Math.random()*3) + 1));
+      state.cost += Math.random() * 0.07 + 0.02;
+      state.rate = Math.floor(Math.random() * 7) + 12;
+      state.witnessLag = Math.floor(Math.random() * 24) + 8;
+      updateStats();
+    }
+  }, 600);
+
+  setInterval(() => { document.getElementById('clock').textContent = now() + ' UTC'; }, 1000);
+
+  async function typeInto(el, text, speed=70) {
+    el.value = '';
+    el.focus();
+    for (const ch of text) {
+      el.value += ch;
+      await wait(speed + Math.random() * 28);
+    }
+  }
+
+  function activate() {
+    if (state.activated) return;
+    state.activated = true;
+    setAgent('orchestrator', 'busy');
+    setAgent('opus', 'busy');
+    setAgent('gemini', 'busy');
+    setAgent('codex', 'busy');
+    setAgent('haiku', 'busy');
+    document.getElementById('ins-cap').textContent = `cap_${hex(8)}_${hex(8)}_${hex(4)}`;
+    document.getElementById('ins-issued').textContent = now() + ' UTC';
+    document.getElementById('ins-scope').textContent = 'spec_review';
+    document.getElementById('ins-exp').textContent = '+ 30m';
+    convAux.textContent = 'live · round 1/8';
+  }
+
+  function sendUserMessage(text) {
+    const message = (text || userInput.value).trim();
+    if (!message) return;
+    addMsg('user', message);
+    userInput.value = '';
+    activate();
+  }
+
+  sendBtn.addEventListener('click', () => sendUserMessage());
+  userInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); sendUserMessage(); }
+  });
+
+  document.querySelectorAll('.fleet-node').forEach(node => {
+    node.addEventListener('click', () => {
+      document.querySelectorAll('.fleet-node').forEach(n => n.classList.remove('selected'));
+      node.classList.add('selected');
+      const id = node.dataset.agent;
+      state.selected = id;
+      const a = agents[id];
+      const role = node.querySelector('.agent-meta').textContent;
+      document.getElementById('ins-agent').innerHTML =
+        `${a.name} <span class="accent">· ${role}</span>`;
+      if (state.activated) {
+        document.getElementById('ins-cap').textContent =
+          `cap_${hex(8)}_${hex(8)}_${hex(4)}`;
+        document.getElementById('ins-issued').textContent = now() + ' UTC';
+      }
+    });
+  });
+
+  const btnPause = document.getElementById('btn-pause');
+  btnPause.addEventListener('click', () => togglePause());
+
+  function togglePause() {
+    state.paused = !state.paused;
+    if (state.paused) {
+      btnPause.textContent = '▶ Resume Fleet';
+      btnPause.classList.add('brass');
+      ['orchestrator','opus','gemini','codex','haiku'].forEach(a => setAgent(a, 'paused'));
+      addMsg('orchestrator',
+        '<strong>⏸ FLEET PAUSED</strong> — all capabilities held by operator.', 'alert');
+    } else {
+      btnPause.textContent = '⏸ Pause Fleet';
+      btnPause.classList.remove('brass');
+      ['orchestrator','opus','gemini','codex','haiku'].forEach(a => setAgent(a, 'busy'));
+      addMsg('orchestrator',
+        '<strong>▶ FLEET RESUMED</strong> — capability batch reactivated.', 'alert');
+    }
+  }
+
+  document.getElementById('btn-revoke').addEventListener('click', () => {
+    addMsg('orchestrator',
+      `<strong>⚠ CAPABILITY REVOKED</strong> — broadcast to witness log.`, 'alert');
+    setAgent(state.selected, 'idle');
+  });
+  document.getElementById('btn-extend').addEventListener('click', showAuth);
+
+  document.getElementById('btn-trigger-deny').addEventListener('click', async () => {
+    if (!state.activated) activate();
+    addMsg('opus', 'Reviewer requesting capability extension. Current batch: <strong>3 calls remaining</strong>.');
+    await wait(1400);
+    addMsg('orchestrator',
+      '<strong>✗ CAPABILITY EXTENSION DENIED</strong> by Edge policy: budget threshold exceeded.', 'error');
+    await wait(1100);
+    addMsg('opus', 'Acknowledged. Halting. State checkpoint signed and persisted.');
+    setAgent('opus', 'paused');
+  });
+
+  document.getElementById('btn-trigger-auth').addEventListener('click', showAuth);
+
+  function showAuth() { document.getElementById('modal').classList.add('show'); }
+  function hideAuth() { document.getElementById('modal').classList.remove('show'); }
+
+  document.getElementById('phone-deny').addEventListener('click', () => {
+    hideAuth();
+    addMsg('orchestrator',
+      '<strong>✗ EXTENSION DENIED</strong> via Authenticator. Stage halted.', 'error');
+  });
+  document.getElementById('phone-approve').addEventListener('click', () => {
+    hideAuth();
+    addMsg('orchestrator',
+      `<strong>✓ EXTENSION APPROVED</strong> via Authenticator. Witness wit_${hex(8)} signed.`, 'alert');
+    state.cap = 1000;
+    state.capMax = 2000;
+    updateStats();
+  });
+
+  // ========= 45-SECOND PLAY SEQUENCE ======================
+  document.getElementById('btn-play').addEventListener('click', async () => {
+    document.getElementById('btn-reset').click();
+    await wait(1500);
+
+    // Phase 1: Operator types (00:01.5 → 00:09)
+    const prompt = "Review our multi-agent system for security weaknesses before we ship.";
+    await typeInto(userInput, prompt, 75);
+    await wait(1500);
+
+    // Phase 2: Send (00:09 → 00:11)
+    addMsg('user', prompt);
+    userInput.value = '';
+    activate();
+
+    // Phase 3: Orchestrator dispatches (00:11 → 00:17)
+    await wait(2200);
+    addMsg('orchestrator',
+      'Task accepted. Capability batch issued: <strong>1000 calls</strong>, scope=<strong>spec_review</strong>. Dispatching to three reviewers in parallel.');
+
+    // Phase 4: Reviewers find regressions (00:17 → 00:40)
+    await wait(3500);
+    addMsg('opus', 'Round 1 of 8. Scanning for security regressions.');
+
+    await wait(3800);
+    addMsg('gemini',
+      '<strong>P1:</strong> environment variable leakage. API keys passing into untrusted code via subprocess. Critical.');
+
+    await wait(4200);
+    addMsg('codex',
+      '<strong>P1:</strong> prompt injection — code blocks interpolated into markdown without XML fencing. Reviewer outputs can hijack the fix prompt.');
+
+    await wait(4000);
+    addMsg('haiku', 'Comparator dedup: <strong>8 unique findings retained</strong>. 4 collapsed.');
+
+    // Phase 5: Close (00:40 → 00:46)
+    await wait(3500);
+    addMsg('orchestrator',
+      '<strong>HALT.</strong> 2 critical security regressions caught before ship. Build blocked. Witness log finalized.');
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    state.cost = 0; state.cap = 1000; state.capMax = 1000;
+    state.paused = false; state.rate = 0; state.witnessLag = 0;
+    state.activated = false;
+    conv.innerHTML = '';
+    witnessLog.innerHTML =
+      `<div class="wit-entry"><span class="check">·</span><span class="placeholder">no entries yet</span><span class="t"></span></div>`;
+    btnPause.textContent = '⏸ Pause Fleet';
+    btnPause.classList.remove('brass');
+    ['orchestrator','opus','gemini','codex','haiku','claude-code'].forEach(a => setAgent(a, 'idle'));
+    convAux.textContent = 'awaiting operator…';
+    document.getElementById('ins-cap').textContent = '(none — awaiting operator)';
+    document.getElementById('ins-issued').textContent = '—';
+    document.getElementById('ins-scope').textContent = '—';
+    document.getElementById('ins-exp').textContent = '—';
+    userInput.value = '';
+    updateStats();
+    showBootMessages();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === '`') {
+      const tray = document.querySelector('.demo-tray');
+      tray.style.display = (tray.style.display === 'none') ? 'block' : 'none';
+    }
+    if (e.key === 'Escape') hideAuth();
+  });
+
+  function showBootMessages() {
+    addMsg('orchestrator',
+      'Edge connection established. Reviewers enrolled and standing by. <em>Awaiting operator request.</em>',
+      '', false);
+  }
+
+  ['orchestrator','opus','gemini','codex','haiku','claude-code'].forEach(a => setAgent(a, 'idle'));
+  updateStats();
+  showBootMessages();
+  userInput.focus();
+</script>
+</body>
+</html>
