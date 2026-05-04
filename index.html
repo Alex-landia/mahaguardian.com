@@ -4,24 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MahaGuardian — Cryptographic Information Barriers for AI Agents</title>
-<meta name="description" content="MahaGuardian enforces information barriers between autonomous AI agents through architecture, not policy.">
+<meta name="description" content="Safe democratization of the Agentic Web. Cryptographic information barriers for autonomous AI agents — enforced by architecture, not policy.">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root { --bg:#FAFAF8; --surface:#FFF; --text:#1A1A18; --muted:#6B6B65; --accent:#0F6E56; --accent-lt:#E1F5EE; --border:#E5E5E0; --code-bg:#F4F4F0; --coral:#D85A30; --blue:#185FA5; --purple:#534AB7; }
+:root { --bg:#FAFAF8; --surface:#FFF; --text:#1A1A18; --muted:#6B6B65; --accent:#0F6E56; --accent-dk:#0B5644; --accent-lt:#E1F5EE; --border:#E5E5E0; --code-bg:#F4F4F0; --coral:#D85A30; --blue:#185FA5; --purple:#534AB7; }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);line-height:1.7}
 a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
 code{font-family:'DM Mono',monospace;font-size:.9em;background:var(--code-bg);padding:2px 6px;border-radius:4px}
 .c{max-width:880px;margin:0 auto;padding:0 24px}
-nav{padding:20px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+nav{padding:20px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px}
 nav .logo{font-size:18px;font-weight:700;letter-spacing:-.5px} nav .logo span{color:var(--accent)}
-nav .links{display:flex;gap:24px;font-size:14px;font-weight:500;color:var(--muted)}
+nav .links{display:flex;gap:24px;font-size:14px;font-weight:500;color:var(--muted);align-items:center;flex-wrap:wrap}
 nav .links a{color:var(--muted)} nav .links a:hover{color:var(--text)}
+nav .links a.nav-cta{background:var(--accent);color:#FFF;padding:8px 16px;border-radius:6px}
+nav .links a.nav-cta:hover{background:var(--accent-dk);color:#FFF;text-decoration:none}
 
 .hero{padding:80px 0 60px;border-bottom:1px solid var(--border)}
 .hero h1{font-size:44px;font-weight:700;letter-spacing:-1.5px;margin-bottom:16px}
 .hero h1 em{font-style:normal;color:var(--accent)}
-.hero .sub{font-size:19px;color:var(--muted);max-width:620px;margin-bottom:28px}
+.hero .sub{font-size:19px;color:var(--muted);max-width:640px;margin-bottom:28px}
+.hero-cta{margin-bottom:28px;display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{display:inline-block;background:var(--accent);color:#FFF;padding:14px 28px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;transition:background .15s;border:none;cursor:pointer}
+.btn-primary:hover{background:var(--accent-dk);text-decoration:none;color:#FFF}
+.btn-secondary{display:inline-block;background:var(--surface);color:var(--text);padding:14px 28px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;border:1px solid var(--border);transition:border-color .15s}
+.btn-secondary:hover{border-color:var(--text);text-decoration:none;color:var(--text)}
 .badges{display:flex;gap:10px;flex-wrap:wrap}
 .badge{display:inline-flex;align-items:center;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid var(--border);background:var(--surface)}
 .badge.g{background:var(--accent-lt);border-color:var(--accent);color:var(--accent)}
@@ -53,10 +60,32 @@ p{margin-bottom:14px} p:last-child{margin-bottom:0}
 .lim ul{list-style:none;padding:0}
 .lim li{padding:7px 0;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--muted);display:flex;gap:10px}
 .lim li:last-child{border-bottom:none}
-.lim li::before{content:"\2192";color:var(--coral);flex-shrink:0}
+.lim li::before{content:"→";color:var(--coral);flex-shrink:0}
+
+.matrix-wrap{overflow-x:auto;margin:20px 0}
+.matrix{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;font-size:14px}
+.matrix th,.matrix td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
+.matrix th{background:var(--code-bg);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.matrix tr:last-child td{border-bottom:none}
+.matrix td.allow{color:var(--accent);font-weight:600}
+.matrix td.deny{color:var(--coral);font-weight:600}
+
+.link-cta{display:inline-block;margin-top:10px;font-weight:700;font-size:15px}
+
+.personas{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.persona{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px}
+.persona h3{font-size:15px;margin-bottom:8px;color:var(--accent)}
+.persona p{font-size:14px;color:var(--muted);margin-bottom:0}
+
+.join{background:var(--accent-lt);border-radius:10px;padding:36px;margin-top:20px;text-align:center}
+.join p{max-width:600px;margin:0 auto 20px;color:var(--text)}
 
 footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
-@media(max-width:768px){.hero h1{font-size:30px}.grid2,.grid3{grid-template-columns:1fr}}
+@media(max-width:768px){
+  .hero h1{font-size:30px}
+  .grid2,.grid3,.personas{grid-template-columns:1fr}
+  nav .links{gap:14px;font-size:13px}
+}
 </style>
 </head>
 <body>
@@ -69,12 +98,17 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
     <a href="#quickstart">Quick start</a>
     <a href="whitepaper/">White paper</a>
     <a href="https://github.com/partitia-clean/mahaguardian">GitHub</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" target="_blank" rel="noopener noreferrer" class="nav-cta">Join the first 100</a>
   </div>
 </nav>
 
 <div class="hero">
-  <h1>Cryptographic barriers<br>for <em>AI agents</em></h1>
-  <p class="sub">MahaGuardian enforces information barriers between autonomous AI agents through architecture, not policy. Cryptographic credential management, signed rules, and tamper-evident audit.</p>
+  <h1>Safe democratization of<br>the <em>Agentic Web</em></h1>
+  <p class="sub">Cryptographic information barriers for autonomous AI agents. Enforced by architecture, not policy. Available to any operator — from a global bank to a solo practitioner.</p>
+  <div class="hero-cta">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" target="_blank" rel="noopener noreferrer" class="btn-primary">Join the first 100</a>
+    <a href="whitepaper/" class="btn-secondary">Read the white paper</a>
+  </div>
   <div class="badges">
     <span class="badge g">Patent pending</span>
     <span class="badge">970 tests passing</span>
@@ -84,11 +118,19 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
 </div>
 
 <section>
+  <h2>Why this matters</h2>
+  <p>Autonomous AI agents are arriving — agents that read your email, draft your contracts, move your money, take actions in the world without you in the loop. Every one of those agents needs credentials and access.</p>
+  <p>Today nobody has solved this well. Large enterprises spend millions on security teams, vendor reviews, and audit programs to manage the risk operationally — and breaches still happen. Small operators have none of that mitigation and are exposed from day one. The common thread: every existing approach is procedural. An agent with credentials can still misuse them; the controls only catch it after the fact.</p>
+  <p>MahaGuardian is architectural. The guarantees are enforced by cryptography and topology, not by policy and audit. An agent that should not be able to read the cap table is given a credential that does not unlock the cap table — there is no path for the misuse to occur in the first place.</p>
+  <p>That changes the picture for everyone. Large operators get a stronger guarantee than the one they are paying millions for. Operators of every other size — solo professionals, small funds, mission-driven organizations, founders — get the same guarantee for the first time, without needing a security team to deploy it.</p>
+</section>
+
+<section>
   <h2>The problem</h2>
   <div class="grid2">
     <div class="card prob">
       <h3>Today</h3>
-      <p>AI agents hold long-lived credentials on cloud servers. If the server is compromised, the agent's authority is compromised. The enforcement layer can grant new permissions, making it a high-value target.</p>
+      <p>AI agents hold long-lived credentials on cloud servers. If the server is compromised, or the agent is manipulated, the agent's full authority is compromised with it.</p>
     </div>
     <div class="card sol">
       <h3>MahaGuardian</h3>
@@ -97,14 +139,54 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
   </div>
 </section>
 
+<section>
+  <h2>A concrete moment</h2>
+  <p>Electric Mobility Co. X is raising a Series B. The founder hires three advisors and gives each one an AI agent.</p>
+  <div class="matrix-wrap">
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>Data class</th>
+          <th>Fundraising advisor</th>
+          <th>Legal advisor</th>
+          <th>Outside consultant</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pitch deck &amp; financials</td>
+          <td class="allow">Allow</td>
+          <td class="allow">Allow</td>
+          <td class="deny">Deny</td>
+        </tr>
+        <tr>
+          <td>Cap table &amp; term sheets</td>
+          <td class="allow">Allow</td>
+          <td class="allow">Allow</td>
+          <td class="deny">Deny</td>
+        </tr>
+        <tr>
+          <td>Board-only strategic memos</td>
+          <td class="deny">Deny</td>
+          <td class="allow">Allow</td>
+          <td class="deny">Deny</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Without enforcement, every agent in this picture can read everything. The only thing stopping the consultant's agent from quietly summarizing the cap table is a polite instruction in a prompt — and prompts can be manipulated, leaked, or simply ignored by a model that hallucinates.</p>
+  <p>MahaGuardian enforces this matrix at the credential layer. The consultant's agent does not get a polite "please don't read the cap table." It gets a credential that does not unlock the cap table at all. The denial is structural.</p>
+  <p><a href="MahaGuardian_Edge_Console_Mock.html" target="_blank" rel="noopener noreferrer" class="link-cta">See it work — 20-second auto-play demo →</a></p>
+</section>
+
 <section id="architecture">
   <h2>Architecture</h2>
   <p>MahaGuardian's Guardian Daemon runs on the owner's device and manages encrypted credentials, signed agent rules, and a tamper-evident audit log. Agents run on isolated cloud droplets with short-lived, scoped credentials that cannot be escalated.</p>
   <div class="arch"><b>Owner's device (Guardian Daemon)</b>
-  vault.enc    \u2014 age-encrypted credential store
-  SOUL.lock    \u2014 ed25519-signed agent rules
-  SOUL.hash    \u2014 SHA-256 integrity ledger (signed)
-  audit.log    \u2014 append-only, hash-chained
+  vault.enc    — age-encrypted credential store
+  SOUL.lock    — ed25519-signed agent rules
+  SOUL.hash    — SHA-256 integrity ledger (signed)
+  audit.log    — append-only, hash-chained
       |
       |  mTLS
       v
@@ -151,6 +233,33 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
   </div>
 </section>
 
+<section>
+  <h2>Who this is for</h2>
+  <p>Five kinds of operator we are built for. If one of these sounds like you, we want to talk.</p>
+  <div class="personas">
+    <div class="persona">
+      <h3>Professionals handling regulated information</h3>
+      <p>Lawyers, M&amp;A advisors, wealth managers, healthcare consultants — practitioners and the firms they work in. Multiple clients, strict confidentiality duties. You can't be the firm that leaks.</p>
+    </div>
+    <div class="persona">
+      <h3>The fund or family office</h3>
+      <p>Doing diligence and operations work where the data is too sensitive to put through a generic SaaS — and where agents could be more efficient than far larger headcount.</p>
+    </div>
+    <div class="persona">
+      <h3>The mission-driven organization</h3>
+      <p>Nonprofit, advocacy group, civic-tech outfit. Agents would multiply your reach — but donor lists, source identities, and case files cannot leak.</p>
+    </div>
+    <div class="persona">
+      <h3>Individuals, board members, open-source community</h3>
+      <p>You need information-barrier enforcement to safely build and deploy agents that multiply your productivity many times over.</p>
+    </div>
+    <div class="persona">
+      <h3>The industrial enterprise security team</h3>
+      <p>You run the security program and know the gap: procedural controls catch misuse after it happens. You want an architectural primitive that prevents it — and that your auditors can verify cryptographically.</p>
+    </div>
+  </div>
+</section>
+
 <section id="quickstart">
   <h2>Quick start</h2>
   <div class="code"><span class="c1"># Clone and install</span>
@@ -191,6 +300,15 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
   <p><strong>V1 (current):</strong> Laptop-based Guardian Daemon with encrypted vault, signed rules, and tamper-evident audit logging. Functional with 970 passing tests.</p>
   <p><strong>Next:</strong> Production architecture with stronger credential delegation and independent audit verification. Under development. See the <a href="whitepaper/">white paper</a>.</p>
 </section>
+
+<section>
+  <h2>Join the first 100</h2>
+  <div class="join">
+    <p>We are working with our first 100 design partners — operators who want cryptographic information barriers for their agents and are willing to shape what V2 looks like with us. No cost. Direct line to the founders.</p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" target="_blank" rel="noopener noreferrer" class="btn-primary">Sign up →</a>
+  </div>
+</section>
+
 </div>
 
 <footer>
