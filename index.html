@@ -174,6 +174,41 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
 </section>
 
 <section>
+  <h2>Who this is for</h2>
+  <p>Five kinds of operator we are built for. If one of these sounds like you, we want to talk.</p>
+  <div class="personas">
+    <div class="persona">
+      <h3>Professionals handling regulated information</h3>
+      <p>Lawyers, M&amp;A advisors, wealth managers, healthcare consultants, board directors — practitioners and the firms they work in. Multiple clients, strict confidentiality duties. You can't be the firm that leaks.</p>
+    </div>
+    <div class="persona">
+      <h3>The fund or family office</h3>
+      <p>Doing diligence and operations work where the data is too sensitive to put through a generic SaaS — and where agents could be more efficient than far larger headcount.</p>
+    </div>
+    <div class="persona">
+      <h3>The mission-driven organization</h3>
+      <p>Nonprofit, advocacy group, civic-tech outfit, university. Agents would multiply your depth and reach — but donor lists, source identities, case files and student debates cannot leak.</p>
+    </div>
+    <div class="persona">
+      <h3>Individuals and open-source community</h3>
+      <p>You need information-barrier enforcement to safely build and deploy agents that multiply your productivity many times over.</p>
+    </div>
+    <div class="persona">
+      <h3>The industrial enterprise security team</h3>
+      <p>You run the security program and know the gap: procedural controls catch misuse after it happens. You want an architectural primitive that prevents it — and that your auditors can verify cryptographically.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Join the first 100</h2>
+  <div class="join">
+    <p>We are working with our first 100 design partners — operators who want cryptographic information barriers for their agents and are willing to shape what V2 looks like with us. No cost. Direct line to the founders.</p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" target="_blank" rel="noopener noreferrer" class="btn-primary">Sign up →</a>
+  </div>
+</section>
+
+<section>
   <h2>A concrete moment — protecting client boundaries</h2>
   <p>Electric Mobility Co. X is raising a Series B. The founder hires three advisors and gives each one an AI agent.</p>
   <div class="matrix-wrap">
@@ -210,7 +245,7 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
   </div>
   <p>Without enforcement, every agent in this picture can read almost everything. The usual thing stopping the outside consultant's agent from quietly summarizing the cap table is a polite instruction in a prompt — and prompts can be manipulated, leaked, or simply ignored by a model that hallucinates.</p>
   <p>MahaGuardian enforces this matrix at the credential layer. The outside consultant's agent does not get a polite "please don't read the cap table." It gets a credential that does not unlock the cap table at all — and it does not even know where to ask. The denial is structural.</p>
-  <p><a href="MahaGuardian_Edge_Console_Fundraising.html" target="_blank" rel="noopener noreferrer" class="link-cta">See it work — 20-second auto-play demo →</a></p>
+  <p><a href="MahaGuardian_Edge_Console_Mock%20(5).html" target="_blank" rel="noopener noreferrer" class="link-cta">See it work — 20-second auto-play demo →</a></p>
 </section>
 
 <section>
@@ -263,7 +298,7 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
     </div>
   </div>
 
-  <p><a href="MahaGuardian_Edge_Console_SecurityReview.html" target="_blank" rel="noopener noreferrer" class="link-cta">See it work — 45-second auto-play demo →</a></p>
+  <p><a href="MahaGuardian_Edge_Console_Mock%20(3).html" target="_blank" rel="noopener noreferrer" class="link-cta">See it work — 45-second auto-play demo →</a></p>
 
   <div class="orch-stats">
     <div class="ostat">
@@ -340,33 +375,6 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
   </div>
 </section>
 
-<section>
-  <h2>Who this is for</h2>
-  <p>Five kinds of operator we are built for. If one of these sounds like you, we want to talk.</p>
-  <div class="personas">
-    <div class="persona">
-      <h3>Professionals handling regulated information</h3>
-      <p>Lawyers, M&amp;A advisors, wealth managers, healthcare consultants, board directors — practitioners and the firms they work in. Multiple clients, strict confidentiality duties. You can't be the firm that leaks.</p>
-    </div>
-    <div class="persona">
-      <h3>The fund or family office</h3>
-      <p>Doing diligence and operations work where the data is too sensitive to put through a generic SaaS — and where agents could be more efficient than far larger headcount.</p>
-    </div>
-    <div class="persona">
-      <h3>The mission-driven organization</h3>
-      <p>Nonprofit, advocacy group, civic-tech outfit, university. Agents would multiply your depth and reach — but donor lists, source identities, case files and student debates cannot leak.</p>
-    </div>
-    <div class="persona">
-      <h3>Individuals and open-source community</h3>
-      <p>You need information-barrier enforcement to safely build and deploy agents that multiply your productivity many times over.</p>
-    </div>
-    <div class="persona">
-      <h3>The industrial enterprise security team</h3>
-      <p>You run the security program and know the gap: procedural controls catch misuse after it happens. You want an architectural primitive that prevents it — and that your auditors can verify cryptographically.</p>
-    </div>
-  </div>
-</section>
-
 <section id="quickstart">
   <h2>Quick start</h2>
   <div class="code"><span class="c1"># Clone and install</span>
@@ -406,14 +414,6 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
   <h2>Roadmap</h2>
   <p><strong>V1 (current):</strong> Laptop-based Guardian Daemon with encrypted vault, signed rules, and tamper-evident audit logging. Functional with 970 passing tests.</p>
   <p><strong>Next:</strong> Production architecture with stronger credential delegation and independent audit verification. Under development. See the <a href="whitepaper/">white paper</a>.</p>
-</section>
-
-<section>
-  <h2>Join the first 100</h2>
-  <div class="join">
-    <p>We are working with our first 100 design partners — operators who want cryptographic information barriers for their agents and are willing to shape what V2 looks like with us. No cost. Direct line to the founders.</p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" target="_blank" rel="noopener noreferrer" class="btn-primary">Sign up →</a>
-  </div>
 </section>
 
 </div>
