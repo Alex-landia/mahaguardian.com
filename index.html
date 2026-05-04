@@ -80,10 +80,44 @@ p{margin-bottom:14px} p:last-child{margin-bottom:0}
 .join{background:var(--accent-lt);border-radius:10px;padding:36px;margin-top:20px;text-align:center}
 .join p{max-width:600px;margin:0 auto 20px;color:var(--text)}
 
+/* ── Section B: orchestrator demo ── */
+.event-log{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:20px 0}
+.event-log-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--code-bg)}
+.ev-dot{width:10px;height:10px;border-radius:50%}
+.ev-dot-r{background:#D85A30} .ev-dot-a{background:#D4A017} .ev-dot-g{background:#0F6E56}
+.ev-bar-title{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;flex:1;text-align:center}
+.ev-body{padding:20px 20px 0}
+.ev-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13.5px}
+.ev-row:last-of-type{border-bottom:none}
+.ev-ts{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);min-width:36px;padding-top:3px;flex-shrink:0}
+.ev-tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:2px;font-family:'DM Mono',monospace;letter-spacing:.02em}
+.tag-opus{background:#EEEDFE;color:#3C3489}
+.tag-gemini{background:#E6F1FB;color:#0C447C}
+.tag-gpt{background:var(--accent-lt);color:var(--accent-dk)}
+.tag-haiku{background:var(--code-bg);color:var(--muted)}
+.tag-halt{background:var(--coral);color:#FFF;font-size:11px}
+.ev-text{color:var(--text);line-height:1.5}
+.ev-text .finding{color:var(--coral);font-weight:700}
+.ev-text code{font-size:.85em}
+.halt-strip{display:flex;align-items:center;gap:12px;padding:14px 20px;background:#FFF5F2;border-top:1px solid #F5C4B3}
+.halt-icon{width:22px;height:22px;border-radius:50%;background:var(--coral);color:#FFF;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.halt-msg{font-size:13px;color:#993C1D;font-weight:500;line-height:1.4}
+.halt-cost{margin-left:auto;font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);white-space:nowrap;flex-shrink:0}
+.halt-cost b{color:var(--accent)}
+
+.orch-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:4px}
+.ostat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px}
+.ostat .num{font-size:28px;font-weight:700;color:var(--text);letter-spacing:-1px;line-height:1}
+.ostat .label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-top:4px;margin-bottom:4px}
+.ostat .desc{font-size:13px;color:var(--muted);line-height:1.4}
+
+.orch-note{font-size:13px;color:var(--muted);margin-top:20px;padding:14px 18px;background:var(--code-bg);border-radius:8px;border-left:3px solid var(--border);line-height:1.6}
+/* ── end Section B ── */
+
 footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
 @media(max-width:768px){
   .hero h1{font-size:30px}
-  .grid2,.grid3,.personas{grid-template-columns:1fr}
+  .grid2,.grid3,.personas,.orch-stats{grid-template-columns:1fr}
   nav .links{gap:14px;font-size:13px}
 }
 </style>
@@ -140,7 +174,7 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
 </section>
 
 <section>
-  <h2>A concrete moment</h2>
+  <h2>A concrete moment — protecting client boundaries</h2>
   <p>Electric Mobility Co. X is raising a Series B. The founder hires three advisors and gives each one an AI agent.</p>
   <div class="matrix-wrap">
     <table class="matrix">
@@ -174,9 +208,82 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
       </tbody>
     </table>
   </div>
-  <p>Without enforcement, every agent in this picture can read everything. The only thing stopping the consultant's agent from quietly summarizing the cap table is a polite instruction in a prompt — and prompts can be manipulated, leaked, or simply ignored by a model that hallucinates.</p>
-  <p>MahaGuardian enforces this matrix at the credential layer. The consultant's agent does not get a polite "please don't read the cap table." It gets a credential that does not unlock the cap table at all. The denial is structural.</p>
-  <p><a href="MahaGuardian_Edge_Console_Mock.html" target="_blank" rel="noopener noreferrer" class="link-cta">See it work — 20-second auto-play demo →</a></p>
+  <p>Without enforcement, every agent in this picture can read almost everything. The usual thing stopping the outside consultant's agent from quietly summarizing the cap table is a polite instruction in a prompt — and prompts can be manipulated, leaked, or simply ignored by a model that hallucinates.</p>
+  <p>MahaGuardian enforces this matrix at the credential layer. The outside consultant's agent does not get a polite "please don't read the cap table." It gets a credential that does not unlock the cap table at all — and it does not even know where to ask. The denial is structural.</p>
+  <p><a href="MahaGuardian_Edge_Console_Fundraising.html" target="_blank" rel="noopener noreferrer" class="link-cta">See it work — 20-second auto-play demo →</a></p>
+</section>
+
+<section>
+  <h2>MahaGuardian detecting threats in real time</h2>
+  <p>Three independent reviewers — running on different model providers — audit a multi-agent system for security weaknesses in parallel. When two reviewers surface an environment-variable leak and a prompt-injection vector, MahaGuardian halts the build automatically. No human intervention required. No breach possible.</p>
+
+  <div class="event-log">
+    <div class="event-log-bar">
+      <div class="ev-dot ev-dot-r"></div>
+      <div class="ev-dot ev-dot-a"></div>
+      <div class="ev-dot ev-dot-g"></div>
+      <span class="ev-bar-title">MahaGuardian — orchestrator security review</span>
+    </div>
+    <div class="ev-body">
+      <div class="ev-row">
+        <span class="ev-ts">0:03</span>
+        <span class="ev-tag tag-opus">OPUS</span>
+        <span class="ev-text">Reviewing agent communication patterns and SOUL.lock configuration…</span>
+      </div>
+      <div class="ev-row">
+        <span class="ev-ts">0:09</span>
+        <span class="ev-tag tag-gemini">GEMINI</span>
+        <span class="ev-text">Scanning environment variables and credential handling across agent boundary…</span>
+      </div>
+      <div class="ev-row">
+        <span class="ev-ts">0:15</span>
+        <span class="ev-tag tag-gpt">GPT</span>
+        <span class="ev-text">Auditing prompt construction in <code>coding.py</code> for injection surfaces…</span>
+      </div>
+      <div class="ev-row">
+        <span class="ev-ts">0:24</span>
+        <span class="ev-tag tag-gemini">GEMINI</span>
+        <span class="ev-text"><span class="finding">C-001:</span> ANTHROPIC_API_KEY written to agent environment — leaks to subprocess scope.</span>
+      </div>
+      <div class="ev-row">
+        <span class="ev-ts">0:31</span>
+        <span class="ev-tag tag-gpt">GPT</span>
+        <span class="ev-text"><span class="finding">C-002:</span> User-controlled input reaches system prompt without sanitisation in <code>coding.py:147</code>.</span>
+      </div>
+      <div class="ev-row">
+        <span class="ev-ts">0:38</span>
+        <span class="ev-tag tag-haiku">HAIKU</span>
+        <span class="ev-text">Deduplication complete. Two distinct critical findings confirmed across independent reviewers.</span>
+      </div>
+    </div>
+    <div class="halt-strip">
+      <div class="halt-icon">!</div>
+      <div class="halt-msg">Build blocked &nbsp;·&nbsp; 2 critical findings &nbsp;·&nbsp; C-001 env-var leak &nbsp;·&nbsp; C-002 prompt injection</div>
+      <div class="halt-cost">Cost frozen at <b>$0.041</b></div>
+    </div>
+  </div>
+
+  <p><a href="MahaGuardian_Edge_Console_SecurityReview.html" target="_blank" rel="noopener noreferrer" class="link-cta">See it work — 45-second auto-play demo →</a></p>
+
+  <div class="orch-stats">
+    <div class="ostat">
+      <div class="num">3</div>
+      <div class="label">Reviewers</div>
+      <div class="desc">Anthropic, Google, OpenAI — distinct prompt lineages, no shared state</div>
+    </div>
+    <div class="ostat">
+      <div class="num">1</div>
+      <div class="label">Finding to halt</div>
+      <div class="desc">Any critical finding triggers automatic build block — not a majority vote</div>
+    </div>
+    <div class="ostat">
+      <div class="num">0</div>
+      <div class="label">Human steps</div>
+      <div class="desc">Halt, cost freeze, and alert are architectural — not a policy that can be skipped</div>
+    </div>
+  </div>
+
+  <p class="orch-note">This is the same orchestrator MahaGuardian uses to review its own supply-chain dependencies. What you see is production behaviour, not a demonstration mode.</p>
 </section>
 
 <section id="architecture">
