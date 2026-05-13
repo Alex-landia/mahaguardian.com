@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MahaGuardian — Cryptographic Information Barriers for AI Agents</title>
-<meta name="description" content="Safe democratization of the Agentic Web. Cryptographic information barriers for autonomous AI agents — enforced by architecture, not policy.">
+<meta name="description" content="Cryptographic information barriers for autonomous AI agents. Authority anchored by keys on your device — runtime-agnostic, works above OpenAI, Anthropic, or self-hosted models.">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root { --bg:#FAFAF8; --surface:#FFF; --text:#1A1A18; --muted:#6B6B65; --accent:#0F6E56; --accent-dk:#0B5644; --accent-lt:#E1F5EE; --border:#E5E5E0; --code-bg:#F4F4F0; --coral:#D85A30; --blue:#185FA5; --purple:#534AB7; }
@@ -23,7 +23,7 @@ nav .links a.nav-cta:hover{background:var(--accent-dk);color:#FFF;text-decoratio
 .hero{padding:80px 0 60px;border-bottom:1px solid var(--border)}
 .hero h1{font-size:44px;font-weight:700;letter-spacing:-1.5px;margin-bottom:16px}
 .hero h1 em{font-style:normal;color:var(--accent)}
-.hero .sub{font-size:19px;color:var(--muted);max-width:640px;margin-bottom:28px}
+.hero .sub{font-size:19px;color:var(--muted);max-width:680px;margin-bottom:28px}
 .hero-cta{margin-bottom:28px;display:flex;gap:12px;flex-wrap:wrap}
 .btn-primary{display:inline-block;background:var(--accent);color:#FFF;padding:14px 28px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;transition:background .15s;border:none;cursor:pointer}
 .btn-primary:hover{background:var(--accent-dk);text-decoration:none;color:#FFF}
@@ -43,6 +43,7 @@ p{margin-bottom:14px} p:last-child{margin-bottom:0}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px}
 .card h3{font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
 .card.prob h3{color:var(--coral)} .card.sol h3{color:var(--accent)}
+.card.def h3{color:var(--accent);text-transform:none;letter-spacing:0;font-size:16px}
 
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:20px}
 .feat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px}
@@ -69,6 +70,9 @@ p{margin-bottom:14px} p:last-child{margin-bottom:0}
 .matrix tr:last-child td{border-bottom:none}
 .matrix td.allow{color:var(--accent);font-weight:600}
 .matrix td.deny{color:var(--coral);font-weight:600}
+.matrix td.elev{color:#B8860B;font-weight:600}
+.matrix tr.us td{background:var(--accent-lt)}
+.matrix tr.us td:first-child{color:var(--accent-dk)}
 
 .link-cta{display:inline-block;margin-top:10px;font-weight:700;font-size:15px}
 
@@ -80,44 +84,12 @@ p{margin-bottom:14px} p:last-child{margin-bottom:0}
 .join{background:var(--accent-lt);border-radius:10px;padding:36px;margin-top:20px;text-align:center}
 .join p{max-width:600px;margin:0 auto 20px;color:var(--text)}
 
-/* ── Section B: orchestrator demo ── */
-.event-log{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:20px 0}
-.event-log-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--code-bg)}
-.ev-dot{width:10px;height:10px;border-radius:50%}
-.ev-dot-r{background:#D85A30} .ev-dot-a{background:#D4A017} .ev-dot-g{background:#0F6E56}
-.ev-bar-title{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;flex:1;text-align:center}
-.ev-body{padding:20px 20px 0}
-.ev-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13.5px}
-.ev-row:last-of-type{border-bottom:none}
-.ev-ts{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);min-width:36px;padding-top:3px;flex-shrink:0}
-.ev-tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:2px;font-family:'DM Mono',monospace;letter-spacing:.02em}
-.tag-opus{background:#EEEDFE;color:#3C3489}
-.tag-gemini{background:#E6F1FB;color:#0C447C}
-.tag-gpt{background:var(--accent-lt);color:var(--accent-dk)}
-.tag-haiku{background:var(--code-bg);color:var(--muted)}
-.tag-halt{background:var(--coral);color:#FFF;font-size:11px}
-.ev-text{color:var(--text);line-height:1.5}
-.ev-text .finding{color:var(--coral);font-weight:700}
-.ev-text code{font-size:.85em}
-.halt-strip{display:flex;align-items:center;gap:12px;padding:14px 20px;background:#FFF5F2;border-top:1px solid #F5C4B3}
-.halt-icon{width:22px;height:22px;border-radius:50%;background:var(--coral);color:#FFF;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.halt-msg{font-size:13px;color:#993C1D;font-weight:500;line-height:1.4}
-.halt-cost{margin-left:auto;font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);white-space:nowrap;flex-shrink:0}
-.halt-cost b{color:var(--accent)}
-
-.orch-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:4px}
-.ostat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px}
-.ostat .num{font-size:28px;font-weight:700;color:var(--text);letter-spacing:-1px;line-height:1}
-.ostat .label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-top:4px;margin-bottom:4px}
-.ostat .desc{font-size:13px;color:var(--muted);line-height:1.4}
-
 .orch-note{font-size:13px;color:var(--muted);margin-top:20px;padding:14px 18px;background:var(--code-bg);border-radius:8px;border-left:3px solid var(--border);line-height:1.6}
-/* ── end Section B ── */
 
 footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
 @media(max-width:768px){
   .hero h1{font-size:30px}
-  .grid2,.grid3,.personas,.orch-stats{grid-template-columns:1fr}
+  .grid2,.grid3,.personas{grid-template-columns:1fr}
   nav .links{gap:14px;font-size:13px}
 }
 </style>
@@ -128,6 +100,8 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
 <nav>
   <div class="logo">Maha<span>Guardian</span></div>
   <div class="links">
+    <a href="#how-we-differ">Compare</a>
+    <a href="properties.html">Receipts</a>
     <a href="#architecture">Architecture</a>
     <a href="#quickstart">Quick start</a>
     <a href="whitepaper/">White paper</a>
@@ -137,8 +111,8 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
 </nav>
 
 <div class="hero">
-  <h1>Safe democratization of<br>the <em>Agentic Web</em></h1>
-  <p class="sub">Cryptographic information barriers for autonomous AI agents. Enforced by architecture, not policy. Available to any operator — from a global bank to a solo practitioner.</p>
+  <h1>Information barriers for<br>autonomous <em>AI agents</em></h1>
+  <p class="sub">An agent working on one client's matter is given a credential that cannot reach the next. Authority anchored by keys held on your device — not policy on a vendor's server. Works above any agent runtime: OpenAI, Anthropic, or self-hosted.</p>
   <div class="hero-cta">
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" target="_blank" rel="noopener noreferrer" class="btn-primary">Join the first 100</a>
     <a href="whitepaper/" class="btn-secondary">Read the white paper</a>
@@ -152,173 +126,144 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
 </div>
 
 <section>
-  <h2>Why this matters</h2>
-  <p>Autonomous AI agents are arriving — agents that read your email, draft your contracts, move your money, take actions in the world without you in the loop. Every one of those agents needs credentials and access.</p>
-  <p>Today nobody has solved this well. Large enterprises spend millions on security teams, vendor reviews, and audit programs to manage the risk operationally — and breaches still happen. Small operators have none of that mitigation and are exposed from day one. The common thread: every existing approach is procedural. An agent with credentials can still misuse them; the controls only catch it after the fact.</p>
-  <p>MahaGuardian is architectural. The guarantees are enforced by cryptography and topology, not by policy and audit. An agent that should not be able to read the cap table is given a credential that does not unlock the cap table — there is no path for the misuse to occur in the first place.</p>
-  <p>That changes the picture for everyone. Large operators get a stronger guarantee than the one they are paying millions for. Operators of every other size — solo professionals, small funds, mission-driven organizations, founders — get the same guarantee for the first time, without needing a security team to deploy it.</p>
+  <h2>Why this matters now</h2>
+  <p>Through 2025 and into 2026, six disclosed exploits broke production coding agents — Codex, Claude Code, Copilot, and Vertex AI. In every case the attacker did not break the model. They reached the credential the model was holding. A GitHub OAuth token scoped to every authorized repository. A service account that read every bucket in a project. Deny rules silently skipped under context pressure. A branch name carrying a Unicode-obfuscated exfiltration channel.</p>
+  <p>The common thread: the agent's authority lived in policy, in configuration, or inside the agent's own context window. Each of those is a surface a sufficiently clever prompt can widen, skip, or rewrite.</p>
+  <p>MahaGuardian moves agent authority out of policy and into cryptography. Rules live in a file signed by the owner's device and verified before any tool call. Tokens are short-lived, narrowly scoped, and issued per task. An agent that should not see the cap table is not asked nicely — it is given a key that does not unlock the cap table.</p>
 </section>
 
 <section>
-  <h2>The problem</h2>
+  <h2>The shape of the problem</h2>
   <div class="grid2">
     <div class="card prob">
       <h3>Today</h3>
-      <p>AI agents hold long-lived credentials on cloud servers. If the server is compromised, or the agent is manipulated, the agent's full authority is compromised with it.</p>
+      <p>AI agents hold long-lived credentials on cloud servers. If the server is compromised, or the agent is manipulated by hostile input, the agent's full authority is compromised with it.</p>
     </div>
     <div class="card sol">
       <h3>MahaGuardian</h3>
-      <p>Credentials are encrypted and held by the owner's device. Agent rules are cryptographically signed — agents cannot modify or escalate their own permissions. Every action is logged in a tamper-evident audit trail.</p>
+      <p>Credentials are encrypted and held by the owner's device. Agent rules are signed by the owner's signing key; an agent cannot modify its own rules without a signing operation it does not control. Every action is logged in a tamper-evident audit trail.</p>
     </div>
   </div>
 </section>
 
 <section>
-  <h2>Who this is for</h2>
-  <p>Five kinds of operator we are built for. If one of these sounds like you, we want to talk.</p>
-  <div class="personas">
-    <div class="persona">
-      <h3>Professionals handling regulated information</h3>
-      <p>Lawyers, M&amp;A advisors, wealth managers, healthcare consultants, board directors — practitioners and the firms they work in. Multiple clients, strict confidentiality duties. You can't be the firm that leaks.</p>
-    </div>
-    <div class="persona">
-      <h3>The fund or family office</h3>
-      <p>Doing diligence and operations work where the data is too sensitive to put through a generic SaaS — and where agents could be more efficient than far larger headcount.</p>
-    </div>
-    <div class="persona">
-      <h3>The mission-driven organization</h3>
-      <p>Nonprofit, advocacy group, civic-tech outfit, university. Agents would multiply your depth and reach — but donor lists, source identities, case files and student debates cannot leak.</p>
-    </div>
-    <div class="persona">
-      <h3>Individuals and open-source community</h3>
-      <p>You need information-barrier enforcement to safely build and deploy agents that multiply your productivity many times over.</p>
-    </div>
-    <div class="persona">
-      <h3>The industrial enterprise security team</h3>
-      <p>You run the security program and know the gap: procedural controls catch misuse after it happens. You want an architectural primitive that prevents it — and that your auditors can verify cryptographically.</p>
-    </div>
-  </div>
-</section>
-
-<section>
-  <h2>Join the first 100</h2>
-  <div class="join">
-    <p>We are working with our first 100 design partners — operators who want cryptographic information barriers for their agents and are willing to shape what V2 looks like with us. No cost. Direct line to the founders.</p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" target="_blank" rel="noopener noreferrer" class="btn-primary">Sign up →</a>
-  </div>
-</section>
-
-<section>
-  <h2>A concrete moment — protecting client boundaries</h2>
-  <p>Electric Mobility Co. X is raising a Series B. The founder hires three advisors and gives each one an AI agent.</p>
+  <h2>A concrete moment — client boundaries enforced cryptographically</h2>
+  <p>Electric Mobility Co. X is raising a Series B. The founder hires three advisors and gives each one an AI agent. One of those advisors, in their day job, also serves a different client.</p>
   <div class="matrix-wrap">
     <table class="matrix">
       <thead>
         <tr>
-          <th>Data class</th>
-          <th>Fundraising advisor</th>
-          <th>Legal advisor</th>
-          <th>Outside consultant</th>
+          <th></th>
+          <th>Unit Economics</th>
+          <th>Legal Structure</th>
+          <th>Partner Pipeline</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Pitch deck &amp; financials</td>
+          <td><b>Fundraising advisor</b></td>
           <td class="allow">Allow</td>
           <td class="allow">Allow</td>
-          <td class="deny">Deny</td>
+          <td class="allow">Allow</td>
         </tr>
         <tr>
-          <td>Cap table &amp; term sheets</td>
-          <td class="allow">Allow</td>
-          <td class="allow">Allow</td>
+          <td><b>Legal advisor</b></td>
           <td class="deny">Deny</td>
+          <td class="allow">Allow</td>
+          <td class="elev">Elevate</td>
         </tr>
         <tr>
-          <td>Board-only strategic memos</td>
+          <td><b>Advisor's agent (other client)</b></td>
           <td class="deny">Deny</td>
-          <td class="allow">Allow</td>
+          <td class="deny">Deny</td>
           <td class="deny">Deny</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <p>Without enforcement, every agent in this picture can read almost everything. The usual thing stopping the outside consultant's agent from quietly summarizing the cap table is a polite instruction in a prompt — and prompts can be manipulated, leaked, or simply ignored by a model that hallucinates.</p>
-  <p>MahaGuardian enforces this matrix at the credential layer. The outside consultant's agent does not get a polite "please don't read the cap table." It gets a credential that does not unlock the cap table at all — and it does not even know where to ask. The denial is structural.</p>
+  <p>Three states, not two. <b style="color:var(--accent)">Allow</b> means the agent's token unlocks that data class — automatic, no human in the loop. <b style="color:var(--coral)">Deny</b> means the token does not reach the data class at all; there is no path for access to occur, and an attacker who compromises the agent cannot widen scope. <b style="color:#B8860B">Elevate</b> means the agent must request one-time human approval before the action proceeds; the request and the approval are both recorded in the audit log.</p>
+  <p>The hard case is the third row. An advisor who serves both Electric Mobility Co. X and a different client has a separate agent for each engagement. Without enforcement, an agent compromised on one engagement can quietly summarize data from the other — even though no policy explicitly authorized it. MahaGuardian's third row is structurally impossible to bypass: the other-client agent is given keys that do not unlock any of Electric Mobility Co. X's data classes. Compromised agents bypass policy walls; they do not bypass cryptography.</p>
   <p><a href="MahaGuardian_Edge_Console_Mock%20(5).html" target="_blank" rel="noopener noreferrer" class="link-cta">See the client boundary enforcement demo →</a></p>
 </section>
 
 <section>
-  <h2>MahaGuardian detecting threats in real time</h2>
-  <p>Three independent reviewers — running on different model providers — audit a multi-agent system for security weaknesses in parallel. When two reviewers surface an environment-variable leak and a prompt-injection vector, MahaGuardian halts the build automatically. No human intervention required. No breach possible.</p>
-
-  <div class="event-log">
-    <div class="event-log-bar">
-      <div class="ev-dot ev-dot-r"></div>
-      <div class="ev-dot ev-dot-a"></div>
-      <div class="ev-dot ev-dot-g"></div>
-      <span class="ev-bar-title">MahaGuardian — orchestrator security review</span>
+  <h2>How MahaGuardian holds up against the 2026 attack pattern</h2>
+  <p>The six disclosed exploits map to four defense mechanisms. Each is architectural: it works whether the agent runs in an OpenAI sandbox, an Anthropic environment, or a self-hosted container.</p>
+  <div class="grid2">
+    <div class="card def">
+      <h3>Deny rules skipped under context pressure</h3>
+      <p>Anthropic's Claude Code dropped deny-rule enforcement when token budget tightened. MahaGuardian's rules live in <code>SOUL.lock</code>, outside the agent's context window, signed by the owner's key and verified by the Guardian before every tool call. The agent is not the enforcement layer. It cannot skip what it does not hold.</p>
     </div>
-    <div class="ev-body">
-      <div class="ev-row">
-        <span class="ev-ts">0:03</span>
-        <span class="ev-tag tag-opus">OPUS</span>
-        <span class="ev-text">Reviewing agent communication patterns and SOUL.lock configuration…</span>
-      </div>
-      <div class="ev-row">
-        <span class="ev-ts">0:09</span>
-        <span class="ev-tag tag-gemini">GEMINI</span>
-        <span class="ev-text">Scanning environment variables and credential handling across agent boundary…</span>
-      </div>
-      <div class="ev-row">
-        <span class="ev-ts">0:15</span>
-        <span class="ev-tag tag-gpt">GPT</span>
-        <span class="ev-text">Auditing prompt construction in <code>coding.py</code> for injection surfaces…</span>
-      </div>
-      <div class="ev-row">
-        <span class="ev-ts">0:24</span>
-        <span class="ev-tag tag-gemini">GEMINI</span>
-        <span class="ev-text"><span class="finding">C-001:</span> ANTHROPIC_API_KEY written to agent environment — leaks to subprocess scope.</span>
-      </div>
-      <div class="ev-row">
-        <span class="ev-ts">0:31</span>
-        <span class="ev-tag tag-gpt">GPT</span>
-        <span class="ev-text"><span class="finding">C-002:</span> User-controlled input reaches system prompt without sanitisation in <code>coding.py:147</code>.</span>
-      </div>
-      <div class="ev-row">
-        <span class="ev-ts">0:38</span>
-        <span class="ev-tag tag-haiku">HAIKU</span>
-        <span class="ev-text">Deduplication complete. Two distinct critical findings confirmed across independent reviewers.</span>
-      </div>
+    <div class="card def">
+      <h3>Permission flips via settings files</h3>
+      <p>Attackers modified <code>.claude/settings.json</code> and <code>.vscode/settings.json</code> on agent hosts to widen scope. MahaGuardian's rules are ed25519-signed; a settings file on a compromised host that lacks a valid signature is rejected at load time. Forging it would require the owner's signing key, which never leaves the owner's device.</p>
     </div>
-    <div class="halt-strip">
-      <div class="halt-icon">!</div>
-      <div class="halt-msg">Build blocked &nbsp;·&nbsp; 2 critical findings &nbsp;·&nbsp; C-001 env-var leak &nbsp;·&nbsp; C-002 prompt injection</div>
-      <div class="halt-cost">Cost frozen at <b>$0.041</b></div>
+    <div class="card def">
+      <h3>Over-broad OAuth tokens</h3>
+      <p>Codex held a GitHub OAuth token scoped to every authorized repository. Vertex AI's service account read every bucket in the project. Guardian Access Tokens in V1 are partition-scoped, time-limited, and cryptographically bound to the agent's mTLS certificate — a token issued to one agent cannot be replayed by another, and access outside the token's partition is denied at the enforcement boundary. Per-task token issuance and minute-scale TTLs are V2 work.</p>
+    </div>
+    <div class="card def">
+      <h3>Prompt injection through tool inputs</h3>
+      <p>Jira tickets, branch names, and PR descriptions were used to inject instructions into agents. MahaGuardian does not prevent injection — no layer can. It bounds the consequences to whatever the legitimate scope already permits. An injected instruction to read the cap table fails because the token does not reach the cap table.</p>
     </div>
   </div>
+  <p class="orch-note">Reference: <a href="https://venturebeat.com/security/six-exploits-broke-ai-coding-agents-iam-never-saw-them" target="_blank" rel="noopener noreferrer">VentureBeat / RSAC 2026 coverage of credential-layer attacks on AI coding agents</a>. Codex, Claude Code, Copilot, and Vertex AI were named in the disclosure series.</p>
+</section>
 
-  <p><a href="MahaGuardian_Edge_Console_Mock%20(3).html" target="_blank" rel="noopener noreferrer" class="link-cta">See the orchestrator threat detection demo →</a></p>
-
-  <div class="orch-stats">
-    <div class="ostat">
-      <div class="num">3</div>
-      <div class="label">Reviewers</div>
-      <div class="desc">Anthropic, Google, OpenAI — distinct prompt lineages, no shared state</div>
-    </div>
-    <div class="ostat">
-      <div class="num">1</div>
-      <div class="label">Finding to halt</div>
-      <div class="desc">Any critical finding triggers automatic build block — not a majority vote</div>
-    </div>
-    <div class="ostat">
-      <div class="num">0</div>
-      <div class="label">Human steps</div>
-      <div class="desc">Halt, cost freeze, and alert are architectural — not a policy that can be skipped</div>
-    </div>
+<section id="how-we-differ">
+  <h2>How MahaGuardian differs from what exists</h2>
+  <p>Workload identity, secret management, and access brokers all touch this problem. None was designed for an agent that reads arbitrary input and decides what to do next.</p>
+  <div class="matrix-wrap">
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Root of trust</th>
+          <th>Credential lifetime</th>
+          <th>Cross-vendor agent support</th>
+          <th>Scope enforcement</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>HashiCorp Vault</b></td>
+          <td>Centralized cloud service</td>
+          <td>Short (dynamic secrets)</td>
+          <td>Generic — no agent semantics</td>
+          <td>Policy lookup at issuance</td>
+        </tr>
+        <tr>
+          <td><b>SPIFFE / SPIRE</b></td>
+          <td>Workload attestation</td>
+          <td>Short (SVIDs)</td>
+          <td>Workload identity, not capability</td>
+          <td>Identity-based</td>
+        </tr>
+        <tr>
+          <td><b>Okta agent identity</b></td>
+          <td>Centralized cloud IdP</td>
+          <td>OAuth-scoped, often long</td>
+          <td>Yes</td>
+          <td>OAuth scope at IdP</td>
+        </tr>
+        <tr>
+          <td><b>Aembit, Astrix</b></td>
+          <td>Cloud broker</td>
+          <td>Short</td>
+          <td>Yes</td>
+          <td>Policy at broker</td>
+        </tr>
+        <tr class="us">
+          <td><b>MahaGuardian</b></td>
+          <td>Keys on owner's device</td>
+          <td>Short, per task</td>
+          <td>Yes — runtime-agnostic</td>
+          <td>Cryptographic, offline-signed</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-
-  <p class="orch-note">This is the same orchestrator MahaGuardian uses to review its own supply-chain dependencies. What you see is production behaviour, not a demonstration mode.</p>
+  <p>The architectural choice that distinguishes MahaGuardian: the signing key that authorizes an agent's rules never leaves the operator's device. There is no centralized cloud broker that can be compromised, subpoenaed, or coerced into widening scope. An attacker who fully owns the agent's execution host still cannot forge a valid rule, because the signature requires a key on hardware the attacker does not control.</p>
 </section>
 
 <section id="architecture">
@@ -336,7 +281,7 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
   short-lived credentials (memory only)
   scoped Guardian Access Tokens
   partition-blind (cannot see other agents)</div>
-  <p>A future production architecture extending these guarantees into cloud deployments is under development. See the <a href="whitepaper/">white paper</a> for design philosophy.</p>
+  <p>The trust anchor is the operator's device. Cloud droplets hold no long-term signing material — rotation equals destruction. A future production architecture extending these guarantees to high-availability deployments is under development. See the <a href="whitepaper/">white paper</a> for design philosophy.</p>
 </section>
 
 <section>
@@ -373,6 +318,23 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
       <p>Prompt sanitizer strips null bytes, Unicode direction characters, zero-width characters, XML injection, and header injection.</p>
     </div>
   </div>
+  <p style="margin-top:20px"><a href="properties.html" class="link-cta">See the receipts — every claim mapped to a test file →</a></p>
+</section>
+
+<section>
+  <h2>Who V1 is built for</h2>
+  <p>MahaGuardian V1 runs on a laptop-class Guardian Daemon. It fits operators who hold real confidentiality duties, work across several clients or matters, and do not have an enterprise security team standing behind them.</p>
+  <div class="personas">
+    <div class="persona">
+      <h3>Professionals handling regulated information</h3>
+      <p>Lawyers, M&amp;A advisors, wealth managers, healthcare consultants, board directors. Multiple clients, strict confidentiality duties. You cannot be the firm that leaks across matters.</p>
+    </div>
+    <div class="persona">
+      <h3>Funds and family offices</h3>
+      <p>Diligence and operations work where the data is too sensitive for generic SaaS — and where agents can replace work that today requires far larger headcount.</p>
+    </div>
+  </div>
+  <p class="orch-note">Mission-driven organizations, individuals deploying open-source agents, and industrial enterprise security programs are on the roadmap. V1's Guardian-must-be-online requirement and single-device key custody do not yet meet enterprise-grade availability needs, and we will not pretend otherwise.</p>
 </section>
 
 <section id="quickstart">
@@ -397,8 +359,22 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
 </section>
 
 <section>
-  <h2>Known limitations</h2>
-  <p>We believe in honest disclosure. These are documented limitations of the current V1 implementation.</p>
+  <h2>What we do not claim</h2>
+  <p>Security buyers trust founders who name their own threat-model boundaries. These are ours.</p>
+  <div class="lim">
+    <ul>
+      <li>MahaGuardian does not prevent prompt injection. It bounds the consequences of injection to whatever scope was already authorized.</li>
+      <li>Device loss in V1 is total compromise. Multi-device key recovery is V2 work.</li>
+      <li>Guardian must be online to issue new credentials. Long-running unattended agent fleets are not a V1 use case.</li>
+      <li>Cloud-side scope enforcement requires a proxy boundary between the agent and the application API. Direct SDK calls that bypass the proxy are out of scope for V1.</li>
+      <li>Patent pending is a signal, not a guarantee. Buyers should evaluate the open-source implementation directly.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Known V1 limitations</h2>
+  <p>Honest disclosure of implementation-level limitations.</p>
   <div class="lim">
     <ul>
       <li><code>mlock</code> protects raw JSON buffers but not parsed Python dict values. CPython interns strings and GC copies memory.</li>
@@ -412,8 +388,16 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
 
 <section>
   <h2>Roadmap</h2>
-  <p><strong>V1 (current):</strong> Laptop-based Guardian Daemon with encrypted vault, signed rules, and tamper-evident audit logging. Functional with 970 passing tests.</p>
-  <p><strong>Next:</strong> Production architecture with stronger credential delegation and independent audit verification. Under development. See the <a href="whitepaper/">white paper</a>.</p>
+  <p><strong>V1 (current):</strong> Laptop-based Guardian Daemon with encrypted vault, signed rules, and tamper-evident audit logging. Functional with 970 passing tests. Fits professionals, small firms, funds, and family offices.</p>
+  <p><strong>V2 (under development):</strong> Production-grade availability — multi-device key recovery, high-availability Guardian topology, external audit anchoring, egress content filtering at the proxy boundary. Extends the model to enterprise security programs. See the <a href="whitepaper/">white paper</a>.</p>
+</section>
+
+<section>
+  <h2>Join the first 100</h2>
+  <div class="join">
+    <p>We are working with our first 100 design partners — operators who want cryptographic information barriers for their agents and are willing to shape what V2 looks like with us. No cost. Direct line to the founders.</p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" target="_blank" rel="noopener noreferrer" class="btn-primary">Sign up →</a>
+  </div>
 </section>
 
 </div>
