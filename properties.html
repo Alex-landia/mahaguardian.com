@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security properties — MahaGuardian</title>
+<meta name="description" content="Every defensive claim MahaGuardian makes, mapped to a specific test file and assertion line in the open-source repository.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#FAFAF8; --surface:#FFF; --text:#1A1A18; --muted:#6B6B65; --accent:#0F6E56; --accent-dk:#0B5644; --accent-lt:#E1F5EE; --border:#E5E5E0; --code-bg:#F4F4F0; --coral:#D85A30; --blue:#185FA5; --purple:#534AB7; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);line-height:1.7}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+code{font-family:'DM Mono',monospace;font-size:.9em;background:var(--code-bg);padding:2px 6px;border-radius:4px}
+.c{max-width:880px;margin:0 auto;padding:0 24px}
+
+nav{padding:20px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px}
+nav .logo{font-size:18px;font-weight:700;letter-spacing:-.5px} nav .logo span{color:var(--accent)}
+nav .links{display:flex;gap:24px;font-size:14px;font-weight:500;color:var(--muted);align-items:center;flex-wrap:wrap}
+nav .links a{color:var(--muted)} nav .links a:hover{color:var(--text)}
+nav .links a.nav-cta{background:var(--accent);color:#FFF;padding:8px 16px;border-radius:6px}
+nav .links a.nav-cta:hover{background:var(--accent-dk);color:#FFF;text-decoration:none}
+
+.hero{padding:60px 0 40px;border-bottom:1px solid var(--border)}
+.hero h1{font-size:38px;font-weight:700;letter-spacing:-1.2px;margin-bottom:16px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .sub{font-size:18px;color:var(--muted);max-width:720px;margin-bottom:20px}
+
+section{padding:48px 0;border-bottom:1px solid var(--border)}
+section:last-of-type{border-bottom:none}
+h2{font-size:22px;font-weight:700;margin-bottom:8px;letter-spacing:-.4px}
+.section-intro{color:var(--muted);font-size:15px;margin-bottom:24px;max-width:720px}
+
+.receipt{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:14px}
+.receipt:last-child{margin-bottom:0}
+.receipt-claim{font-weight:700;font-size:15.5px;color:var(--text);margin-bottom:10px;line-height:1.45}
+.receipt-meta{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:10px}
+.receipt-meta b{color:var(--text);font-weight:500}
+.receipt-code{background:#1A1A18;color:#E5E5E0;border-radius:6px;padding:12px 14px;font-family:'DM Mono',monospace;font-size:12px;line-height:1.6;overflow-x:auto;white-space:pre;margin-bottom:10px}
+.receipt-code .c1{color:#6B6B65}
+.receipt-code .cm{color:#5DCAA5}
+.receipt-link{font-size:13px;font-weight:600;color:var(--accent)}
+
+.caveat{background:var(--code-bg);border-left:3px solid var(--coral);border-radius:6px;padding:18px 22px;margin-top:24px;font-size:14px;color:var(--text);line-height:1.6}
+.caveat b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--coral);margin-bottom:6px;font-weight:700}
+
+footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:768px){
+  .hero h1{font-size:26px}
+  nav .links{gap:14px;font-size:13px}
+  .receipt-code{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<div class="c">
+<nav>
+  <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none">Maha<span>Guardian</span></a></div>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="index.html#how-we-differ">Compare</a>
+    <a href="index.html#architecture">Architecture</a>
+    <a href="whitepaper/">White paper</a>
+    <a href="https://github.com/partitia-clean/mahaguardian">GitHub</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" target="_blank" rel="noopener noreferrer" class="nav-cta">Join the first 100</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Security properties — <em>the receipts</em></h1>
+  <p class="sub">Every defensive claim on the homepage maps to a specific test in the open-source repository. This page is the index. Each entry shows the claim, the canonical test file, and the assertion line that proves it.</p>
+</div>
+
+<section>
+  <h2>Architectural enforcement — defense by deletion</h2>
+  <p class="section-intro">The strongest claim MahaGuardian makes is that bypass paths do not exist in the codebase. These tests assert it directly: the function cannot be imported because it has been removed.</p>
+
+  <div class="receipt">
+    <div class="receipt-claim">The agent has no alternate read path into the vault. Bypass functions deleted.</div>
+    <div class="receipt-meta"><b>tests/test_vault_phase3.py</b> :: TestVaultStructuralEnforcement</div>
+<div class="receipt-code">assert not hasattr(_vault_mod, "_vault_read"), \
+    "_vault_read still exists — FIX 2 incomplete"</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_vault_phase3.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">enforce() delegates to the canonical pipeline (TLP check, param scan, item lookup). It cannot be bypassed because the bypass calls are mocked and asserted-called.</div>
+    <div class="receipt-meta"><b>tests/test_enforce_integration.py</b> :: TestEnforceCallsCanonicalFunctions</div>
+<div class="receipt-code">assert mock_tlp.called, "enforce() must call check_tlp()"</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_enforce_integration.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">Legacy partition-access enforcement and its error type have been removed entirely. The attack surface is gone.</div>
+    <div class="receipt-meta"><b>tests/test_attacks.py</b> :: test_cross_agent_vault_access</div>
+<div class="receipt-code">assert not hasattr(enforcer_module, "enforce_partition_access"), \
+    "enforce_partition_access must not exist after SM-001 removal"</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_attacks.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">Guardian API is bound to localhost only. The owner's device is the only host that can reach it.</div>
+    <div class="receipt-meta"><b>tests/test_attacks.py</b> :: test_guardian_api_not_accessible_externally</div>
+<div class="receipt-code">assert GUARDIAN_HOST == "127.0.0.1", \
+    f"GUARDIAN_HOST must be 127.0.0.1 (localhost only), got {GUARDIAN_HOST}"</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_attacks.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">LLM API keys are never written to disk in plaintext. A filesystem scan after vault operations finds nothing.</div>
+    <div class="receipt-meta"><b>tests/test_attacks.py</b> :: test_llm_key_not_in_agent_filesystem</div>
+<div class="receipt-code">assert secret_value.encode() not in content, \
+    f"Plaintext LLM key found in {fpath}"</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_attacks.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+</section>
+
+<section>
+  <h2>Signed rules — SOUL.lock integrity</h2>
+  <p class="section-intro">Agent rules are ed25519-signed by the owner's device. Tampering — direct rewrite, schema corruption, missing signature, hash mismatch — is detected before the rule is loaded.</p>
+
+  <div class="receipt">
+    <div class="receipt-claim">Direct rewrite of a signed SOUL.lock file is detected by signature + hash verification at load time.</div>
+    <div class="receipt-meta"><b>tests/test_attacks.py</b> :: test_soul_lock_direct_write_blocked</div>
+<div class="receipt-code"><span class="c1"># ATTACK: direct write to SOUL.lock</span>
+soul_path.write_text("[meta]\nagent = 'evil'\n", encoding="utf-8")
+
+<span class="c1"># DEFENCE: verify_soul catches the tamper</span>
+with pytest.raises(SOULTamperError):
+    verify_soul(soul_path, pub_key)</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_attacks.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">All SOUL.lock error paths return the same generic message. An attacker cannot probe internal state from error responses.</div>
+    <div class="receipt-meta"><b>tests/test_soul_security.py</b> :: test_all_invalid_soul_errors_use_same_message_prefix</div>
+<div class="receipt-code">assert msg.startswith("SOUL.lock validation failed"), \
+    f"Unexpected error format: {msg!r}"</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_soul_security.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">Schema validation timing is uniform between valid and invalid inputs. No timing oracle.</div>
+    <div class="receipt-meta"><b>tests/test_soul_security.py</b> :: test_valid_vs_invalid_schema_timing_similar</div>
+<div class="receipt-code">assert abs(avg_valid - avg_invalid) < 0.005, \
+    f"Timing gap: valid={avg_valid:.4f}s, invalid={avg_invalid:.4f}s"</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_soul_security.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+</section>
+
+<section>
+  <h2>Token enforcement</h2>
+  <p class="section-intro">Guardian Access Tokens are scoped, time-limited, and cryptographically bound to the agent's mTLS certificate. Permissions are derived from the vault at issuance, not from the request.</p>
+
+  <div class="receipt">
+    <div class="receipt-claim">Tokens are bound to the agent's mTLS certificate. Presenting a token with the wrong certificate is rejected.</div>
+    <div class="receipt-meta"><b>tests/test_attacks.py</b> :: test_token_agent_mismatch</div>
+<div class="receipt-code"><span class="c1"># Issue token bound to cert A; present with cert B</span>
+with pytest.raises(TokenAgentMismatchError):
+    verify_token(token_str, cert_b)</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_attacks.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">Expired tokens are rejected at the verification boundary, not at the application layer.</div>
+    <div class="receipt-meta"><b>tests/test_attacks.py</b> :: test_expired_token_rejected</div>
+<div class="receipt-code">with pytest.raises(TokenExpiredError):
+    verify_token(token_str, agent_cert)</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_attacks.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">Token permissions come from the vault at issuance, not from caller-supplied request fields. Caller cannot elevate by lying.</div>
+    <div class="receipt-meta"><b>tests/test_attacks.py</b> :: test_token_permissions_come_from_vault_not_request</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_attacks.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+</section>
+
+<section>
+  <h2>Cross-matter isolation</h2>
+  <p class="section-intro">The core product claim. An agent working on Engagement A cannot reach Engagement B's data, even when the same human operator is involved in both. Twelve parametrized scenarios exercise allow / deny / elevate across six agent profiles.</p>
+
+  <div class="receipt">
+    <div class="receipt-claim">Twelve-case truth table: every combination of agent profile × data key produces the expected allow / deny / elevate outcome end-to-end.</div>
+    <div class="receipt-meta"><b>tests/test_integration_truth_table.py</b> :: TestIntegrationTruthTable.test_truth_table</div>
+<div class="receipt-code">TRUTH_TABLE = [
+    ("director_overview",   "client_count",       "allow"),
+    ("director_asst_a",     "v2g_profit_split",   "deny"),     <span class="c1"># partition deny</span>
+    ("financial_analyst_a", "client_count",       "elevate"),  <span class="c1"># human approval</span>
+    ("external_agent_a",    "client_count",       "deny"),     <span class="c1"># TLP: GREEN + RESTRICTED</span>
+    <span class="c1"># ... 8 more cases</span>
+]</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_integration_truth_table.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">Cross-partition access at the HTTP API returns 403 with the generic <code>access_denied</code> message. No information leak about whether the resource exists.</div>
+    <div class="receipt-meta"><b>tests/test_attacks.py</b> :: test_cross_partition_via_api</div>
+<div class="receipt-code">assert response.status_code == 403
+assert response.json()["detail"] == "access_denied"</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_attacks.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">Confused-deputy via tool params is caught. An agent with company-a credentials cannot smuggle a company-b path through tool arguments.</div>
+    <div class="receipt-meta"><b>tests/test_attacks.py</b> :: test_tool_params_confused_deputy_via_api</div>
+<div class="receipt-code"><span class="c1"># agent_id="alpha" with company-a token, but params reference company-b</span>
+"params": {"path": "/vault/company-b/secrets.txt"}
+<span class="c1"># Expected: 403 — confused-deputy detected by partition scan of params</span>
+assert response.status_code == 403</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_attacks.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">Injection of control characters (commas, equals) in payment recipient fields is rejected before reaching accounting. Audit log integrity preserved.</div>
+    <div class="receipt-meta"><b>tests/test_attacks.py</b> :: test_recipient_injection_neutralized_at_api</div>
+<div class="receipt-code"><span class="c1"># recipient="Shop,amount=-9999.0" — control char injection</span>
+assert response.status_code != 200, \
+    f"Injection recipient was accepted! {response.json()}"</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_attacks.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+</section>
+
+<section>
+  <h2>Audit chain integrity</h2>
+  <p class="section-intro">Every enforcement decision is appended to a hash-chained SQLite log keyed with an HMAC. Tampering is detectable; UPDATE and DELETE are blocked at the database authorization layer.</p>
+
+  <div class="receipt">
+    <div class="receipt-claim">Tampering with any field in a logged decision is detected at verification time. The chain breaks.</div>
+    <div class="receipt-meta"><b>tests/test_audit_chain.py</b> :: test_verify_detects_tamper_in_decision</div>
+<div class="receipt-code"><span class="c1"># Direct SQL: flip a logged ALLOW to DENY</span>
+conn.execute("UPDATE audit_chain SET decision='DENY' WHERE rowid=1")
+assert chain.verify() is False</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_audit_chain.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">UPDATE on the audit chain table is denied at the SQLite authorization layer, not just by application policy.</div>
+    <div class="receipt-meta"><b>tests/test_audit_chain.py</b> :: test_append_only_update_blocked</div>
+<div class="receipt-code">conn.set_authorizer(
+    lambda code, *_: sqlite3.SQLITE_DENY if code == sqlite3.SQLITE_UPDATE
+    else sqlite3.SQLITE_OK
+)
+with pytest.raises(Exception):
+    conn.execute("UPDATE audit_chain SET decision='DENY' WHERE rowid=1")</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_audit_chain.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">ELEVATE decisions (human-approval gate) are logged with the same fields as ALLOW and DENY, in chain order.</div>
+    <div class="receipt-meta"><b>tests/test_audit_chain.py</b> :: test_elevate_entry_logged</div>
+<div class="receipt-code">assert entries[0]["decision"] == "ELEVATE"</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_audit_chain.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+</section>
+
+<section>
+  <h2>Side-channel resistance</h2>
+  <p class="section-intro">An attacker probing the enforcement boundary cannot learn whether a resource exists by comparing error messages or response timing.</p>
+
+  <div class="receipt">
+    <div class="receipt-claim">"Key not found" and "access denied" expose the same safe message at the caller boundary.</div>
+    <div class="receipt-meta"><b>tests/test_anti_probing.py</b> :: test_not_found_and_denied_have_same_safe_message</div>
+<div class="receipt-code">assert e_not_found.value.safe_message \
+    == e_denied.value.safe_message \
+    == "access_denied"</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_anti_probing.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+
+  <div class="receipt">
+    <div class="receipt-claim">"Key not found" and "access denied" have comparable response times. No timing oracle.</div>
+    <div class="receipt-meta"><b>tests/test_anti_probing.py</b> :: test_not_found_vs_denied_timing_comparable</div>
+<div class="receipt-code">assert diff_ms < 50, (
+    f"Timing oracle detected: mean not_found={mean_nf*1000:.2f}ms, "
+    f"mean denied={mean_denied*1000:.2f}ms, diff={diff_ms:.2f}ms"
+)</div>
+    <a class="receipt-link" href="https://github.com/partitia-clean/mahaguardian/blob/main/tests/test_anti_probing.py" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+  </div>
+</section>
+
+<section>
+  <h2>What these tests do and do not prove</h2>
+  <div class="caveat">
+    <b>Honest framing</b>
+    A passing test proves that one specific scenario behaves as the test author intended. It does not prove the absence of bugs, nor does it prove correctness against attacks that were not yet imagined when the test was written. We list canonical tests here so that any security reviewer can verify our claims directly and so that we can be held to a specific bar in conversation. This is evidence of intent and rigor, not a proof of soundness. We commission third-party security review in the V2 timeframe, and we will publish findings.
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="c">
+    <p>MahaGuardian &copy; 2026 Alexander Landia. Patent pending (USPTO). <a href="https://github.com/partitia-clean/mahaguardian">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
