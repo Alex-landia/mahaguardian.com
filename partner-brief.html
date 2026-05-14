@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner Brief — MahaGuardian</title>
+<meta name="description" content="MahaGuardian Partner Brief — what it does, where it fits in your firm's existing security stack, why it is needed alongside vendor sandboxes like Codex Sandbox, and how to engage.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#FAFAF8; --surface:#FFF; --text:#1A1A18; --muted:#6B6B65; --accent:#0F6E56; --accent-dk:#0B5644; --accent-lt:#E1F5EE; --border:#E5E5E0; --code-bg:#F4F4F0; --coral:#D85A30; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);line-height:1.75}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+.c{max-width:760px;margin:0 auto;padding:0 24px}
+
+nav{padding:20px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px}
+nav .logo{font-size:18px;font-weight:700;letter-spacing:-.5px} nav .logo span{color:var(--accent)}
+nav .links{display:flex;gap:24px;font-size:14px;font-weight:500;color:var(--muted);align-items:center;flex-wrap:wrap}
+nav .links a{color:var(--muted)} nav .links a:hover{color:var(--text)}
+nav .links a.nav-cta{background:var(--accent);color:#FFF;padding:8px 16px;border-radius:6px}
+nav .links a.nav-cta:hover{background:var(--accent-dk);color:#FFF;text-decoration:none}
+
+.hero{padding:60px 0 40px;border-bottom:1px solid var(--border)}
+.hero .eyebrow{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.hero h1{font-size:36px;font-weight:700;letter-spacing:-1px;margin-bottom:16px;line-height:1.15}
+.hero .lede{font-size:17px;color:var(--muted);max-width:660px}
+
+section{padding:48px 0;border-bottom:1px solid var(--border)}
+section:last-of-type{border-bottom:none}
+.section-num{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;display:block}
+h2{font-size:24px;font-weight:700;margin-bottom:16px;letter-spacing:-.4px;line-height:1.25}
+h3{font-size:16px;font-weight:700;margin-top:22px;margin-bottom:8px}
+p{margin-bottom:14px;font-size:16px} p:last-child{margin-bottom:0}
+
+.layer-table{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px;margin:18px 0;font-size:14.5px}
+.layer-row{display:grid;grid-template-columns:1fr 2fr;gap:14px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.layer-row:last-child{border-bottom:none}
+.layer-row b{color:var(--accent-dk);font-weight:700}
+.layer-row p{font-size:14.5px;line-height:1.55;margin-bottom:0}
+
+.qa{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:12px}
+.qa h3{margin-top:0;margin-bottom:6px;font-size:15.5px;color:var(--text)}
+.qa p{font-size:15px;margin-bottom:0;color:var(--muted);line-height:1.6}
+
+.threat-note{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:16px 20px;margin-top:18px;font-size:14px;color:var(--muted);line-height:1.65}
+.threat-note b{color:var(--text)}
+
+.contact{background:var(--accent-lt);border-radius:10px;padding:28px 32px;margin-top:16px;font-size:15.5px}
+.contact b{color:var(--accent-dk)}
+
+footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
+
+@media(max-width:768px){
+  .hero h1{font-size:28px}
+  .layer-row{grid-template-columns:1fr;gap:6px}
+  nav .links{gap:14px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<div class="c">
+<nav>
+  <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none">Maha<span>Guardian</span></a></div>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="properties.html">Security Status</a>
+    <a href="whitepaper/">Architecture</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" target="_blank" rel="noopener noreferrer" class="nav-cta">Join the first 100</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">Partner Brief — May 2026</div>
+  <h1>MahaGuardian for professional services firms</h1>
+  <p class="lede">An add-on layer that sits on top of your firm's existing security infrastructure and adapts it for the AI agents about to start acting on your staff's behalf. Vendor-neutral. Cryptographically enforced. Built for firms that cannot afford the headline.</p>
+</div>
+
+<section>
+  <span class="section-num">01 — Summary</span>
+  <h2>One paragraph</h2>
+  <p>MahaGuardian gives every AI agent in your practice a credential that opens exactly one matter's information and nothing else. It does not replace your identity provider, your document-management system, your conflicts engine, or your email security — it sits on top of them and adapts them for an environment where AI agents read prompts and decide what to do next. It works with most AI vendors your firm uses today or chooses tomorrow. It is operated by your firm on your firm's infrastructure, not by a vendor on theirs. This brief describes the problem, what MahaGuardian does, where it fits in your existing stack, why vendor sandboxes such as OpenAI's Codex Sandbox do not replace it, and how to engage.</p>
+</section>
+
+<section>
+  <span class="section-num">02 — Where It Fits</span>
+  <h2>An add-on layer, not a replacement</h2>
+  <p>Your firm has already invested in security infrastructure. MahaGuardian does not replace any of it. It adapts your existing investments for an environment where AI agents are about to start acting on behalf of your staff. Each system your firm runs was designed for a world in which humans, not models, made requests against the firm's data. MahaGuardian fills the gap each of them now has.</p>
+
+  <div class="layer-table">
+    <div class="layer-row">
+      <b>Identity<br>(Okta, Microsoft Entra ID, Active Directory)</b>
+      <p>Knows who your staff are. Does not know which AI agent on a staff member's machine is making the current request, or what scope that agent should hold. MahaGuardian binds an agent identity to a staff identity and to a single matter at issuance.</p>
+    </div>
+    <div class="layer-row">
+      <b>Document management<br>(iManage, NetDocuments)</b>
+      <p>Enforces who can open which folder. Does not enforce which AI agent operating within a staff member's session can open it. MahaGuardian issues per-agent, per-matter credentials compatible with standard enterprise API authorisation patterns — OAuth app registrations, service principals, delegated scopes.</p>
+    </div>
+    <div class="layer-row">
+      <b>Conflicts and ethical walls<br>(Intapp, custom)</b>
+      <p>Tracks which matters are walled from which, at the human level. Does not enforce the same walls against AI agents reading data on a human's behalf. MahaGuardian extends your existing conflicts taxonomy into the agent layer.</p>
+    </div>
+    <div class="layer-row">
+      <b>Email security &amp; DLP<br>(Mimecast, Microsoft Purview)</b>
+      <p>Catches sensitive content at egress. Does not catch the moment an AI agent reads cross-matter data and incorporates it into a draft that is then sent through a sanctioned channel. MahaGuardian prevents the read at source — through the Guardian-controlled credential boundary.</p>
+    </div>
+    <div class="layer-row">
+      <b>Endpoint security<br>(CrowdStrike, SentinelOne)</b>
+      <p>Detects malicious processes on staff machines. Does not detect legitimate AI agents acting outside their authorised matter scope. MahaGuardian enforces scope at the agent's API boundary regardless of endpoint health.</p>
+    </div>
+  </div>
+
+  <p>The picture: your existing controls continue to do exactly what they do today, against the human surface they were designed for. MahaGuardian adds one thin layer between the AI agent and those systems, and ensures whatever the agent does on a staff member's behalf is bounded by a credential the firm itself issued for that specific matter.</p>
+
+  <div class="threat-note">
+    <b>Integration scope:</b> MahaGuardian integrates wherever your systems support scoped, revocable credentials. Systems that only support shared user tokens, legacy file shares, or VDI environments without API boundaries require integration scoping during the pilot. We work through any new interface with design-partner firms before deployment.
+  </div>
+</section>
+
+<section>
+  <span class="section-num">03 — The Problem</span>
+  <h2>Why firms need it now</h2>
+  <p>Every firm using AI agents in client work faces the same exposure: a model whose vendor promises it will not leak across matters, with no enforcement mechanism the firm itself controls. The vendor's promise is a policy. The risk is architectural.</p>
+  <p>AI agents acting on a staff member's behalf operate with that person's access. Without matter-scoped credentials, an agent active in one engagement can read — and incorporate — data from any other engagement the staff member can reach. The agent does not have to be malicious. It just has to be helpful in the wrong direction.</p>
+  <p>By construction, when correctly deployed, MahaGuardian closes this gap through the credential layer itself. The agent is not asked to be careful. It is issued a key that does not unlock other matters.</p>
+</section>
+
+<section>
+  <span class="section-num">04 — What MahaGuardian Does</span>
+  <h2>Three properties your compliance officer will recognise</h2>
+
+  <h3>Matter walls live in the credentials, not in the agent's instructions.</h3>
+  <p>Every agent in your practice carries a credential that opens exactly one matter's information. There is no key on that credential for any other matter through the Guardian-controlled boundary. An agent that should not be able to read another client's file is not asked to be careful — it is given a key that does not unlock the file. The agent cannot widen its own scope, cannot escalate its own permissions, and cannot bypass the check by hallucinating its way past a prompt instruction.</p>
+
+  <h3>Every Guardian-mediated action is auditable, end to end.</h3>
+  <p>Every retrieval the agent performs through MahaGuardian is recorded in a tamper-evident, hash-chained log. The log is signed, so any retrospective alteration is detectable. If a client's general counsel ever asks "show me everywhere the AI touched our data," the firm has a complete answer covering all Guardian-mediated retrievals and approvals. The audit log lives on your firm's infrastructure, not the vendor's. The <a href="properties.html">Security Status</a> page documents exactly what is and is not within audit scope.</p>
+
+  <h3>Sensitive actions require a named human to approve.</h3>
+  <p>For actions the firm has flagged as sensitive — moving money, sending external communications, sharing privileged material, accessing information above an agent's normal scope — the agent must request approval from a named human before proceeding. The request and the approving partner are both recorded. The agent cannot route around the gate through the Guardian-controlled boundary. This is the same control your firm already operates for wire transfers and outside-counsel referrals, applied to the action surface that AI agents are about to start operating on.</p>
+</section>
+
+<section>
+  <span class="section-num">05 — Vendor Neutrality</span>
+  <h2>Works with most AI vendors your firm chooses</h2>
+  <p>Your firm should not have to bet on a single AI vendor. The model market is moving fast — capabilities, pricing, and trust posture all shift quarter by quarter. MahaGuardian works with most AI agents that interact with your firm's systems through standard APIs. Whether your team uses OpenAI's models for technical work, Anthropic's Claude for legal drafting, Google's Gemini for diligence, AWS Bedrock for compliance review, or a self-hosted model for the most sensitive matters, the same MahaGuardian deployment enforces the same matter walls across all of them — wherever your systems support scoped, revocable credentials.</p>
+  <p>If your firm switches AI vendors next year — and it will, at least once — you do not re-architect your information barriers. The barriers live in MahaGuardian. The model is replaceable. This is the position your CIO wants to be able to take.</p>
+</section>
+
+<section>
+  <span class="section-num">06 — Vendor Sandboxes</span>
+  <h2>Doesn't OpenAI's Codex Sandbox already solve this?</h2>
+  <p>In the past year, AI vendors have made significant investments in agent safety — most visibly OpenAI's Codex Sandbox, Anthropic's Code Execution environment, and similar work at Google and AWS. These are real improvements. They do not, however, solve the problem MahaGuardian addresses, for three reasons.</p>
+  <p><b>First — different problem.</b> Codex Sandbox constrains what an AI agent's <em>execution environment</em> can do — the files it can read on a developer's machine, the network requests it can make, the commands it can execute. MahaGuardian constrains what the AI agent's <em>authority</em> lets it reach across your firm's information systems. Even with a sandbox in place, if a single agent session or token can access two client matters, the agent can still retrieve both. The sandbox stops the agent running unsafe code on a laptop. MahaGuardian stops the agent reading another client's matter while drafting yours — by splitting the credential authority at the source.</p>
+  <p><b>Second — vendor-specific.</b> Codex Sandbox protects Codex. If your firm uses one vendor's model for one task, another for a second, and a third for a third — and almost every firm using AI seriously already does — each runs in its own vendor's sandbox under that vendor's controls. The firm has no single enforcement layer across all three. MahaGuardian is that layer.</p>
+  <p><b>Third — operated by the vendor, not the firm.</b> Vendor sandbox controls run on vendor infrastructure. For many vendor-operated controls, firms may not hold independent, cryptographically verifiable evidence of every enforcement decision — evidence that would be entirely within the firm's own custody. MahaGuardian's controls are operated by the firm on the firm's infrastructure. The signing keys never leave the firm's device. If a regulator, a court, or a client asks who could possibly have widened an AI agent's permissions, the firm has a single, locally-held, cryptographically verifiable answer.</p>
+  <p style="font-size:14px;color:var(--muted);margin-top:16px">We use Codex Sandbox as an illustrative example; similar arguments apply to equivalent controls from Anthropic, Google, and AWS.</p>
+  <p>Vendor sandboxes are a floor. The agents that operate against your firm's data need a ceiling as well, and the ceiling has to be installed and operated by the firm. That is what MahaGuardian is.</p>
+</section>
+
+<section>
+  <span class="section-num">07 — The Design Partner Program</span>
+  <h2>Engage with us</h2>
+  <p>We are working with our first 100 design-partner firms — practices that want cryptographic information barriers around their AI agents and are willing to shape what V2 looks like with us. The arrangement is straightforward. There is no cost during the design-partner phase. The founder is your direct line. We ask for time, candour, and willingness to deploy in pilot scope on a defined slice of your AI usage. In return, the firm gets a working deployment, a published case (if you are willing), and a paid commercial relationship at the end of the pilot if it works for both sides.</p>
+</section>
+
+<section>
+  <span class="section-num">08 — Common Questions</span>
+  <h2>What we get asked</h2>
+
+  <div class="qa">
+    <h3>Where exactly does MahaGuardian sit?</h3>
+    <p>Between each AI agent your staff uses and the systems that agent reaches for data. The agent calls MahaGuardian for a credential; MahaGuardian issues a scoped, time-limited credential bound to that specific agent and that specific matter; the agent uses the credential against your DMS, email, or other system through standard API authorisation patterns. The systems behind never see MahaGuardian — they see a normal API request from a credential they can verify.</p>
+  </div>
+
+  <div class="qa">
+    <h3>What does it cost?</h3>
+    <p>No cost during the design-partner phase. Commercial pricing is per-agent, per-month, in line with seat-licensed security software your firm already purchases. We will publish a price list when V2 ships.</p>
+  </div>
+
+  <div class="qa">
+    <h3>How long does deployment take?</h3>
+    <p>V1 deploys in a day on a single compliance officer's or partner's laptop, with pilot scope of up to a few dozen agents. V2 will support firm-wide, always-on deployment; that is in development for late 2026.</p>
+  </div>
+
+  <div class="qa">
+    <h3>What if the deployment device is offline or unavailable?</h3>
+    <p>Agents operating with already-issued credentials continue to function within those credentials' validity window. Issuance of new credentials requires the device to be online. V1 includes a documented manual key-backup and recovery procedure; the recommended pilot scope is a defined set of agents on active matters, not firm-wide always-on issuance. High-availability key management is V2 work.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Does it work with our existing AI vendor?</h3>
+    <p>Yes, if the agent interacts with your systems through standard APIs. We have tested with OpenAI, Anthropic, and Google models, and with self-hosted Llama and Mistral. We have not tested every possible integration; we work through any new vendor's interface during the design-partner pilot.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Is the codebase open source?</h3>
+    <p>The implementation is open source under a dual licence — open for review, audit, and non-commercial use; a commercial licence covers production deployments. Reviewers and security researchers are welcome to examine the codebase on <a href="https://github.com/partitia-clean/mahaguardian" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Who is behind MahaGuardian?</h3>
+    <p>The founder is Alexander Landia. The codebase is open-source on GitHub and open for review by security researchers. The product is patent-pending in the United States. A direct introduction is the best way to evaluate the team.</p>
+  </div>
+</section>
+
+<section>
+  <span class="section-num">09 — Contact</span>
+  <h2>Speak with the founder</h2>
+  <div class="contact">
+    <p>The fastest path is to fill in the <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" target="_blank" rel="noopener noreferrer">design-partner form</a>, mention you read the partner brief, and you will be in conversation with the founder within a working day.</p>
+    <p style="margin-top:14px"><b>For security teams</b> evaluating the technical posture before partner-level engagement, the <a href="properties.html">Security Status</a> page maps every claim in this brief to a specific test in the open-source repository. The <a href="whitepaper/">architecture white paper</a> covers the cryptographic design in full.</p>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="c">
+    <p>MahaGuardian &copy; 2026 Alexander Landia. Patent pending (USPTO). <a href="https://github.com/partitia-clean/mahaguardian">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
