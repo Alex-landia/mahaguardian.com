@@ -73,44 +73,44 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
 <div class="hero">
   <div class="eyebrow">Partner Brief — May 2026</div>
   <h1>MahaGuardian for professional services firms</h1>
-  <p class="lede">An add-on layer that sits on top of your firm's existing security infrastructure and adapts it for the AI agents about to start acting on your staff's behalf. Vendor-neutral. Cryptographically enforced. Built for firms that cannot afford the headline.</p>
+  <p class="lede">An add-on layer that extends your firm's existing security infrastructure to the AI agents now acting on your staff's behalf. Your IdP, DMS, conflicts engine, and DLP keep working exactly as they do today — MahaGuardian gives each agent its own scoped credential within them. Vendor-neutral. Cryptographically enforced. Built for firms that cannot afford the headline.</p>
 </div>
 
 <section>
   <span class="section-num">01 — Summary</span>
   <h2>One paragraph</h2>
-  <p>MahaGuardian gives every AI agent in your practice a credential that opens exactly one matter's information and nothing else. It does not replace your identity provider, your document-management system, your conflicts engine, or your email security — it sits on top of them and adapts them for an environment where AI agents read prompts and decide what to do next. It works with most AI vendors your firm uses today or chooses tomorrow. It is operated by your firm on your firm's infrastructure, not by a vendor on theirs. This brief describes the problem, what MahaGuardian does, where it fits in your existing stack, why vendor sandboxes such as OpenAI's Codex Sandbox do not replace it, and how to engage.</p>
+  <p>MahaGuardian gives every AI agent in your practice a credential that opens exactly one matter's information and nothing else. It does not replace your identity provider, your document-management system, your conflicts engine, or your email security — it integrates with them and gives each AI agent its own scoped identity within the systems you already operate. It works with most AI vendors your firm uses today or chooses tomorrow. It is operated by your firm on your firm's infrastructure, not by a vendor on theirs. This brief describes the problem, what MahaGuardian does, where it fits in your existing stack, why vendor sandboxes such as OpenAI's Codex Sandbox do not replace it, and how to engage.</p>
 </section>
 
 <section>
   <span class="section-num">02 — Where It Fits</span>
   <h2>An add-on layer, not a replacement</h2>
-  <p>Your firm has already invested in security infrastructure. MahaGuardian does not replace any of it. It adapts your existing investments for an environment where AI agents are about to start acting on behalf of your staff. Each system your firm runs was designed for a world in which humans, not models, made requests against the firm's data. MahaGuardian fills the gap each of them now has.</p>
+  <p>Your firm has already invested in security infrastructure. None of it needs to change. The systems you run continue to work exactly as designed — they were built for human principals, and they keep working correctly when humans make the requests. The gap is that AI agents acting on a staff member's behalf today inherit that staff member's full credentials and full audit footprint: any folder the staff member can open, the agent can open; any action the agent takes is recorded as the staff member's action. MahaGuardian closes that gap by giving each agent its own scoped credential and its own audit identity within your existing systems.</p>
 
   <div class="layer-table">
     <div class="layer-row">
       <b>Identity<br>(Okta, Microsoft Entra ID, Active Directory)</b>
-      <p>Knows who your staff are. Does not know which AI agent on a staff member's machine is making the current request, or what scope that agent should hold. MahaGuardian binds an agent identity to a staff identity and to a single matter at issuance.</p>
+      <p>Authenticates your staff and works exactly as it does today. An AI agent on a staff member's machine currently reaches downstream systems using the staff member's session — to those systems, the request is indistinguishable from the staff member's own. MahaGuardian issues the agent its own credential, bound to the staff member and scoped to a single matter, so downstream systems see the agent as a distinct principal.</p>
     </div>
     <div class="layer-row">
       <b>Document management<br>(iManage, NetDocuments)</b>
-      <p>Enforces who can open which folder. Does not enforce which AI agent operating within a staff member's session can open it. MahaGuardian issues per-agent, per-matter credentials compatible with standard enterprise API authorisation patterns — OAuth app registrations, service principals, delegated scopes.</p>
+      <p>Enforces folder-level access for your staff exactly as designed. An AI agent operating with a staff member's session today has the same DMS access the staff member has — every folder they can open, the agent can open. MahaGuardian issues per-agent, per-matter credentials compatible with standard enterprise API authorisation patterns (OAuth app registrations, service principals, delegated scopes), so the DMS sees the agent's narrower scope rather than the staff member's full scope.</p>
     </div>
     <div class="layer-row">
       <b>Conflicts and ethical walls<br>(Intapp, custom)</b>
-      <p>Tracks which matters are walled from which, at the human level. Does not enforce the same walls against AI agents reading data on a human's behalf. MahaGuardian extends your existing conflicts taxonomy into the agent layer.</p>
+      <p>Tracks matter walls at the staff level. An AI agent inherits the conflicts profile of the staff member running it, so the wall is enforced per human rather than per active engagement — even though the same staff member may legitimately work on both sides of a wall at different moments. MahaGuardian extends your existing conflicts taxonomy into the agent layer, so an agent assigned to Matter A cannot reach Matter B, even when the same staff member can reach both.</p>
     </div>
     <div class="layer-row">
       <b>Email security &amp; DLP<br>(Mimecast, Microsoft Purview)</b>
-      <p>Catches sensitive content at egress. Does not catch the moment an AI agent reads cross-matter data and incorporates it into a draft that is then sent through a sanctioned channel. MahaGuardian prevents the read at source — through the Guardian-controlled credential boundary.</p>
+      <p>Catches sensitive content at egress. When an agent reads cross-matter data, incorporates it into a draft, and the draft then leaves through a sanctioned channel, DLP sees a routine outbound message from the staff member. MahaGuardian prevents the cross-matter read at source, through the Guardian-controlled credential boundary, before the content can reach the draft.</p>
     </div>
     <div class="layer-row">
       <b>Endpoint security<br>(CrowdStrike, SentinelOne)</b>
-      <p>Detects malicious processes on staff machines. Does not detect legitimate AI agents acting outside their authorised matter scope. MahaGuardian enforces scope at the agent's API boundary regardless of endpoint health.</p>
+      <p>Detects malicious processes on staff machines. AI agents acting outside their intended matter scope are not malicious processes — they are authorised software running with the staff member's credentials, and every endpoint signal looks legitimate. MahaGuardian enforces scope at the agent's API boundary, regardless of endpoint health.</p>
     </div>
   </div>
 
-  <p>The picture: your existing controls continue to do exactly what they do today, against the human surface they were designed for. MahaGuardian adds one thin layer between the AI agent and those systems, and ensures whatever the agent does on a staff member's behalf is bounded by a credential the firm itself issued for that specific matter.</p>
+  <p>The picture: your existing controls continue to do exactly what they do today, against the human surface they were designed for. MahaGuardian operates between the AI agent and those systems, and ensures that whatever the agent does on a staff member's behalf reaches them through a credential the firm itself issued for that specific matter — with a distinct audit identity so the agent's actions never blur into the staff member's own.</p>
 
   <div class="threat-note">
     <b>Integration scope:</b> MahaGuardian integrates wherever your systems support scoped, revocable credentials. Systems that only support shared user tokens, legacy file shares, or VDI environments without API boundaries require integration scoping during the pilot. We work through any new interface with design-partner firms before deployment.
@@ -133,7 +133,7 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
   <p>Every agent in your practice carries a credential that opens exactly one matter's information. There is no key on that credential for any other matter through the Guardian-controlled boundary. An agent that should not be able to read another client's file is not asked to be careful — it is given a key that does not unlock the file. The agent cannot widen its own scope, cannot escalate its own permissions, and cannot bypass the check by hallucinating its way past a prompt instruction.</p>
 
   <h3>Every Guardian-mediated action is auditable, end to end.</h3>
-  <p>Every retrieval the agent performs through MahaGuardian is recorded in a tamper-evident, hash-chained log. The log is signed, so any retrospective alteration is detectable. If a client's general counsel ever asks "show me everywhere the AI touched our data," the firm has a complete answer covering all Guardian-mediated retrievals and approvals. The audit log lives on your firm's infrastructure, not the vendor's. The <a href="properties.html">Security Status</a> page documents exactly what is and is not within audit scope.</p>
+  <p>Every retrieval the agent performs through MahaGuardian is recorded in a tamper-evident, hash-chained log. Because each agent operates under its own credential — distinct from the staff member's — its actions appear in a dedicated agent audit trail, not interleaved with the staff member's own activity. The log is signed, so any retrospective alteration is detectable. If a client's general counsel ever asks "show me everywhere the AI touched our data," the firm has a complete answer covering all Guardian-mediated retrievals and approvals. The audit log lives on your firm's infrastructure, not the vendor's. The <a href="properties.html">Security Status</a> page documents exactly what is and is not within audit scope.</p>
 
   <h3>Sensitive actions require a named human to approve.</h3>
   <p>For actions the firm has flagged as sensitive — moving money, sending external communications, sharing privileged material, accessing information above an agent's normal scope — the agent must request approval from a named human before proceeding. The request and the approving partner are both recorded. The agent cannot route around the gate through the Guardian-controlled boundary. This is the same control your firm already operates for wire transfers and outside-counsel referrals, applied to the action surface that AI agents are about to start operating on.</p>
