@@ -158,6 +158,29 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
 </section>
 
 <section>
+  <span class="section-num">06a — Platform permissions vs. matter-scoped runtime authority</span>
+  <h2>User-level permissions are not the same as task-level confinement</h2>
+  <p>Microsoft 365 Copilot and SharePoint agents are documented as operating within the signed-in user's existing permissions. That is correct behavior for most enterprise AI use, and it is backed by strong tenant-wide governance, DLP, and compliance infrastructure.</p>
+  <p>The harder case is a regulated professional who legitimately has access to several live matters at once — a partner at a law firm with three active clients, a banker running two mandates, a board director sitting on two companies. In that situation, permission inheritance does not by itself create a separate runtime boundary for one agent task acting on one matter. Current Microsoft documentation does not clearly establish a control model for same-user, cross-matter, task-scoped runtime confinement of an AI agent.</p>
+  <p>MahaGuardian is designed for that narrower case. The intended control model shifts the question from <em>"Can this user access this data?"</em> to <em>"Can this specific agent task access only the one matter it was assigned to — for this session, bounded in time and scope?"</em></p>
+  <p>To be precise about the architecture: the agent identity is durable — it persists for the life of the engagement. What is time-bounded is the capability token the Guardian issues for each task session: a signed envelope specifying the matter, the permitted skills, the egress targets, and an expiry. A new envelope must be issued by the Guardian for each session. The previous session's authority cannot be extended by the agent itself.</p>
+  <p>This is not a claim that Microsoft's controls are weak or unnecessary. Microsoft and MahaGuardian address different layers:</p>
+  <div class="layer-table">
+    <div class="layer-row">
+      <b>Microsoft</b>
+      <p>Identity, permissions, tenant governance, DLP, sensitivity labels, compliance, AI posture and threat detection. Strong procurement and integration story for Microsoft-heavy firms.</p>
+    </div>
+    <div class="layer-row">
+      <b>MahaGuardian</b>
+      <p>Time-bounded, matter-scoped runtime authority for agents acting on behalf of users who legitimately have access to multiple matters. Intended to sit alongside Microsoft controls, not replace them.</p>
+    </div>
+  </div>
+  <div class="threat-note">
+    <b>Publishing note:</b> The differentiation claimed here rests on real runtime enforcement. The <a href="properties.html">Security Status</a> page maps each enforcement claim to a specific test in the open-source repository. Claims about what Microsoft documentation does and does not show are based on publicly available Microsoft Learn sources and are reviewed quarterly.
+  </div>
+</section>
+  
+<section>
   <span class="section-num">07 — The Design Partner Program</span>
   <h2>Engage with us</h2>
   <p>We are working with our first 100 design-partner firms — practices that want cryptographic information barriers around their AI agents and are willing to shape what V2 looks like with us. The arrangement is straightforward. There is no cost during the design-partner phase. The founder is your direct line. We ask for time, candour, and willingness to deploy in pilot scope on a defined slice of your AI usage. In return, the firm gets a working deployment, a published case (if you are willing), and a paid commercial relationship at the end of the pilot if it works for both sides.</p>
@@ -197,6 +220,11 @@ footer{padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
     <p>The implementation is open source under a dual licence — open for review, audit, and non-commercial use; a commercial licence covers production deployments. Reviewers and security researchers are welcome to examine the codebase on <a href="https://github.com/partitia-clean/mahaguardian" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
   </div>
 
+<div class="qa">
+  <h3>We already pay for Microsoft E5 and Copilot. Why would we need MahaGuardian?</h3>
+  <p>Microsoft gives you strong tenant-wide governance and ensures agents operate within the signed-in user's permissions — that is valuable and should stay in place. The narrower question MahaGuardian is designed to address is: when one professional legitimately has access to several confidential matters, can one agent task be confined to exactly one of them at runtime? Current Microsoft documentation does not clearly establish a control model for that case. We do not replace Copilot; we are designed to add a matter-scoped runtime boundary where simple permission inheritance is not enough.</p>
+</div>
+  
   <div class="qa">
     <h3>Who is behind MahaGuardian?</h3>
     <p>The founder is Alexander Landia. The codebase is open-source on GitHub and open for review by security researchers. The product is patent-pending in the United States. A direct introduction is the best way to evaluate the team.</p>
