@@ -238,7 +238,15 @@ footer{padding:32px 0;text-align:center;color:var(--muted);font-size:13px}
     <p>Customer matter data does not transit our servers. The architecture is built so it cannot — your credentials, your keys, and your audit logs stay on your firm's infrastructure.</p>
   </div>
 </section>
-
+  
+<section>
+  <h2>How we compare to platform-level agent controls</h2>
+  <p>Microsoft Copilot, SharePoint agents, and similar platforms enforce access through the signed-in user's existing permissions. If one professional has access to Matter A and Matter B, the platform provides strong governance at the tenant, site, and policy level. What current Microsoft documentation does not clearly show is a separate runtime boundary that confines one agent task to Matter A only, even when the same human can also access Matter B.</p>
+  <p>MahaGuardian is designed for that narrower problem. We issue time-bounded, matter-scoped capability tokens to long-lived agents. The agent identity persists for the duration of the engagement; the authority it holds for any given task is bounded to one matter and expires. An agent assigned to Matter A receives a token that does not open Matter B — regardless of what its operator can otherwise reach.</p>
+  <p>Microsoft governance, DLP, and compliance controls remain in place and continue to do what they do well. MahaGuardian is designed to add a tighter runtime layer inside that broader control environment, not to replace it.</p>
+  <p>This differentiation rests on real runtime enforcement, not policy alone. The <a href="properties.html">Security Status</a> page maps every claim to a specific test in the open-source repository.</p>
+</section>
+  
 <section>
   <h2>Join the first 100</h2>
   <div class="join">
