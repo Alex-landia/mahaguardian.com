@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MahaGuardian Careers</title>
+<meta name="description" content="Open roles at MahaGuardian across AI agent runtime engineering, console UX / full-stack engineering, and cryptographic security review.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#FAFAF8; --surface:#FFF; --text:#1A1A18; --muted:#6B6B65; --accent:#0F6E56; --accent-dk:#0B5644; --accent-lt:#E1F5EE; --border:#E5E5E0; --code-bg:#F4F4F0; --coral:#D85A30; --blue:#185FA5; --purple:#534AB7; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);line-height:1.7}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+.c{max-width:960px;margin:0 auto;padding:0 24px}
+nav{padding:20px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px}
+nav .logo{font-size:18px;font-weight:700;letter-spacing:-.5px} nav .logo span{color:var(--accent)}
+nav .links{display:flex;gap:24px;font-size:14px;font-weight:500;color:var(--muted);align-items:center;flex-wrap:wrap}
+nav .links a{color:var(--muted)} nav .links a:hover{color:var(--text)}
+nav .links a.nav-cta{background:var(--accent);color:#FFF;padding:8px 16px;border-radius:6px}
+nav .links a.nav-cta:hover{background:var(--accent-dk);color:#FFF;text-decoration:none}
+.hero{padding:72px 0 44px;border-bottom:1px solid var(--border)}
+.hero h1{font-size:44px;font-weight:700;letter-spacing:-1.4px;margin-bottom:16px;line-height:1.1}
+.hero p{max-width:760px;font-size:18px;color:var(--muted);margin-bottom:16px}
+.hero-meta{display:flex;gap:10px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid var(--border);background:var(--surface)}
+.badge.g{background:var(--accent-lt);border-color:var(--accent);color:var(--accent)}
+section{padding:56px 0;border-bottom:1px solid var(--border)}
+section:last-of-type{border-bottom:none}
+h2{font-size:28px;font-weight:700;margin-bottom:14px;letter-spacing:-.5px;line-height:1.25}
+p{margin-bottom:16px}
+.intro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.intro-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px}
+.intro-card h3{font-size:18px;margin-bottom:8px}
+.intro-card p{font-size:15px;line-height:1.6;margin-bottom:12px}
+.intro-card .meta{font-size:13px;color:var(--muted)}
+.role{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:30px 32px;margin-top:24px}
+.role h3{font-size:30px;line-height:1.15;letter-spacing:-.8px;margin-bottom:12px}
+.role-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:18px}
+.role-summary{max-width:620px}
+.role-summary p{font-size:16px;color:var(--text)}
+.role-pay{background:var(--accent-lt);border:1px solid var(--border);border-radius:10px;padding:16px 18px;min-width:240px}
+.role-pay .label{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:700;margin-bottom:4px}
+.role-pay .value{font-size:22px;font-weight:700;color:var(--accent-dk);line-height:1.2}
+.role-pay .note{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5}
+.role-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;margin-top:16px}
+.panel h4{font-size:16px;margin-bottom:10px}
+.panel ul{padding-left:24px}
+.panel li{margin-bottom:8px}
+.panel p:last-child,.panel li:last-child{margin-bottom:0}
+.facts{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:18px 20px}
+.facts dl{display:grid;grid-template-columns:160px 1fr;row-gap:10px;column-gap:14px}
+.facts dt{font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.facts dd{font-size:15px}
+.apply{background:var(--accent-lt);border-radius:10px;padding:28px 30px;margin-top:18px}
+.apply p{margin-bottom:12px}
+.apply ul{padding-left:22px;margin-bottom:14px}
+.apply li{margin-bottom:8px}
+.btn-primary{display:inline-block;background:var(--accent);color:#FFF;padding:14px 24px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none}
+.btn-primary:hover{background:var(--accent-dk);color:#FFF;text-decoration:none}
+.small{font-size:14px;color:var(--muted)}
+footer{padding:32px 0;text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:820px){
+  .hero h1{font-size:34px}
+  .intro-grid{grid-template-columns:1fr}
+  .role-grid{grid-template-columns:1fr}
+  .facts dl{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="c">
+<nav>
+  <div class="logo">Maha<span>Guardian</span></div>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="partner-brief.html">Partner brief</a>
+    <a href="properties.html">Security Status</a>
+    <a href="careers.html">Careers</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" target="_blank" rel="noopener noreferrer" class="nav-cta">Join the first 100</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Careers at MahaGuardian</h1>
+  <p>MahaGuardian is building the control layer and operator surface for governed AI agents in sensitive professional workflows. These are real product roles in a live codebase, not generic internships.</p>
+  <p>All three roles are remote, part-time, and paid. We are open to candidates in the United States, the United Kingdom, and the European Union with valid work permits.</p>
+  <div class="hero-meta">
+    <span class="badge g">Summer 2026</span>
+    <span class="badge">Part-time</span>
+    <span class="badge">Remote</span>
+    <span class="badge">Live product codebase</span>
+  </div>
+</div>
+
+<section>
+  <h2>Open roles</h2>
+  <p>We are hiring across three specific workstreams: runtime behavior, operator console UX, and trust-boundary / cryptographic review.</p>
+  <div class="intro-grid">
+    <div class="intro-card">
+      <h3>AI Agent Runtime Engineer</h3>
+      <p>Python-heavy backend work around execution flow, prompt/runtime grounding, deployment logic, and operator-agent boundaries.</p>
+      <div class="meta">Best for candidates who want to work on agent behavior as a real product system.</div>
+    </div>
+    <div class="intro-card">
+      <h3>AI Console UX / Full-Stack Engineer</h3>
+      <p>Frontend plus Python integration work to make the early MahaGuardian Console usable, legible, and reliable for operators.</p>
+      <div class="meta">Best for candidates who care about UX judgment as much as implementation.</div>
+    </div>
+    <div class="intro-card">
+      <h3>Cryptographic Security Reviewer</h3>
+      <p>Focused review of trust boundaries, scoped credentials, audit integrity, and safety assumptions in a real early codebase.</p>
+      <div class="meta">Best for security-minded candidates who can distinguish real controls from informal safeguards.</div>
+    </div>
+  </div>
+</section>
+
+<section id="agent-runtime">
+  <div class="role">
+    <div class="role-top">
+      <div class="role-summary">
+        <h3>AI Agent Runtime Engineer</h3>
+        <p>This role works on the Agent Runtime side of the product: execution flow, prompt/runtime behavior, deployment-related backend logic, and the system boundaries between agents, operator controls, and external actions.</p>
+      </div>
+      <div class="role-pay">
+        <div class="label">Compensation</div>
+        <div class="value">$45–$65/hour</div>
+        <div class="note">Depending on fit, experience, and scope.</div>
+      </div>
+    </div>
+    <div class="role-grid">
+      <div class="panel">
+        <h4>Typical work</h4>
+        <ul>
+          <li>Improving agent execution flow and pass structure.</li>
+          <li>Improving prompt/runtime grounding and output quality.</li>
+          <li>Improving task-vs-chat behavior for productized agents.</li>
+          <li>Improving backend logic around deployment workflows and action safety.</li>
+          <li>Working with Python, tests, and existing runtime modules in an evolving codebase.</li>
+          <li>Shipping small, tested pull requests in a fast iteration loop.</li>
+        </ul>
+        <h4>Required</h4>
+        <ul>
+          <li>Strong Python experience.</li>
+          <li>Ability to work in an existing backend codebase with tests.</li>
+          <li>Familiarity with LLM-backed systems, prompt pipelines, or agent-style workflows.</li>
+          <li>Ability to reason clearly about runtime behavior, failure modes, and system boundaries.</li>
+          <li>Comfort debugging behavior across multiple modules rather than only within one script.</li>
+        </ul>
+        <h4>Preferred</h4>
+        <ul>
+          <li>Experience with backend APIs or orchestration systems.</li>
+          <li>Experience with model/tool integration, prompt design, or evaluation loops.</li>
+          <li>Deployment or systems experience.</li>
+          <li>Startup or research engineering experience.</li>
+          <li>Familiarity with JavaScript is helpful but not required.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <div class="facts">
+          <dl>
+            <dt>Schedule</dt>
+            <dd>Part-time</dd>
+            <dt>Format</dt>
+            <dd>Remote</dd>
+            <dt>Location</dt>
+            <dd>United States, United Kingdom, or European Union with valid work permits</dd>
+            <dt>Timeframe</dt>
+            <dd>Summer 2026, starting June 1</dd>
+            <dt>Degree level</dt>
+            <dd>Undergraduate or graduate</dd>
+            <dt>Best fit</dt>
+            <dd>Python-heavy backend, LLM-backed systems, and runtime behavior as product engineering.</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="apply">
+      <p><b>How to apply</b></p>
+      <ul>
+        <li>Send a resume to <a href="mailto:alexander@landia.biz">alexander@landia.biz</a>.</li>
+        <li>Include GitHub, portfolio, or code/project links.</li>
+        <li>Include one brief example of a Python or backend system you built or maintained.</li>
+        <li>If relevant, include one example involving LLM systems, orchestration, or deployment.</li>
+        <li>Include a short note on your availability over the next 2–4 weeks.</li>
+      </ul>
+      <p class="small">Questions are welcome at <a href="mailto:alexander@landia.biz">alexander@landia.biz</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section id="console-ux">
+  <div class="role">
+    <div class="role-top">
+      <div class="role-summary">
+        <h3>AI Console UX / Full-Stack Engineer</h3>
+        <p>This role improves the Console’s core interaction model: agent conversation flow, task and artifact history, deployment UX, and operator-facing state management.</p>
+      </div>
+      <div class="role-pay">
+        <div class="label">Compensation</div>
+        <div class="value">$40–$60/hour</div>
+        <div class="note">Depending on fit, experience, and scope.</div>
+      </div>
+    </div>
+    <div class="role-grid">
+      <div class="panel">
+        <h4>Typical work</h4>
+        <ul>
+          <li>Improving center-pane agent interaction and chat/task behavior.</li>
+          <li>Improving artifact/history usability and state behavior.</li>
+          <li>Improving the interactive deployment flow for the first beta server.</li>
+          <li>Fixing product-critical UI/state bugs quickly and safely.</li>
+          <li>Working across frontend and Python backend integration where needed.</li>
+          <li>Shipping small, tested pull requests in a fast iteration loop.</li>
+        </ul>
+        <h4>Required</h4>
+        <ul>
+          <li>Strong JavaScript / TypeScript or equivalent frontend experience.</li>
+          <li>Working Python experience.</li>
+          <li>Ability to read and modify backend application code.</li>
+          <li>Ability to work in an existing codebase with tests.</li>
+          <li>Strong product/UX judgment, not just implementation skill.</li>
+          <li>Ability to debug interactive behavior from screenshots, traces, and observed runtime state.</li>
+        </ul>
+        <h4>Preferred</h4>
+        <ul>
+          <li>FastAPI or similar backend experience.</li>
+          <li>Experience with AI / LLM-backed products.</li>
+          <li>Startup or research engineering experience.</li>
+          <li>Comfort with local development environments and API-key-based tooling.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <div class="facts">
+          <dl>
+            <dt>Schedule</dt>
+            <dd>Part-time</dd>
+            <dt>Format</dt>
+            <dd>Remote</dd>
+            <dt>Location</dt>
+            <dd>United States, United Kingdom, or European Union with valid work permits</dd>
+            <dt>Timeframe</dt>
+            <dd>Summer 2026, starting June 1</dd>
+            <dt>Degree level</dt>
+            <dd>Undergraduate or graduate</dd>
+            <dt>Best fit</dt>
+            <dd>Frontend + Python backend in an evolving product codebase with real UX judgment.</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="apply">
+      <p><b>How to apply</b></p>
+      <ul>
+        <li>Send a resume to <a href="mailto:alexander@landia.biz">alexander@landia.biz</a>.</li>
+        <li>Include GitHub, portfolio, or shipped product links.</li>
+        <li>Include one brief example of a UI or product workflow you designed or implemented.</li>
+        <li>If relevant, include one example involving agent workflows, LLM-backed products, or developer tools.</li>
+        <li>Include a short note on your availability over the next 2–4 weeks.</li>
+      </ul>
+      <p class="small">Questions are welcome at <a href="mailto:alexander@landia.biz">alexander@landia.biz</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section id="security-reviewer">
+  <div class="role">
+    <div class="role-top">
+      <div class="role-summary">
+        <h3>Cryptographic Security Reviewer for AI Agent Control</h3>
+        <p>This role assesses the security properties of the current system and helps identify weaknesses in the boundary between agent runtime behavior, scoped credentials, local control surfaces, auditability, and cryptographic trust assumptions.</p>
+      </div>
+      <div class="role-pay">
+        <div class="label">Compensation</div>
+        <div class="value">$50–$80/hour</div>
+        <div class="note">Depending on experience and review scope. In some cases, we may define a short fixed-scope review sprint with possible follow-on work.</div>
+      </div>
+    </div>
+    <div class="role-grid">
+      <div class="panel">
+        <h4>Typical work</h4>
+        <ul>
+          <li>Reviewing Python backend code for security and trust-boundary weaknesses.</li>
+          <li>Reviewing credential handling, state handling, and local control surfaces.</li>
+          <li>Reviewing assumptions around scoped access, replay resistance, and audit integrity.</li>
+          <li>Identifying concrete risks, abuse paths, and misleading safety assumptions.</li>
+          <li>Producing concise findings with severity and recommended fixes.</li>
+          <li>Reviewing whether implemented controls match claimed controls.</li>
+        </ul>
+        <h4>Required</h4>
+        <ul>
+          <li>Strong Python code-reading ability.</li>
+          <li>Strong security engineering judgment.</li>
+          <li>Ability to reason about authentication, authorization, trust boundaries, and misuse paths.</li>
+          <li>Ability to review an existing codebase and produce concrete findings.</li>
+          <li>Comfort reading backend logic, local tooling, and architecture notes together.</li>
+        </ul>
+        <h4>Preferred</h4>
+        <ul>
+          <li>Experience with application security, systems security, or secure software design.</li>
+          <li>Familiarity with cryptographic protocols or capability-style access control.</li>
+          <li>Familiarity with agent/LLM systems is helpful but not required.</li>
+          <li>Experience producing structured code-review or security-review findings.</li>
+          <li>Graduate-level or research-level background is preferred.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <div class="facts">
+          <dl>
+            <dt>Schedule</dt>
+            <dd>Part-time, likely lower weekly hours than the implementation roles</dd>
+            <dt>Format</dt>
+            <dd>Remote</dd>
+            <dt>Location</dt>
+            <dd>United States, United Kingdom, or European Union with valid work permits</dd>
+            <dt>Timeframe</dt>
+            <dd>Short initial review sprint, with possible follow-on work</dd>
+            <dt>Degree level</dt>
+            <dd>Graduate or research-level candidates preferred</dd>
+            <dt>Best fit</dt>
+            <dd>Reviewers who can distinguish real controls from informal safeguards in a live early architecture.</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="apply">
+      <p><b>How to apply</b></p>
+      <ul>
+        <li>Send a resume to <a href="mailto:alexander@landia.biz">alexander@landia.biz</a>.</li>
+        <li>Include GitHub, security-review examples, or code-review artifacts if available.</li>
+        <li>Include one brief example of a security or trust-boundary review you performed.</li>
+        <li>If relevant, include examples involving Python backend systems, authentication/authorization, or cryptographic protocols.</li>
+        <li>Include a short note on your availability over the next 2–4 weeks.</li>
+      </ul>
+      <p class="small">Questions are welcome at <a href="mailto:alexander@landia.biz">alexander@landia.biz</a>.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="c">
+    <p>MahaGuardian &copy; 2026 Alexander Landia. Patent pending (USPTO).</p>
+  </div>
+</footer>
+
+</body>
+</html>
