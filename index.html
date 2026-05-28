@@ -22,6 +22,7 @@ nav .links a.nav-cta{background:var(--accent);color:#FFF;padding:8px 16px;border
 nav .links a.nav-cta:hover{background:var(--accent-dk);color:#FFF;text-decoration:none}
 
 .hero{padding:80px 0 60px;border-bottom:1px solid var(--border)}
+.hero .eyebrow{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
 .hero h1{font-size:46px;font-weight:700;letter-spacing:-1.5px;margin-bottom:18px;line-height:1.1}
 .hero h1 em{font-style:normal;color:var(--accent)}
 .hero .sub{font-size:19px;color:var(--muted);max-width:680px;margin-bottom:32px}
@@ -78,12 +79,13 @@ section > p:first-of-type{font-size:16px}
 .join{background:var(--accent-lt);border-radius:10px;padding:40px;margin-top:24px;text-align:center}
 .join p{max-width:620px;margin:0 auto 22px;color:var(--text);font-size:16px}
 
-.hiring-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
-.hiring-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:12px}
-.hiring-card h3{font-size:18px;color:var(--text);margin-bottom:0}
-.hiring-meta{font-size:13px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
-.hiring-card p{font-size:15px;line-height:1.6;margin-bottom:0}
-.hiring-link{margin-top:auto;font-weight:700}
+.roles{display:grid;grid-template-columns:1fr;gap:16px;margin-top:24px}
+.role{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 28px}
+.role h3{font-size:18px;color:var(--accent-dk);margin-bottom:6px}
+.role .tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.role .tag{font-size:12px;font-weight:500;padding:3px 10px;border-radius:12px;background:var(--code-bg);color:var(--muted)}
+.role p{font-size:15px;color:var(--text);margin-bottom:10px;line-height:1.6}
+.role a{font-weight:700;font-size:14px}
 
 .tech-row{padding:32px 0;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;font-size:13.5px;color:var(--muted)}
 .tech-row b{font-weight:700;color:var(--text);margin-right:8px}
@@ -94,7 +96,6 @@ footer{padding:32px 0;text-align:center;color:var(--muted);font-size:13px}
 @media(max-width:768px){
   .hero h1{font-size:32px}
   .personas{grid-template-columns:1fr}
-  .hiring-grid{grid-template-columns:1fr}
   nav .links{gap:14px;font-size:13px}
 }
 </style>
@@ -115,6 +116,7 @@ footer{padding:32px 0;text-align:center;color:var(--muted);font-size:13px}
 </nav>
 
 <div class="hero">
+  <div class="eyebrow">Trust infrastructure for the agentic era</div>
   <h1>AI agents that cannot leak<br>across <em>client matters</em></h1>
   <p class="sub">MahaGuardian builds the information wall around the agent itself — not around the prompt, not around the server. Built for M&amp;A advisors, PE firms, family offices, and law firms whose engagements demand absolute matter isolation.</p>
   <div class="hero-cta">
@@ -210,6 +212,12 @@ footer{padding:32px 0;text-align:center;color:var(--muted);font-size:13px}
   <p><a href="MahaGuardian_Edge_Console_Mock%20(5).html" target="_blank" rel="noopener noreferrer" class="link-cta">See the boundary enforcement in action →</a></p>
 </section>
 
+<section>
+  <h2>Why this architecture matters beyond enterprise</h2>
+  <p>AI agents are becoming operational actors — they access systems, invoke tools, coordinate with other agents, and increasingly operate autonomously across institutional boundaries. Current architectures lack enforceable trust boundaries for machine authority. The governance problem is not that agents are dangerous; it is that agents inherit broad access, and no layer exists to constrain what they can reach within a specific task.</p>
+  <p>MahaGuardian separates authority from execution. Agents do not possess authority — they receive it, scoped and time-bounded, from an external governance layer that they cannot modify or self-escalate. This is the same architectural principle that makes multi-agent coordination safe across institutions: bounded autonomy, externally verifiable, cryptographically enforced. The enterprise deployment is the first implementation context. The architecture generalises wherever autonomous systems require governable delegation.</p>
+</section>
+
 <section id="for-your-firm">
   <h2>Five operators MahaGuardian is built for</h2>
   <p>The shape of the problem differs by practice. The shape of the solution does not.</p>
@@ -241,13 +249,13 @@ footer{padding:32px 0;text-align:center;color:var(--muted);font-size:13px}
 <section>
   <h2>What MahaGuardian is — and isn't</h2>
   <div class="honest">
-    <p>MahaGuardian is the information-barrier layer for AI agents in your practice. We are not the AI model, not the email server, not the document-management system. We sit between the agent and your data, and we ensure the agent gets exactly the keys you have authorised — and never more.</p>
+    <p>MahaGuardian is the governance layer for AI agents in your practice. We are not the AI model, not the email server, not the document-management system. We sit between the agent and your data, and we ensure the agent gets exactly the keys you have authorised — and never more.</p>
     <p>We don't rely on prompt defences alone. Prompt injection is an unsolved flaw in all large language models. MahaGuardian limits what a compromised agent can reach: if an injected instruction tells the agent to retrieve another client's file, the credential the agent holds does not open that file through the Guardian-controlled boundary. The attack fails at the architecture layer, even when the prompt is compromised.</p>
     <p>V1 runs on a single device — typically the principal's or compliance officer's laptop. This fits firms operating up to a few dozen agents. Larger and always-on deployments are V2 work, in development for late 2026.</p>
     <p>Customer matter data does not transit our servers. The architecture is built so it cannot — your credentials, your keys, and your audit logs stay on your firm's infrastructure.</p>
   </div>
 </section>
-  
+
 <section>
   <h2>How we compare to platform-level agent controls</h2>
   <p>Microsoft Copilot, SharePoint agents, and similar platforms enforce access through the signed-in user's existing permissions. If one professional has access to Matter A and Matter B, the platform provides strong governance at the tenant, site, and policy level. What current Microsoft documentation does not clearly show is a separate runtime boundary that confines one agent task to Matter A only, even when the same human can also access Matter B.</p>
@@ -255,40 +263,29 @@ footer{padding:32px 0;text-align:center;color:var(--muted);font-size:13px}
   <p>Microsoft governance, DLP, and compliance controls remain in place and continue to do what they do well. MahaGuardian is designed to add a tighter runtime layer inside that broader control environment, not to replace it.</p>
   <p>This differentiation rests on real runtime enforcement, not policy alone. The <a href="properties.html">Security Status</a> page maps every claim to a specific test in the open-source repository.</p>
 </section>
-  
+
 <section>
   <h2>We're hiring</h2>
   <p>MahaGuardian is moving from architecture and enforcement primitives into a real operator product. We are hiring for three focused roles across runtime, console UX, and security review.</p>
-  <div class="hiring-grid">
-    <div class="hiring-card">
+
+  <div class="roles">
+    <div class="role">
       <h3>AI Agent Runtime Engineer</h3>
-      <div class="hiring-meta">
-        <span>Remote</span>
-        <span>Part-time</span>
-        <span>Python-heavy backend</span>
-      </div>
+      <div class="tags"><span class="tag">Remote</span><span class="tag">Part-time</span><span class="tag">Python-heavy backend</span></div>
       <p>Work on agent execution flow, runtime grounding, deployment-related backend logic, and the boundary between agents, operators, and external actions.</p>
-      <a href="careers.html#agent-runtime" class="hiring-link">View role details →</a>
+      <a href="careers.html#agent-runtime">View role details →</a>
     </div>
-    <div class="hiring-card">
+    <div class="role">
       <h3>AI Console UX / Full-Stack Engineer</h3>
-      <div class="hiring-meta">
-        <span>Remote</span>
-        <span>Part-time</span>
-        <span>Frontend + Python</span>
-      </div>
+      <div class="tags"><span class="tag">Remote</span><span class="tag">Part-time</span><span class="tag">Frontend + Python</span></div>
       <p>Improve conversation flow, artifact history, deployment UX, and operator-facing state management in the early MahaGuardian Console.</p>
-      <a href="careers.html#console-ux" class="hiring-link">View role details →</a>
+      <a href="careers.html#console-ux">View role details →</a>
     </div>
-    <div class="hiring-card">
+    <div class="role">
       <h3>Cryptographic Security Reviewer</h3>
-      <div class="hiring-meta">
-        <span>Remote</span>
-        <span>Part-time</span>
-        <span>Security review</span>
-      </div>
+      <div class="tags"><span class="tag">Remote</span><span class="tag">Part-time</span><span class="tag">Security review</span></div>
       <p>Review scoped credentials, trust boundaries, audit integrity, and local control surfaces in a real early codebase for governed AI agents.</p>
-      <a href="careers.html#security-reviewer" class="hiring-link">View role details →</a>
+      <a href="careers.html#security-reviewer">View role details →</a>
     </div>
   </div>
 </section>
