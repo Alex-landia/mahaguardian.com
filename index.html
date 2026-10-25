@@ -63,9 +63,9 @@ section{max-width:var(--max-w);margin:0 auto;padding:0 1.5rem}
 footer{max-width:960px;margin:0 auto;padding:2rem 1.5rem;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.8rem;font-size:.82rem;color:var(--text-dim)}
 footer a{color:var(--text-dim);text-decoration:none}
 footer a:hover{color:var(--text-bright)}
-.footer-links{display:flex;gap:1.4rem}
+.footer-links{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem}
 
-@media(max-width:640px){nav{flex-wrap:wrap}.nav-links{gap:1rem}.hero{padding-top:4rem;padding-bottom:3.5rem}.hero h1{font-size:2rem}.operator-list{gap:.5rem}}
+@media(max-width:640px){nav{flex-wrap:wrap}.nav-links{gap:.5rem 1rem;flex-wrap:wrap}.hero{padding-top:4rem;padding-bottom:3.5rem}.hero h1{font-size:2rem}.operator-list{gap:.5rem}}
 </style>
 </head>
 <body>
@@ -74,6 +74,8 @@ footer a:hover{color:var(--text-bright)}
   <a href="/" class="logo">MahaGuardian</a>
   <ul class="nav-links">
     <li><a href="/partner-brief.html">Partner brief</a></li>
+    <li><a href="/platforms.html">For AI platforms</a></li>
+    <li><a href="/roadmap.html">Roadmap</a></li>
     <li><a href="/properties.html">Security status</a></li>
   </ul>
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" class="btn">Get in touch</a>
@@ -81,7 +83,7 @@ footer a:hover{color:var(--text-bright)}
 
 <section class="hero">
   <h1>Information barriers for AI agents</h1>
-  <p>MahaGuardian gives every AI agent in your practice a credential that opens exactly one engagement — and nothing else. The barrier is in the credential, not in the prompt.</p>
+  <p>MahaGuardian gives every AI agent in your practice a credential that opens exactly one engagement — one client, project or deal — and nothing else. The barrier is in the credential, not in the prompt.</p>
   <div class="hero-cta">
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" class="btn">Get in touch</a>
     <a href="/partner-brief.html" class="btn btn-ghost">Read the partner brief</a>
@@ -110,6 +112,16 @@ footer a:hover{color:var(--text-bright)}
   </div>
 </section>
 
+<section class="stack">
+  <h2>Breaking the lethal trifecta</h2>
+  <p>An agent becomes dangerous when it combines private data, untrusted content and a way to send data out. MahaGuardian does not stop untrusted content reaching the agent — it limits what that content can achieve. The credential opens one engagement, so only one client's data is within reach; external sends can require a named approver; every attempt is recorded.</p>
+</section>
+
+<section class="stack">
+  <h2>European by design</h2>
+  <p>Signing keys and audit records stay with your firm, and client data never passes to MahaGuardian. Per-engagement access supports GDPR data protection by design and appropriate security (Articles 25 and 32). The audit trail and human-approval step are designed to support the EU AI Act's record-keeping and human-oversight requirements (Articles 12 and 14).</p>
+</section>
+
 <section class="built-for">
   <h2>Built for</h2>
   <ul class="operator-list">
@@ -117,18 +129,31 @@ footer a:hover{color:var(--text-bright)}
     <li>PE firms</li>
     <li>Family offices</li>
     <li>Law firms</li>
+    <li>Advisory and consulting firms</li>
+    <li>Corporate development and strategy teams</li>
     <li>Enterprise security teams</li>
   </ul>
 </section>
 
 <section class="stack">
   <h2>Works alongside your existing controls</h2>
-  <p>MahaGuardian sits alongside Microsoft, Okta, iManage, and the rest of your security infrastructure — not instead of them. It decides whether an agent credential comes into existence and can destroy it; your platform decides what that credential can do once it exists.</p>
+  <p>MahaGuardian sits alongside Microsoft, Google Workspace, Okta, iManage, and the rest of your security infrastructure — not instead of them. It decides whether an agent credential comes into existence and can destroy it; your platform decides what that credential can do once it exists.</p>
   <p>Guardian authority records and your platform's own activity logs can be reconciled, so a credential issued without firm authority is detectable by the firm itself. The signing keys never leave your infrastructure.</p>
   <p>MahaGuardian works with most AI agents that interact with your systems through standard APIs — OpenAI, Anthropic, Google, self-hosted models. If your firm switches vendors next year, you do not re-architect your information barriers.</p>
   <div class="scope-note">
     <strong>Scope.</strong> MahaGuardian's credential authority applies to agents whose credential path the firm controls — typically firm-built agents with their own application registration. Microsoft-operated agents (Copilot Studio declarative agents, SharePoint agents, first-party Copilot) authenticate through Microsoft's own service principals; platform-level controls apply to those agents directly.
   </div>
+</section>
+
+<section class="stack">
+  <h2>Using an agent platform?</h2>
+  <p>MahaGuardian can sit underneath agent platforms, so engagement-scoped barriers travel with your agents whichever model they use.</p>
+  <p><a href="/platforms.html" class="btn btn-ghost">For AI platforms</a></p>
+</section>
+
+<section class="stack">
+  <h2>About the founder</h2>
+  <p>MahaGuardian was built by Alexander Landia, an investor and director of several companies, including Lambert Energy Advisory and The Mobility House, with 30 years of M&amp;A and strategy work. It began with a case: on an energy-transition mandate, one adviser legitimately held access to engagements that had to stay apart, and an AI agent working for him could reach all of them. He developed it at the MIT Media Lab, where it was selected as a top project in the Agentic Web course.</p>
 </section>
 
 <section class="bottom-cta">
@@ -141,6 +166,8 @@ footer a:hover{color:var(--text-bright)}
   <span>MahaGuardian &copy; 2026 Alexander Landia. Patent pending (USPTO).</span>
   <div class="footer-links">
     <a href="/partner-brief.html">Partner brief</a>
+    <a href="/platforms.html">For AI platforms</a>
+    <a href="/roadmap.html">Roadmap</a>
     <a href="/properties.html">Security status</a>
     <a href="/whitepaper/">Architecture</a>
     <a href="https://github.com/partitia-clean/mahaguardian">GitHub</a>

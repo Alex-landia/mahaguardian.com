@@ -25,7 +25,7 @@ section{max-width:var(--max-w);margin:0 auto;padding:0 1.5rem}
 footer{max-width:960px;margin:0 auto;padding:2rem 1.5rem;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.8rem;font-size:.82rem;color:var(--text-dim)}
 footer a{color:var(--text-dim);text-decoration:none}
 footer a:hover{color:var(--text-bright)}
-.footer-links{display:flex;gap:1.4rem}
+.footer-links{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem}
 
 /* BRIEF-SPECIFIC */
 .brief{max-width:var(--max-w);margin:0 auto;padding:2rem 1.5rem 6rem}
@@ -44,7 +44,7 @@ footer a:hover{color:var(--text-bright)}
 .cta-section{text-align:center;margin-top:3rem;padding-top:3rem;border-top:1px solid var(--rule)}
 .cta-section p{color:var(--text-dim);font-size:.95rem;margin-bottom:1.5rem}
 
-@media(max-width:640px){nav{flex-wrap:wrap}.nav-links{gap:1rem}}
+@media(max-width:640px){nav{flex-wrap:wrap}.nav-links{gap:.5rem 1rem;flex-wrap:wrap}}
 </style>
 </head>
 <body>
@@ -53,6 +53,8 @@ footer a:hover{color:var(--text-bright)}
   <a href="/" class="logo">MahaGuardian</a>
   <ul class="nav-links">
     <li><a href="/">Home</a></li>
+    <li><a href="/platforms.html">For AI platforms</a></li>
+    <li><a href="/roadmap.html">Roadmap</a></li>
     <li><a href="/properties.html">Security status</a></li>
     <li><a href="/whitepaper/">Architecture</a></li>
   </ul>
@@ -61,7 +63,7 @@ footer a:hover{color:var(--text-bright)}
 
 <div class="brief">
 
-<div class="brief-date">Partner Brief — September 2026</div>
+<div class="brief-date">Partner Brief — October 2026</div>
 
 <h1>MahaGuardian for professional services firms</h1>
 
@@ -150,7 +152,7 @@ footer a:hover{color:var(--text-bright)}
 <p>Commercial pricing is per-agent, per-month, in line with seat-licensed security software your firm already purchases. We will publish a price list when V2 ships.</p>
 
 <h3>How long does deployment take?</h3>
-<p>V1 deploys in a day on a single compliance officer's or partner's laptop, with pilot scope of up to a few dozen agents. V2 will support firm-wide, always-on deployment; that is in development.</p>
+<p>V1 deploys in a day on a single compliance officer's or partner's laptop, with pilot scope of up to a few dozen agents. V2 will support firm-wide, always-on deployment and is planned for 2027; see the <a href="/roadmap.html">roadmap</a>.</p>
 
 <h3>What if the deployment device is offline or unavailable?</h3>
 <p>Agents operating with already-issued credentials continue to function within those credentials' validity window. Issuance of new credentials requires the device to be online. V1 includes a documented manual key-backup and recovery procedure; the recommended pilot scope is a defined set of agents on active matters, not firm-wide always-on issuance. High-availability key management is V2 work.</p>
@@ -161,11 +163,17 @@ footer a:hover{color:var(--text-bright)}
 <h3>We already pay for Microsoft 365 E7 and Agent 365. Why do we need MahaGuardian?</h3>
 <p>Agent 365 is a strong estate-level control plane — it discovers which agents your firm runs, applies policy, and can block unauthorised agents. MahaGuardian sits alongside Agent 365 and adds a layer Agent 365 does not provide: engagement-scoped credential issuance so that an authorised agent working on Client A cannot reach Client B's data, even though both clients' data lives in the same systems the agent is authorised to access. Agent 365 governs the fleet. MahaGuardian constrains each agent's authority within its specific engagement.</p>
 
+<h3>We already use an agent platform with its own audit logs. Why add this?</h3>
+<p>Platform controls govern the workspace — which agents exist, what they connect to, what they did. MahaGuardian governs each agent's authority within a single engagement, with the evidence held by your firm rather than the platform. The two work together. See <a href="/platforms.html">MahaGuardian for AI platforms</a>.</p>
+
+<h3>Does it support MCP?</h3>
+<p>A remote MCP gateway is in development. Agent platforms will be able to add MahaGuardian as an MCP integration, with each agent's tools limited to one engagement. See the <a href="/roadmap.html">roadmap</a>.</p>
+
 <h3>Is the codebase open source?</h3>
 <p>The implementation is open source under a dual licence — open for review, audit, and non-commercial use; a commercial licence covers production deployments. Reviewers and security researchers are welcome to examine the codebase on <a href="https://github.com/partitia-clean/mahaguardian">GitHub</a>.</p>
 
 <h3>Who is behind MahaGuardian?</h3>
-<p>The founder is Alexander Landia. The codebase is open-source on GitHub and open for review by security researchers. The product is patent-pending in the United States.</p>
+<p>Alexander Landia, founder. He is an investor and director of several companies, including the energy-sector advisory firm Lambert Energy Advisory in London and The Mobility House. He has worked on M&amp;A and strategy mandates for 30 years. MahaGuardian began with a case: on an energy-transition mandate, one adviser legitimately held access to engagements that had to stay apart, and an AI agent working for him could reach all of them. He developed MahaGuardian at the MIT Media Lab, where the project was selected as a top project in the Agentic Web course. The codebase is open source and open to review by security researchers; the product is patent-pending in the United States.</p>
 
 <div class="cta-section">
   <h2>Speak with the founder</h2>
@@ -179,6 +187,8 @@ footer a:hover{color:var(--text-bright)}
   <span>MahaGuardian &copy; 2026 Alexander Landia. Patent pending (USPTO).</span>
   <div class="footer-links">
     <a href="/partner-brief.html">Partner brief</a>
+    <a href="/platforms.html">For AI platforms</a>
+    <a href="/roadmap.html">Roadmap</a>
     <a href="/properties.html">Security status</a>
     <a href="/whitepaper/">Architecture</a>
     <a href="https://github.com/partitia-clean/mahaguardian">GitHub</a>
