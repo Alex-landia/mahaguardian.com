@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="MahaGuardian for agent platforms: engagement-scoped information barriers underneath your agents, with keys and evidence held by your customer.">
+<title>For AI platforms — MahaGuardian</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B1120;--bg-raised:#131D33;--bg-surface:#1A2744;--text:#D8DEE9;--text-dim:#8892A4;--text-bright:#F0F4F8;--accent:#6B9E78;--accent-dim:rgba(107,158,120,.15);--rule:rgba(136,146,164,.18);--max-w:680px;--font-body:'Inter',system-ui,sans-serif;--font-display:'Literata','Georgia',serif}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#F6F4F0;--bg-raised:#EDEAE4;--bg-surface:#E3DFD8;--text:#2C2C2C;--text-dim:#6B6B6B;--text-bright:#111;--accent:#3D7A4C;--accent-dim:rgba(61,122,76,.1);--rule:rgba(0,0,0,.1)}}
+:root[data-theme="dark"]{--bg:#0B1120;--bg-raised:#131D33;--bg-surface:#1A2744;--text:#D8DEE9;--text-dim:#8892A4;--text-bright:#F0F4F8;--accent:#6B9E78;--accent-dim:rgba(107,158,120,.15);--rule:rgba(136,146,164,.18)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+nav{max-width:960px;margin:0 auto;padding:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.logo{font-family:var(--font-body);font-size:1.15rem;font-weight:600;color:var(--text-bright);text-decoration:none;letter-spacing:-.01em}
+.nav-links{display:flex;align-items:center;gap:1.8rem;list-style:none}
+.nav-links li a{font-size:.88rem;font-weight:500;color:var(--text-dim);text-decoration:none;transition:color .15s}
+.nav-links li a:hover{color:var(--text-bright)}
+a.btn{display:inline-block;font-family:var(--font-body);font-size:.88rem;font-weight:600;color:#fff;background:var(--accent);padding:.55rem 1.3rem;border-radius:4px;text-decoration:none;transition:opacity .15s}
+a.btn:hover{opacity:.88}
+section{max-width:var(--max-w);margin:0 auto;padding:0 1.5rem}
+footer{max-width:960px;margin:0 auto;padding:2rem 1.5rem;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.8rem;font-size:.82rem;color:var(--text-dim)}
+footer a{color:var(--text-dim);text-decoration:none}
+footer a:hover{color:var(--text-bright)}
+.footer-links{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem}
+
+/* BRIEF-SPECIFIC */
+.brief{max-width:var(--max-w);margin:0 auto;padding:2rem 1.5rem 6rem}
+.brief-date{font-size:.88rem;color:var(--text-dim);margin-bottom:.5rem}
+.brief h1{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.4rem);font-weight:600;line-height:1.25;color:var(--text-bright);letter-spacing:-.02em;margin-bottom:1rem}
+.brief .lead{font-size:1.05rem;line-height:1.6;margin-bottom:3rem;color:var(--text)}
+.brief h2{font-family:var(--font-display);font-size:1.35rem;font-weight:600;color:var(--text-bright);margin:3rem 0 1rem;letter-spacing:-.01em}
+.brief h3{font-family:var(--font-body);font-size:1rem;font-weight:600;color:var(--text-bright);margin:1.8rem 0 .5rem}
+.brief p{margin-bottom:1rem}
+.brief p:last-child{margin-bottom:0}
+.brief strong{color:var(--text-bright)}
+.brief a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.brief a:hover{color:var(--text-bright)}
+.section-num{font-size:.82rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem}
+.scope-note{margin-top:1.5rem;padding:1rem 1.2rem;background:var(--accent-dim);border-left:2px solid var(--accent);border-radius:0 4px 4px 0;font-size:.88rem;line-height:1.55}
+.cta-section{text-align:center;margin-top:3rem;padding-top:3rem;border-top:1px solid var(--rule)}
+.cta-section p{color:var(--text-dim);font-size:.95rem;margin-bottom:1.5rem}
+
+@media(max-width:640px){nav{flex-wrap:wrap}.nav-links{gap:.5rem 1rem;flex-wrap:wrap}}
+
+.brief table{width:100%;border-collapse:collapse;font-size:.92rem;margin:1rem 0 1.2rem}
+.brief th,.brief td{text-align:left;vertical-align:top;padding:.7rem .6rem;border-bottom:1px solid var(--rule)}
+.brief th{font-weight:600;color:var(--text-bright)}
+.brief ul,.brief ol{margin:0 0 1rem 1.3rem}
+.brief li{margin-bottom:.5rem}
+.status{font-weight:600;color:var(--accent);white-space:nowrap}
+.when{font-size:.82rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.6rem}
+.note{font-size:.88rem;color:var(--text-dim)}
+.brief a.btn{color:#fff;text-decoration:none}
+.brief a.btn:hover{color:#fff}
+@media(max-width:640px){.brief table{font-size:.85rem}.status{white-space:normal}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">MahaGuardian</a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/platforms.html">For AI platforms</a></li>
+    <li><a href="/roadmap.html">Roadmap</a></li>
+    <li><a href="/properties.html">Security status</a></li>
+    <li><a href="/whitepaper/">Architecture</a></li>
+  </ul>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" class="btn">Get in touch</a>
+</nav>
+
+<div class="brief">
+
+<div class="brief-date">For AI platforms</div>
+
+<h1>Information barriers underneath your agents</h1>
+
+<p class="lead">Your platform makes the model replaceable. MahaGuardian makes the barrier portable — and leaves the keys with your customer.</p>
+
+<div class="section-num">01 — The Question</div>
+<h2>What your professional-services customers will ask</h2>
+<p>Law firms, deal advisers, PE houses and family offices all ask the same thing before they let agents near client work: can an agent working for Client A reach Client B's data, if the same person can reach both?</p>
+<p>Platform controls answer part of this — who may use which tools, which data sources are connected, what happened afterwards. What they cannot give the firm is evidence the firm holds itself, enforced at the level of a single client, project or deal.</p>
+
+<div class="section-num">02 — How It Fits</div>
+<h2>One engagement per agent run</h2>
+<ol>
+  <li><strong>An agent run starts on your platform</strong>, assigned to one engagement.</li>
+  <li><strong>It obtains a MahaGuardian credential</strong> for that engagement — short-lived, scoped and issued by the customer's Guardian.</li>
+  <li><strong>Its tool and data calls pass through that credential.</strong> Each is allowed, denied or escalated to a named human.</li>
+  <li><strong>Every decision is recorded</strong> in a hash-chained audit trail on the customer's infrastructure.</li>
+</ol>
+<p>Model routing, workflows and your user interface are unchanged. The barrier sits in the credential, not in the prompt.</p>
+
+<div class="section-num">03 — Custody</div>
+<h2>Who holds what</h2>
+<table>
+  <tr><th>Your platform</th><th>Your customer</th><th>MahaGuardian</th></tr>
+  <tr>
+    <td>Model routing, agents, workflows, platform logs</td>
+    <td>Guardian signing keys, engagement structure, named approvers, audit trail</td>
+    <td>Software only — no keys, no client data</td>
+  </tr>
+</table>
+
+<div class="section-num">04 — Complementary Controls</div>
+<h2>Works with your controls, not against them</h2>
+<p>Your controls govern the workspace: which agents exist, what they may connect to, what they did. MahaGuardian governs each agent's authority within a single engagement, with the evidence held by the customer. A compliance officer can point to both.</p>
+
+<div class="section-num">05 — Agent Risk</div>
+<h2>Breaking the lethal trifecta</h2>
+<p>An agent becomes dangerous when it combines three things: access to private data, exposure to untrusted content — an email, a web page, a shared document — and a way to send data out. One injected instruction can then carry one client's data to someone else.</p>
+<p>MahaGuardian does not stop untrusted content reaching the agent. It limits what that content can achieve:</p>
+<ul>
+  <li><strong>Private data:</strong> the credential opens one engagement, so there is only one client's data within reach.</li>
+  <li><strong>Sending data out:</strong> external communication can be set as an Elevate action, requiring a named approver.</li>
+  <li><strong>After the fact:</strong> every attempt, allowed or denied, is in the customer's audit trail.</li>
+</ul>
+
+<div class="section-num">06 — Integration</div>
+<h2>Integration status</h2>
+<table>
+  <tr><th>Path</th><th>Status</th></tr>
+  <tr><td>Standard enterprise API authorisation — OAuth app registrations, service principals, delegated scopes</td><td class="status">Available (V1)</td></tr>
+  <tr><td>Remote MCP gateway — add MahaGuardian as an MCP integration (Streamable HTTP, OAuth 2.1), with tools limited to one engagement</td><td class="status">In development</td></tr>
+  <tr><td>Always-on, multi-tenant deployment with high-availability key management</td><td class="status">V2 (2027)</td></tr>
+</table>
+<p class="note">Tested with OpenAI, Anthropic and Google models and with self-hosted Llama and Mistral. New interfaces are worked through with partners before deployment. See the <a href="/roadmap.html">roadmap</a>.</p>
+
+<div class="section-num">07 — Europe</div>
+<h2>European by design</h2>
+<ul>
+  <li><strong>Custody:</strong> signing keys and audit records stay with the customer. Client data never passes to MahaGuardian.</li>
+  <li><strong>GDPR:</strong> per-engagement access supports data protection by design and appropriate security (Articles 25 and 32).</li>
+  <li><strong>EU AI Act:</strong> the audit trail and Elevate approvals are designed to support record-keeping and human-oversight requirements (Articles 12 and 14).</li>
+</ul>
+<p class="note">MahaGuardian supports these obligations; it does not by itself make a deployment compliant.</p>
+
+<div class="cta-section">
+  <h2>Talk to the founder</h2>
+  <p>If you run an agent platform and serve professional-services customers, a direct conversation is the quickest way to see whether this fits.</p>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKvhBi1uaRGn53-73j1468n5NyrVasQhesiA9YiU_E7Zu4_Q/viewform" class="btn">Get in touch</a>
+</div>
+
+</div>
+
+<footer>
+  <span>MahaGuardian &copy; 2026 Alexander Landia. Patent pending (USPTO).</span>
+  <div class="footer-links">
+    <a href="/partner-brief.html">Partner brief</a>
+    <a href="/platforms.html">For AI platforms</a>
+    <a href="/roadmap.html">Roadmap</a>
+    <a href="/properties.html">Security status</a>
+    <a href="/whitepaper/">Architecture</a>
+    <a href="https://github.com/partitia-clean/mahaguardian">GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>
